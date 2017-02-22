@@ -552,13 +552,6 @@ public class MB_TextureCombiner{
 			EditorUserBuildSettings.activeBuildTarget == BuildTarget.StandaloneOSXIntel){
 			return "Standalone";	
 		}
-		if (EditorUserBuildSettings.activeBuildTarget == BuildTarget.WebPlayer ||
-			EditorUserBuildSettings.activeBuildTarget == BuildTarget.WebPlayerStreamed){
-			return "Web";
-		}
-		/*if (EditorUserBuildSettings.activeBuildTarget == BuildTarget.FlashPlayer){
-			return "FlashPlayer";			
-		}*/
 		return null;
 	}
 #endif
