@@ -77,7 +77,7 @@ public class GamePlayCameraController : BaseCameraController
     {
         if (GameState.Instance.PauseLevel != PauseLevel.Unpaused)
         {
-            Screen.lockCursor = false;
+            Cursor.lockState = CursorLockMode.None;
             return;
         }
         if (!EventSystem.current.IsPointerOverGameObject() && _controlsEnabled && Input.GetMouseButton(1))
@@ -86,11 +86,11 @@ public class GamePlayCameraController : BaseCameraController
             _cam.TargetForward = Quaternion.AngleAxis(TurningRate * turn, Vector3.up) * _cam.TargetForward;
 
             Debug.DrawLine(transform.position + 2 * Vector3.up, transform.position + 2 * Vector3.up + _cam.TargetForward * 3, Color.magenta);
-            Screen.lockCursor = true;
+            Cursor.lockState = CursorLockMode.Locked;
         }
         else
         {
-            Screen.lockCursor = false;
+            Cursor.lockState = CursorLockMode.None;
         }
 
         
