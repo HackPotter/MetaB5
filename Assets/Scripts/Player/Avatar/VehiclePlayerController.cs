@@ -222,11 +222,11 @@ public class VehiclePlayerController : BasePlayerController
     {
         if (GameState.Instance.PauseLevel == PauseLevel.Unpaused && !EventSystem.current.IsPointerOverGameObject() && Input.GetMouseButton(1))
         {
-            Screen.lockCursor = true;
+            Cursor.lockState = CursorLockMode.Locked;
         }
         else
         {
-            Screen.lockCursor = false;
+            Cursor.lockState = CursorLockMode.None;
         }
     }
 }
