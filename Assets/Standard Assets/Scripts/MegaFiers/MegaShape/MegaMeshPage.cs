@@ -372,7 +372,6 @@ public class MegaMeshPage : MonoBehaviour
 		mesh.RecalculateBounds();
 	}
 
-
 	void BuildMeshOld(Mesh mesh)
 	{
 		Width = Mathf.Clamp(Width, 0.0f, float.MaxValue);

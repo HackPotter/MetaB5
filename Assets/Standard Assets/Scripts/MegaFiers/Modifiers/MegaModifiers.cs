@@ -1,5 +1,4 @@
-﻿
-using UnityEngine;
+﻿using UnityEngine;
 using System;
 using System.Collections.Generic;
 
@@ -1310,7 +1309,7 @@ public class MegaModifiers : MonoBehaviour {
     // ***************************************************************************
     // PS3 Code
     // ***************************************************************************
-#if true   //UNITY_PS3
+#if false  //UNITY_PS3
     void Awake() {
         if (Application.platform == RuntimePlatform.PS3 && !Application.isEditor) {
             Mesh ps3mesh = MegaUtils.GetMesh(gameObject);
