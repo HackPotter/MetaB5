@@ -1,4 +1,9 @@
-﻿using System;
+﻿#pragma warning disable 0168 // variable declared but not used.
+#pragma warning disable 0219 // variable assigned but not used.
+#pragma warning disable 0414 // private field assigned but not used.
+#pragma warning disable 0067 // The event is never used.
+
+using System;
 using UnityEngine;
 
 public enum TimerMode
