@@ -40,7 +40,7 @@ namespace Metablast.UI
             BuildEntryList();
 
             _exitButton.onClick.AddListener(ExitButtonOnClickHandler);
-            _searchField.onValueChange.AddListener(searchFieldChangedHandler);
+            _searchField.onValueChanged.AddListener(searchFieldChangedHandler);
         }
 
         void searchFieldChangedHandler(string searchString)
