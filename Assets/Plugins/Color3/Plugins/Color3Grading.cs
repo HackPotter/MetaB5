@@ -90,7 +90,7 @@ sealed public class Color3Grading : MonoBehaviour
 	bool CheckSupport()
 	{
 		// Disable if we don't support image effect or render textures
-		if ( !SystemInfo.supportsImageEffects || !SystemInfo.supportsRenderTextures )
+		if ( !SystemInfo.supportsImageEffects )
 		{
 			ReportNotSupported();
 			return false;
