@@ -69,11 +69,11 @@ public class MouseOrbitCameraController : BaseCameraController
             _cam.TargetForward = Quaternion.AngleAxis(_turningRate * turn * Time.deltaTime, Vector3.up) * _cam.TargetForward;
 
             Debug.DrawLine(transform.position + 2 * Vector3.up, transform.position + 2 * Vector3.up + _cam.TargetForward * 3, Color.magenta);
-            Screen.lockCursor = true;
+            Cursor.lockState = CursorLockMode.Locked;
         }
         else
         {
-            Screen.lockCursor = false;
+            Cursor.lockState = CursorLockMode.None;
         }
 
         if (!EventSystem.current.IsPointerOverGameObject() && Input.GetMouseButton(1))

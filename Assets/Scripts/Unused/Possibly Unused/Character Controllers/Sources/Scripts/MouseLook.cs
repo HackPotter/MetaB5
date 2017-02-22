@@ -35,13 +35,13 @@ public class MouseLook : MonoBehaviour {
 	{
         if (GameState.Instance.PauseLevel != PauseLevel.Unpaused)
         {
-			Screen.lockCursor = false;
+            Cursor.lockState = CursorLockMode.None;
             return;
         }
 
         if (!EventSystem.current.IsPointerOverGameObject() && Input.GetMouseButton(1))
         {
-            Screen.lockCursor = true;
+            Cursor.lockState = CursorLockMode.Locked;
             if (axes == RotationAxes.MouseXAndY)
             {
                 float rotationX = transform.localEulerAngles.y + Input.GetAxis("Horizontal") * sensitivityX;
@@ -65,7 +65,7 @@ public class MouseLook : MonoBehaviour {
         }
         else
         {
-            Screen.lockCursor = false;
+            Cursor.lockState = CursorLockMode.None;
             if (axes == RotationAxes.MouseXAndY || axes == RotationAxes.MouseY)
             {
                 rotationY = Mathf.Lerp(rotationY, 0, 0.15f);
