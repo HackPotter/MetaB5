@@ -69,7 +69,7 @@ public class PostEffectsBase : MonoBehaviour
 
     public bool CheckSupport(bool needDepth)
     {
-        if (!SystemInfo.supportsImageEffects || !SystemInfo.supportsRenderTextures)
+        if (!SystemInfo.supportsImageEffects)
         {
             NotSupported();
             return false;

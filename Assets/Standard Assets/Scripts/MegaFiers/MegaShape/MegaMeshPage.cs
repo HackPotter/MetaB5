@@ -369,9 +369,6 @@ public class MegaMeshPage : MonoBehaviour
 		if ( tangents )
 			BuildTangents(mesh);
 
-		if ( optimize )
-			;
-
 		mesh.RecalculateBounds();
 	}
 
@@ -631,9 +628,6 @@ public class MegaMeshPage : MonoBehaviour
 
 		if ( tangents )
 			BuildTangents(mesh);
-
-		if ( optimize )
-			;
 
 		mesh.RecalculateBounds();
 	}
