@@ -16,4 +16,4 @@ ___
 
 
 For more information about MetaBlast, or to download and play the game, go to our website: [MetaBlast.org](https://www.metablast.org).
-Also checkout our [Github Wiki](https://www.github.com/MetaBlastTeam/MetaBlast/wiki).
+Also checkout our [Github Wiki](https://github.com/MetaBlastTeam/MetaB5/wiki).
