@@ -1,9 +1,7 @@
-// Converted from UnityScript to C# at http://www.M2H.nl/files/js_to_c.php - by Mike Hergaarden
-// Do test the code! You usually need to change a few small bits.
-
 using UnityEngine;
 using System.Collections;
 using System;
+using UnityEngine.SceneManagement;
 
 public enum TimeInMenu { BioLog, Inventory, Objectives, MessageCenter, ClassManagement, QuestionManagement, MyClasses, MyQuestions, Main, Options }
 
@@ -850,14 +848,14 @@ public class Web : MonoBehaviour
 
         if (!trackingScene)
         {
-            curScene = Application.loadedLevelName;
+            curScene = SceneManager.GetActiveScene().name;
             curSceneStart = System.DateTime.Now;
         }
 
         if (Stats[curScene] == null)
         {
             Stats[curScene] = new Hashtable();
-            ((Hashtable)Stats[curScene])["level_id"] = Application.loadedLevel;
+            ((Hashtable)Stats[curScene])["level_id"] =  SceneManager.GetActiveScene().buildIndex;
         }
     }
 

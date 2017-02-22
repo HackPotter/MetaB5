@@ -1,9 +1,9 @@
 ﻿using Squid;
 using UnityEngine;
 using ExitGames.Client.Photon;
+using UnityEngine.SceneManagement;
 
-public class MetablastMenuUI : GuiRenderer
-{
+public class MetablastMenuUI : GuiRenderer {
 #pragma warning disable 0067, 0649
     [SerializeField]
     private SquidLayout _launchScreen;
@@ -12,30 +12,26 @@ public class MetablastMenuUI : GuiRenderer
     [SerializeField]
     private SquidLayout _registerScreen;
 #pragma warning restore 0067, 0649
-    
+
     private bool _sendRegistration = false;
 
     private MenuView _menuView;
     private LoginView _loginView;
     private RegisterView _registerView;
 
-    public IMenuView MenuView
-    {
+    public IMenuView MenuView {
         get { return _menuView; }
     }
 
-    public ILoginView LoginView
-    {
+    public ILoginView LoginView {
         get { return _loginView; }
     }
 
-    public IRegisterView RegisterView
-    {
+    public IRegisterView RegisterView {
         get { return _registerView; }
     }
 
-    protected override void Awake()
-    {
+    protected override void Awake() {
         base.Awake();
 
         _menuView = new MenuView(_launchScreen);
@@ -69,42 +65,34 @@ public class MetablastMenuUI : GuiRenderer
         NetworkManager.Instance.Disconnected += Instance_Disconnected;
         NetworkManager.Instance.EncryptionEstablished += Instance_EncryptionEstablished;
         NetworkManager.Instance.GetHandler<RegisterResponseHandler>().ResponseReceived += MetablastMenuUI_ResponseReceived;
-        
+
     }
 
-    void RegisterView_SubmitButtonPressed()
-    {
+    void RegisterView_SubmitButtonPressed() {
         _sendRegistration = true;
-        if (NetworkManager.Instance.ConnectionStatus == PeerStateValue.Disconnected)
-        {
+        if (NetworkManager.Instance.ConnectionStatus == PeerStateValue.Disconnected) {
             //NetworkManager.Instance.Connect("10.25.109.228:5055", "MetablastServer");
         }
     }
 
-    void Instance_Connected(StatusCode statusCode)
-    {
+    void Instance_Connected(StatusCode statusCode) {
         NetworkManager.Instance.EstablishEncryption();
     }
 
-    void Instance_EncryptionEstablished(StatusCode statusCode)
-    {
-        if (_sendRegistration)
-        {
+    void Instance_EncryptionEstablished(StatusCode statusCode) {
+        if (_sendRegistration) {
             NetworkManager.Instance.SendRequest(new Register(RegisterView.Email, RegisterView.Password, RegisterView.Age, RegisterView.CollectData));
         }
     }
 
-    void Instance_Disconnected(StatusCode statusCode)
-    {
+    void Instance_Disconnected(StatusCode statusCode) {
         //Debug.Log("Disconnected!");
     }
 
-    void MetablastMenuUI_ResponseReceived(RegisterResponse code)
-    {
+    void MetablastMenuUI_ResponseReceived(RegisterResponse code) {
         Debug.Log(code.ToString());
 
-        if (code == RegisterResponse.Success)
-        {
+        if (code == RegisterResponse.Success) {
             _registerView.Visible = false;
             _loginView.Visible = true;
         }
@@ -113,49 +101,41 @@ public class MetablastMenuUI : GuiRenderer
 
 
 
-    void RegisterView_BackButtonPressed()
-    {
+    void RegisterView_BackButtonPressed() {
         _registerView.Visible = false;
         _loginView.Visible = false;
         _menuView.Visible = true;
     }
 
-    void LoginView_ResetPasswordButtonPressed()
-    {
+    void LoginView_ResetPasswordButtonPressed() {
         // TODO not really a way to do this??
     }
 
-    void LoginView_LoginButtonPressed()
-    {
+    void LoginView_LoginButtonPressed() {
         // TODO attempt to login.
     }
 
-    void LoginView_RegisterButtonPressed()
-    {
+    void LoginView_RegisterButtonPressed() {
         _loginView.Visible = false;
         _registerView.Visible = true;
     }
 
-    void LoginView_BackButtonPressed()
-    {
+    void LoginView_BackButtonPressed() {
         _loginView.Visible = false;
         _menuView.Visible = true;
     }
 
-    void MenuView_LoginButtonPressed()
-    {
+    void MenuView_LoginButtonPressed() {
         _menuView.Visible = false;
         _loginView.Visible = true;
     }
 
-    void MenuView_PlayButtonPressed()
-    {
+    void MenuView_PlayButtonPressed() {
         //Debug.Log("Play Button Pressed");
-        Application.LoadLevel("SceneLoader");
+        SceneManager.LoadScene("SceneLoader");
     }
 
-    void MenuView_ExitButtonPressed()
-    {
+    void MenuView_ExitButtonPressed() {
         Application.Quit();
     }
 }

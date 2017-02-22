@@ -14,6 +14,7 @@ using System.IO;
 using System.Text;
 using UnityEditor;
 using UnityEngine;
+using UnityEditor.SceneManagement;
  
 struct ObjMaterial
 {
@@ -287,8 +288,8 @@ public class EditorObjExporter : ScriptableObject
        		{
        			mf[i] = (MeshFilter)mfList[i];
        		}
- 
-       		string filename = EditorApplication.currentScene + "_" + exportedObjects;
+
+            string filename = EditorSceneManager.GetActiveScene().name + "_" + exportedObjects;
  
        		int stripIndex = filename.LastIndexOf('/');//FIXME: Should be Path.PathSeparator
  

@@ -1,8 +1,6 @@
-// Converted from UnityScript to C# at http://www.M2H.nl/files/js_to_c.php - by Mike Hergaarden
-// Do test the code! You usually need to change a few small bits.
-
 using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class DotMatrix : MonoBehaviour
 {
@@ -336,7 +334,7 @@ public class DotMatrix : MonoBehaviour
         GameObject.Find("Main Camera").camera.enabled = true;
         this.camera.enabled = false;
          */
-        Application.LoadLevel("Laboratory");
+        SceneManager.LoadScene("Laboratory");
     }
 
     private IEnumerator nextLevel()

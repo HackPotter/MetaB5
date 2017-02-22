@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
 [Trigger(DisplayPath = "Scene")]
 public class LoadScene : EventResponder
@@ -15,7 +16,7 @@ public class LoadScene : EventResponder
         {
             MetablastUI.Instance.HudView.Hide(() => { }, 0.1f);
         }
-        Application.LoadLevel(_sceneToLoad);
+        SceneManager.LoadScene(_sceneToLoad);
     }
 }
 

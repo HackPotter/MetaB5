@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class RememberMe : MonoBehaviour
 {
@@ -21,37 +22,41 @@ public class RememberMe : MonoBehaviour
 
     void OnEnable()
     {
-        if (!_lastPositions.ContainsKey(Application.loadedLevelName))
+        string currentScene = SceneManager.GetActiveScene().name;
+
+        if (!_lastPositions.ContainsKey(currentScene))
         {
-            _lastPositions.Add(Application.loadedLevelName, new Dictionary<string, Vector3>());
+            _lastPositions.Add(currentScene, new Dictionary<string, Vector3>());
         }
-        if (!_lastRotations.ContainsKey(Application.loadedLevelName))
+        if (!_lastRotations.ContainsKey(currentScene))
         {
-            _lastRotations.Add(Application.loadedLevelName, new Dictionary<string, Quaternion>());
+            _lastRotations.Add(currentScene, new Dictionary<string, Quaternion>());
         }
 
-        if (_lastPositions[Application.loadedLevelName].ContainsKey(_saveName))
+        if (_lastPositions[currentScene].ContainsKey(_saveName))
         {
-            _gameObjectToRemember.transform.position = _lastPositions[Application.loadedLevelName][_saveName];
+            _gameObjectToRemember.transform.position = _lastPositions[currentScene][_saveName];
         }
-        if (_lastRotations[Application.loadedLevelName].ContainsKey(_saveName))
+        if (_lastRotations[currentScene].ContainsKey(_saveName))
         {
-            _gameObjectToRemember.transform.rotation = _lastRotations[Application.loadedLevelName][_saveName];
+            _gameObjectToRemember.transform.rotation = _lastRotations[currentScene][_saveName];
         }
     }
 
     void OnDisable()
     {
-        if (!_lastPositions.ContainsKey(Application.loadedLevelName))
+        string currentScene = SceneManager.GetActiveScene().name;
+
+        if (!_lastPositions.ContainsKey(currentScene))
         {
-            _lastPositions.Add(Application.loadedLevelName, new Dictionary<string, Vector3>());
+            _lastPositions.Add(currentScene, new Dictionary<string, Vector3>());
         }
-        if (!_lastRotations.ContainsKey(Application.loadedLevelName))
+        if (!_lastRotations.ContainsKey(currentScene))
         {
-            _lastRotations.Add(Application.loadedLevelName, new Dictionary<string, Quaternion>());
+            _lastRotations.Add(currentScene, new Dictionary<string, Quaternion>());
         }
 
-        _lastPositions[Application.loadedLevelName][_saveName] = _gameObjectToRemember.transform.position;
-        _lastRotations[Application.loadedLevelName][_saveName] = _gameObjectToRemember.transform.rotation;
+        _lastPositions[currentScene][_saveName] = _gameObjectToRemember.transform.position;
+        _lastRotations[currentScene][_saveName] = _gameObjectToRemember.transform.rotation;
     }
 }

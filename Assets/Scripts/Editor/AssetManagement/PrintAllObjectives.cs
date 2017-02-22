@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using UnityEditor;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 
 public class PrintAllObjectives : EditorWindow
@@ -57,7 +58,8 @@ public class PrintAllObjectives : EditorWindow
             indexWriter.Write("<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">");
             for (int i = 0; i < _scenePaths.Length; i++)
             {
-                EditorApplication.OpenScene(_scenePaths[i]);
+                EditorSceneManager.OpenScene(_scenePaths[i]);
+
                 string html = BuildDialogueHTML(_sceneNames[i]);
 
                 if (!string.IsNullOrEmpty(html))

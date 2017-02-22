@@ -1,10 +1,8 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class OptionsExitGame : MonoBehaviour
-{
-    public void ExitToMenuButtonPressed()
-    {
-	Application.LoadLevel("MainMenu");
+public class OptionsExitGame : MonoBehaviour {
+    public void ExitToMenuButtonPressed() {
+        SceneManager.LoadScene("MainMenu");
     }
-
 }

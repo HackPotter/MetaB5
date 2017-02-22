@@ -1,8 +1,5 @@
-// Converted from UnityScript to C# at http://www.M2H.nl/files/js_to_c.php - by Mike Hergaarden
-// Do test the code! You usually need to change a few small bits.
-
 using UnityEngine;
-using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class Jigsaw : MonoBehaviour
 {
@@ -99,7 +96,7 @@ public class Jigsaw : MonoBehaviour
         GUI.Label(new Rect(screenWidth * 0.07f, screenHeight * 0.25f, screenWidth * 0.17f, screenHeight * 0.05f), "Score: " + score);
         if (GUI.Button(new Rect(screenWidth * 0.875f, screenHeight * 0.935f, screenWidth * 0.07f, screenHeight * 0.05f), "", "Back"))
         {
-            Application.LoadLevel("Laboratory");
+            SceneManager.LoadScene("Laboratory");
         }
 
         if (!playing)

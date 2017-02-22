@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
-public class QuestionSetSelectionMenu : MonoBehaviour
-{
+public class QuestionSetSelectionMenu : MonoBehaviour {
 #pragma warning disable 0067, 0649
     [SerializeField]
     private QuestionSetLoader _loader;
@@ -25,13 +25,11 @@ public class QuestionSetSelectionMenu : MonoBehaviour
 
     private QuestionSetUIElement _selected = null;
 
-    void Awake()
-    {
+    void Awake() {
         ToggleGroup toggleGroup = _questionSetArea.GetComponent<ToggleGroup>();
 
         bool first = true;
-        foreach (var questionSet in _loader.QuestionSets)
-        {
+        foreach (var questionSet in _loader.QuestionSets) {
 
             QuestionSetUIElement element = GameObject.Instantiate(_questionSetUIElementPrefab) as QuestionSetUIElement;
             element.TitleText = questionSet.Title;
@@ -42,16 +40,14 @@ public class QuestionSetSelectionMenu : MonoBehaviour
             element.QuestionSet = questionSet;
             Texture2D previewTexture = Resources.Load(questionSet.PreviewImagePath) as Texture2D;
             element.PreviewTexture = previewTexture ?? element.PreviewTexture;
-            
+
 
             element.Toggle.onValueChanged.AddListener(
-                (val) =>
-                {
+                (val) => {
                     _selected = element;
                 });
 
-            if (first)
-            {
+            if (first) {
                 _selected = element;
                 element.Toggle.isOn = true;
                 first = false;
@@ -61,16 +57,14 @@ public class QuestionSetSelectionMenu : MonoBehaviour
         _playButton.onClick.AddListener(StartGame);
         _backButton.onClick.AddListener(Quit);
 
-        
+
     }
 
-    void _gameUI_UserQuitGame()
-    {
+    void _gameUI_UserQuitGame() {
         this.transform.root.gameObject.SetActive(true);
     }
 
-    void StartGame()
-    {
+    void StartGame() {
         var game = GameObject.Instantiate(_gameUI) as MillionaireUI;
         game.StartGame(new Millionaire(_selected.QuestionSet));
         game.UserQuitGame += new System.Action(_gameUI_UserQuitGame);
@@ -78,8 +72,7 @@ public class QuestionSetSelectionMenu : MonoBehaviour
 
     }
 
-    void Quit()
-    {
-        Application.LoadLevel("Laboratory");
+    void Quit() {
+        SceneManager.LoadScene("Laboratory");
     }
 }

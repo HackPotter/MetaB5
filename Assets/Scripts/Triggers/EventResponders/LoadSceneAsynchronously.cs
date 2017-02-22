@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
 [Trigger(DisplayPath = "Unfinished")]
 public class LoadSceneAsynchronously : EventResponder
@@ -10,7 +11,7 @@ public class LoadSceneAsynchronously : EventResponder
 
     public override void OnEvent(ExecutionContext context)
     {
-        AsyncOperation operation = Application.LoadLevelAsync(_sceneToLoad);
+        AsyncOperation operation = SceneManager.LoadSceneAsync(_sceneToLoad);
         operation.allowSceneActivation = false;
     }
 }

@@ -1,10 +1,9 @@
 ﻿using Squid;
 using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-
-public class MillionaireView : Frame
-{
+public class MillionaireView : Frame {
     public event Action Help1ButtonPressed;
     public event Action Help2ButtonPressed;
     public event Action Help3ButtonPressed;
@@ -18,8 +17,7 @@ public class MillionaireView : Frame
 
     public enum Colors { CORRECT = -16711936, INCORRECT = -36847, WHITE = -1, HIGHLIGHT = -256 }
 
-    public MillionaireView(SquidLayout menuLayout)
-    {
+    public MillionaireView(SquidLayout menuLayout) {
         Desktop menuDesktop = menuLayout.GetInstance();
         menuDesktop.Dock = DockStyle.Fill;
         Controls.Add(menuDesktop);
@@ -39,182 +37,146 @@ public class MillionaireView : Frame
         (GetControl("Exit") as Button).MouseClick += new MouseEvent(ExitButton_MouseClick);
     }
 
-    void Help1Button_MouseClick(Control sender, MouseEventArgs args)
-    {
-        if (Help1ButtonPressed != null)
-        {
+    void Help1Button_MouseClick(Control sender, MouseEventArgs args) {
+        if (Help1ButtonPressed != null) {
             Help1ButtonPressed();
         }
     }
 
-    void Help2Button_MouseClick(Control sender, MouseEventArgs args)
-    {
-        if (Help2ButtonPressed != null)
-        {
+    void Help2Button_MouseClick(Control sender, MouseEventArgs args) {
+        if (Help2ButtonPressed != null) {
             Help2ButtonPressed();
         }
     }
 
-    void Help3Button_MouseClick(Control sender, MouseEventArgs args)
-    {
-        if (Help3ButtonPressed != null)
-        {
+    void Help3Button_MouseClick(Control sender, MouseEventArgs args) {
+        if (Help3ButtonPressed != null) {
             Help3ButtonPressed();
         }
     }
 
-    void AButton_MouseClick(Control sender, MouseEventArgs args)
-    {
-        if (AButtonPressed != null)
-        {
+    void AButton_MouseClick(Control sender, MouseEventArgs args) {
+        if (AButtonPressed != null) {
             AButtonPressed();
         }
     }
 
-    void BButton_MouseClick(Control sender, MouseEventArgs args)
-    {
-        if (BButtonPressed != null)
-        {
+    void BButton_MouseClick(Control sender, MouseEventArgs args) {
+        if (BButtonPressed != null) {
             BButtonPressed();
         }
     }
 
-    void CButton_MouseClick(Control sender, MouseEventArgs args)
-    {
-        if (CButtonPressed != null)
-        {
+    void CButton_MouseClick(Control sender, MouseEventArgs args) {
+        if (CButtonPressed != null) {
             CButtonPressed();
         }
     }
 
-    void DButton_MouseClick(Control sender, MouseEventArgs args)
-    {
-        if (DButtonPressed != null)
-        {
+    void DButton_MouseClick(Control sender, MouseEventArgs args) {
+        if (DButtonPressed != null) {
             DButtonPressed();
         }
     }
 
-    void YesButton_MouseClick(Control sender, MouseEventArgs args)
-    {
-        if (YesButtonPressed != null)
-        {
+    void YesButton_MouseClick(Control sender, MouseEventArgs args) {
+        if (YesButtonPressed != null) {
             YesButtonPressed();
         }
     }
 
-    void NoButton_MouseClick(Control sender, MouseEventArgs args)
-    {
-        if (NoButtonPressed != null)
-        {
+    void NoButton_MouseClick(Control sender, MouseEventArgs args) {
+        if (NoButtonPressed != null) {
             NoButtonPressed();
         }
     }
 
-    void ExitButton_MouseClick(Control sender, MouseEventArgs args)
-    {
-        if (ExitButtonPressed != null)
-        {
+    void ExitButton_MouseClick(Control sender, MouseEventArgs args) {
+        if (ExitButtonPressed != null) {
             ExitButtonPressed();
         }
     }
 
-    public void EditLabel(string control, string text)
-    {
+    public void EditLabel(string control, string text) {
         (GetControl(control) as Label).Text = text;
     }
 
-    public void EditButton(string control, string text)
-    {
+    public void EditButton(string control, string text) {
         (GetControl(control) as Button).Text = text;
     }
 
-    public void Highlight(int level, bool highlight)
-    {
+    public void Highlight(int level, bool highlight) {
         //Hightlight current level
-        if(highlight)
-        (GetControl(level.ToString()) as FlowLayoutFrame).Tint = (int)Colors.HIGHLIGHT;
+        if (highlight)
+            (GetControl(level.ToString()) as FlowLayoutFrame).Tint = (int)Colors.HIGHLIGHT;
         else
             (GetControl(level.ToString()) as FlowLayoutFrame).Tint = (int)Colors.WHITE;
         //Remove highlight from previous level
         /*if (level > 1)
-            (GetControl((level - 1).ToString()) as FlowLayoutFrame).Tint = (int)Colors.WHITE;*/       
-    } 
+            (GetControl((level - 1).ToString()) as FlowLayoutFrame).Tint = (int)Colors.WHITE;*/
+    }
 
-    public void EnableAnswer(string control)
-    {
+    public void EnableAnswer(string control) {
         (GetControl(control) as Button).Enabled = true;
         (GetControl(control) as Button).Opacity = 1.0f;
     }
 
-    public void EnableAllAnswers()
-    {
+    public void EnableAllAnswers() {
         EnableAnswer("A");
         EnableAnswer("B");
         EnableAnswer("C");
         EnableAnswer("D");
-    } 
-
-    public void EnableHelp(int help_number, string texture_path)
-    {
-        (GetControl("Help" + help_number) as ImageControl).Enabled = true;
-        SetTexture("Help" + help_number , texture_path);
-        
     }
 
-    public void DisableAnswer(string control)
-    {
+    public void EnableHelp(int help_number, string texture_path) {
+        (GetControl("Help" + help_number) as ImageControl).Enabled = true;
+        SetTexture("Help" + help_number, texture_path);
+
+    }
+
+    public void DisableAnswer(string control) {
         (GetControl(control) as Button).Enabled = false;
         (GetControl(control) as Button).Opacity = 0.5f;
     }
 
-    public void DisableAllAnswers()
-    {
+    public void DisableAllAnswers() {
         DisableAnswer("A");
         DisableAnswer("B");
         DisableAnswer("C");
         DisableAnswer("D");
     }
 
-    public void DisableHelp(int help_number, string texture_path)
-    {
+    public void DisableHelp(int help_number, string texture_path) {
         (GetControl("Help" + help_number) as ImageControl).Enabled = false;
         SetTexture("Help" + help_number, texture_path);
     }
 
-    public void DisableButton(string control)
-    {
+    public void DisableButton(string control) {
         (GetControl(control) as Button).Visible = false;
         (GetControl(control) as Button).Enabled = false;
     }
-    
-    public void ButtonFrameVisibility(string control, bool visible)
-    {
+
+    public void ButtonFrameVisibility(string control, bool visible) {
         (GetControl(control) as FlowLayoutFrame).Visible = visible;
     }
 
-    public void LabelVisibility(string control, bool visible)
-    {
+    public void LabelVisibility(string control, bool visible) {
         (GetControl(control) as Label).Visible = visible;
     }
 
-    public void ImageVisibility(string control, bool visible)
-    {
+    public void ImageVisibility(string control, bool visible) {
         (GetControl(control) as ImageControl).Visible = visible;
     }
 
-    public void TextColor(string control, Colors color)
-    {
+    public void TextColor(string control, Colors color) {
         (GetControl(control) as Label).TextColor = (int)color;
     }
 
-    public void SetTexture(string control, string texture_path)
-    {
+    public void SetTexture(string control, string texture_path) {
         (GetControl(control) as ImageControl).Texture = texture_path;
     }
 
-    public void SetTitle(string name)
-    {
+    public void SetTitle(string name) {
         (GetControl("Title") as Label).Text = name;
     }
 }
@@ -228,13 +190,13 @@ public class MillionaireUI : GuiRenderer {
 
     private Millionaire _game;
 
-    private enum Mode {IDLE, CONFIRM_ANSWER, CONFIRM_CONTINUE, CONFIRM_HELP, IMAGE, GAME_OVER, HELP}
+    private enum Mode { IDLE, CONFIRM_ANSWER, CONFIRM_CONTINUE, CONFIRM_HELP, IMAGE, GAME_OVER, HELP }
     private Mode mode;
 
-    private enum Answer {A = 1, B = 2, C = 3, D = 4 }
+    private enum Answer { A = 1, B = 2, C = 3, D = 4 }
     private Answer answer;
 
-    private enum Help {ELIMINATE = 1, IMAGE = 2, SKIP = 3}
+    private enum Help { ELIMINATE = 1, IMAGE = 2, SKIP = 3 }
     private Help help_number;
 
     private int[] wrong_answers;
@@ -248,23 +210,20 @@ public class MillionaireUI : GuiRenderer {
 
     private bool game_lost = false;
 
-    public MillionaireView view
-    {
+    public MillionaireView view {
         get;
         private set;
     }
 
     public event Action UserQuitGame;
 
-    public void StartGame(Millionaire game)
-    {
+    public void StartGame(Millionaire game) {
         _game = game;
         gameTitle = _game.QuestionSetName;
         this.gameObject.SetActive(true);
     }
-    
-    protected override void Awake()
-    {
+
+    protected override void Awake() {
         base.Awake();
 
         // Ok so this can be changed to take a list of Millionaire components.
@@ -273,11 +232,11 @@ public class MillionaireUI : GuiRenderer {
 
         Desktop.Controls.Add(view);
 
-        
+
 
         instructions = "Please read the question carefully and select the best answer.\nIf you are unsure of the answer, you may click on one of the 3 'lifeline' buttons on the left.\nEach button works only once.";
-        
-        if (Application.levelCount == 1)
+
+        if (SceneManager.sceneCountInBuildSettings == 1)
             view.DisableButton("Exit");
 
         view.Help1ButtonPressed += new System.Action(MillionaireView_Help1ButtonPressed);
@@ -297,17 +256,15 @@ public class MillionaireUI : GuiRenderer {
         mode = Mode.IDLE;
     }
 
-    protected override void OnGUI()
-    {
+    protected override void OnGUI() {
         base.OnGUI();
 
         answers = _game.AvailableAnswers;
-        
+
         view.SetTitle(gameTitle);
 
-        for (int i = 1; i <= _game.MaxLevel; i++)
-        {
-            if(i == _game.CurrentLevel)
+        for (int i = 1; i <= _game.MaxLevel; i++) {
+            if (i == _game.CurrentLevel)
                 view.Highlight(i, true);
             else
                 view.Highlight(i, false);
@@ -321,14 +278,13 @@ public class MillionaireUI : GuiRenderer {
         if (wrong_answers != null)
             disable_answers();
 
-        if (mode == Mode.IDLE)
-        {
+        if (mode == Mode.IDLE) {
             view.EditLabel("Confirm", instructions);
             view.EditLabel("Question", _game.CurrentQuestionText);
 
             view.TextColor("Question", MillionaireView.Colors.WHITE);
 
-            if(using_lifeline)
+            if (using_lifeline)
                 view.LabelVisibility("Correct", true);
             else
                 view.LabelVisibility("Correct", false);
@@ -338,8 +294,7 @@ public class MillionaireUI : GuiRenderer {
             view.ButtonFrameVisibility("YesNo", false);
             view.ButtonFrameVisibility("Answers", true);
         }
-        else if(mode == Mode.IMAGE)
-        {
+        else if (mode == Mode.IMAGE) {
             view.TextColor("Question", MillionaireView.Colors.WHITE);
             view.LabelVisibility("Correct", false);
             view.LabelVisibility("Confirm", false);
@@ -347,8 +302,7 @@ public class MillionaireUI : GuiRenderer {
             view.ButtonFrameVisibility("YesNo", false);
             view.ButtonFrameVisibility("Answers", true);
         }
-        else if (mode == Mode.CONFIRM_ANSWER)
-        {
+        else if (mode == Mode.CONFIRM_ANSWER) {
             view.EditLabel("Confirm", "Is '" + to_letter_answer((int)answer) + "' your final answer?");
             view.EditButton("Yes", "YES");
             view.EditButton("No", "NO");
@@ -361,8 +315,7 @@ public class MillionaireUI : GuiRenderer {
             view.ButtonFrameVisibility("Answers", true);
             view.DisableAllAnswers();
         }
-        else if (mode == Mode.CONFIRM_CONTINUE)
-        {
+        else if (mode == Mode.CONFIRM_CONTINUE) {
             view.EditLabel("Question", "Total Points: " + _game.CurrentScore + " nMol");
             view.EditLabel("Confirm", "Would you like to continue playing or walk away with half of your points?");
             view.EditButton("Yes", "CONTINUE");
@@ -375,8 +328,7 @@ public class MillionaireUI : GuiRenderer {
             view.ButtonFrameVisibility("YesNo", true);
             view.ButtonFrameVisibility("Answers", false);
         }
-        else if(mode == Mode.CONFIRM_HELP)
-        {
+        else if (mode == Mode.CONFIRM_HELP) {
             view.EditLabel("Confirm", "Do you want to use this lifeline?");
             view.EditButton("Yes", "YES");
             view.EditButton("No", "NO");
@@ -388,8 +340,7 @@ public class MillionaireUI : GuiRenderer {
             view.ButtonFrameVisibility("YesNo", true);
             view.ButtonFrameVisibility("Answers", true);
         }
-        else
-        {
+        else {
             view.EditLabel("Question", "You have earned a total of " + _game.CurrentScore + " nmol!");
             view.EditLabel("Confirm", "Would you like to play again or exit the game?");
             //view.EditLabel("Confirm", "Please click 'Close' to exit the game.");
@@ -401,22 +352,19 @@ public class MillionaireUI : GuiRenderer {
             view.LabelVisibility("Confirm", true);
             view.ImageVisibility("ImageClue", false);
             view.ButtonFrameVisibility("YesNo", true);
-            if(!game_lost)
+            if (!game_lost)
                 view.ButtonFrameVisibility("Answers", false);
-            else
-            {
+            else {
                 view.ButtonFrameVisibility("Answers", true);
                 view.DisableAllAnswers();
             }
         }
     }
 
-    string to_letter_answer(int num_answer)
-    {
-        string letter = null ;
+    string to_letter_answer(int num_answer) {
+        string letter = null;
 
-        switch (num_answer)
-        {
+        switch (num_answer) {
             case 1: letter = "A"; break;
             case 2: letter = "B"; break;
             case 3: letter = "C"; break;
@@ -426,20 +374,16 @@ public class MillionaireUI : GuiRenderer {
         return letter;
     }
 
-    void MillionaireView_Help1ButtonPressed()
-    {
+    void MillionaireView_Help1ButtonPressed() {
         //Prevent player from using more than one lifeline at a time
-        if (using_lifeline)
-        {
+        if (using_lifeline) {
             //Doesn't show message if player hasn't confirmed the previous lifeline
-            if (mode != Mode.CONFIRM_HELP)
-            {
+            if (mode != Mode.CONFIRM_HELP) {
                 view.EditLabel("Correct", "You can't use more than one lifeline per question");
                 view.TextColor("Correct", MillionaireView.Colors.INCORRECT);
             }
         }
-        else if (mode == Mode.IDLE)
-        {
+        else if (mode == Mode.IDLE) {
             help_number = Help.ELIMINATE;
             using_lifeline = true;
             mode = Mode.CONFIRM_HELP;
@@ -447,20 +391,16 @@ public class MillionaireUI : GuiRenderer {
         }
     }
 
-    void MillionaireView_Help2ButtonPressed()
-    {
+    void MillionaireView_Help2ButtonPressed() {
         //Prevent player from using more than one lifeline at a time
-        if (using_lifeline)
-        {
+        if (using_lifeline) {
             //Doesn't show message if player hasn't confirmed the previous lifeline
-            if (mode != Mode.CONFIRM_HELP)
-            {
+            if (mode != Mode.CONFIRM_HELP) {
                 view.EditLabel("Correct", "You can't use more than one lifeline per question");
                 view.TextColor("Correct", MillionaireView.Colors.INCORRECT);
             }
         }
-        else if (mode == Mode.IDLE)
-        {
+        else if (mode == Mode.IDLE) {
             help_number = Help.IMAGE;
             using_lifeline = true;
             mode = Mode.CONFIRM_HELP;
@@ -468,61 +408,50 @@ public class MillionaireUI : GuiRenderer {
         }
     }
 
-    void MillionaireView_Help3ButtonPressed()
-    {
+    void MillionaireView_Help3ButtonPressed() {
         //Prevent player from using more than one lifeline at a time
-        if (using_lifeline)
-        {
+        if (using_lifeline) {
             //Doesn't show message if player hasn't confirmed the previous lifeline
-            if (mode != Mode.CONFIRM_HELP)
-            {
+            if (mode != Mode.CONFIRM_HELP) {
                 view.EditLabel("Correct", "You can't use more than one lifeline per question");
                 view.TextColor("Correct", MillionaireView.Colors.INCORRECT);
             }
         }
-        else if (mode == Mode.IDLE)
-        {
+        else if (mode == Mode.IDLE) {
             help_number = Help.SKIP;
             using_lifeline = true;
             mode = Mode.CONFIRM_HELP;
-            view.EditLabel("Correct", "Switch \nThis lifeline allows you to switch this question for another one.");                
+            view.EditLabel("Correct", "Switch \nThis lifeline allows you to switch this question for another one.");
         }
     }
 
-    void MillionaireView_AButtonPressed()
-    {   
+    void MillionaireView_AButtonPressed() {
         answer = Answer.A;
         mode = Mode.CONFIRM_ANSWER;
     }
 
-    void MillionaireView_BButtonPressed()
-    {
+    void MillionaireView_BButtonPressed() {
         answer = Answer.B;
-        mode =  Mode.CONFIRM_ANSWER;
+        mode = Mode.CONFIRM_ANSWER;
     }
 
-    void MillionaireView_CButtonPressed()
-    {
+    void MillionaireView_CButtonPressed() {
         answer = Answer.C;
         mode = Mode.CONFIRM_ANSWER;
     }
 
-    void MillionaireView_DButtonPressed()
-    {
+    void MillionaireView_DButtonPressed() {
         answer = Answer.D;
         mode = Mode.CONFIRM_ANSWER;
     }
 
-    void MillionaireView_YesButtonPressed()
-    {
-        if (mode == Mode.CONFIRM_ANSWER)
-        {
+    void MillionaireView_YesButtonPressed() {
+        if (mode == Mode.CONFIRM_ANSWER) {
             mode = Mode.CONFIRM_CONTINUE;
             using_lifeline = false;
             check_answer();
         }
-        else if (mode == Mode.CONFIRM_CONTINUE)
-        {
+        else if (mode == Mode.CONFIRM_CONTINUE) {
             mode = Mode.IDLE;
             _game.NextLevel();
 
@@ -531,27 +460,22 @@ public class MillionaireUI : GuiRenderer {
             using_lifeline = false;
             view.EnableAllAnswers();
         }
-        else if (mode == Mode.CONFIRM_HELP)
-        {
+        else if (mode == Mode.CONFIRM_HELP) {
             mode = Mode.IDLE;
             view.DisableHelp((int)help_number, disable_help_path[(int)help_number - 1]);
 
-            if (help_number == Help.ELIMINATE)
-            {
+            if (help_number == Help.ELIMINATE) {
                 wrong_answers = _game.Eliminate();
             }
-            else if (help_number == Help.IMAGE)
-            {
+            else if (help_number == Help.IMAGE) {
                 mode = Mode.IMAGE;
                 view.SetTexture("ImageClue", _game.CurrentImagePath());
             }
-            else
-            {
+            else {
                 _game.SwitchQuestion();
             }
         }
-        else if (mode == Mode.GAME_OVER)
-        {
+        else if (mode == Mode.GAME_OVER) {
             mode = Mode.IDLE;
             using_lifeline = false;
             _game.ResetGame();
@@ -564,75 +488,62 @@ public class MillionaireUI : GuiRenderer {
         }
     }
 
-    void MillionaireView_NoButtonPressed()
-    {
-        if (mode == Mode.CONFIRM_ANSWER || mode == Mode.CONFIRM_HELP)
-        {            
-            if(mode == Mode.CONFIRM_HELP)
+    void MillionaireView_NoButtonPressed() {
+        if (mode == Mode.CONFIRM_ANSWER || mode == Mode.CONFIRM_HELP) {
+            if (mode == Mode.CONFIRM_HELP)
                 using_lifeline = false;
 
-            mode = Mode.IDLE; 
+            mode = Mode.IDLE;
             view.EnableAllAnswers();
         }
-        else if (mode == Mode.CONFIRM_CONTINUE)
-        {
+        else if (mode == Mode.CONFIRM_CONTINUE) {
             mode = Mode.GAME_OVER;
             view.EditLabel("Correct", "");
             _game.WalkAway();
         }
-        else if (mode == Mode.GAME_OVER)
-        {
-            if (Application.levelCount == 1)
+        else if (mode == Mode.GAME_OVER) {
+
+            if (SceneManager.sceneCountInBuildSettings == 1)
                 Application.Quit();
             else
                 MillionaireView_ExitButtonPressed();
         }
     }
 
-    void MillionaireView_ExitButtonPressed()
-    {
+    void MillionaireView_ExitButtonPressed() {
         //Add total points from all games to player's score, then return to lab.
         //GameContext.Instance.Player.Points = game.get_final_score();
         //Application.LoadLevel("Laboratory");
         //this.gameObject.SetActive(false);
-        if (UserQuitGame != null)
-        {
+        if (UserQuitGame != null) {
             UserQuitGame();
             GameObject.Destroy(this.gameObject);
         }
     }
 
-    void check_answer()
-    {
-        if (_game.SubmitAnswer((int)answer))
-        {
+    void check_answer() {
+        if (_game.SubmitAnswer((int)answer)) {
             view.TextColor("Correct", MillionaireView.Colors.CORRECT);
 
-            if (_game.CurrentLevel == _game.MaxLevel)
-            {
+            if (_game.CurrentLevel == _game.MaxLevel) {
                 mode = Mode.GAME_OVER;
                 view.EditLabel("Correct", "CORRECT! \nCongratulations! You have won the game!");
             }
-            else
-            {
+            else {
                 view.EditLabel("Correct", "CORRECT!");
             }
         }
-        else
-        {
+        else {
             mode = Mode.GAME_OVER;
             game_lost = true;
-            view.EditLabel("Correct", "INCORRECT \n The correct answer is " + to_letter_answer(_game.GetCorrectAnswer())+ ".\nUnfortunately this means the game is over.");
+            view.EditLabel("Correct", "INCORRECT \n The correct answer is " + to_letter_answer(_game.GetCorrectAnswer()) + ".\nUnfortunately this means the game is over.");
             view.TextColor("Correct", MillionaireView.Colors.INCORRECT);
         }
     }
 
-    void disable_answers()
-    {
-        foreach (int wrong_answer in wrong_answers)
-        {
-            switch (wrong_answer)
-            {
+    void disable_answers() {
+        foreach (int wrong_answer in wrong_answers) {
+            switch (wrong_answer) {
                 case (int)Answer.A: view.DisableAnswer("A"); break;
                 case (int)Answer.B: view.DisableAnswer("B"); break;
                 case (int)Answer.C: view.DisableAnswer("C"); break;

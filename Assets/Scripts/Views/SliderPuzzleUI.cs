@@ -1,15 +1,14 @@
 ﻿using Squid;
 using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class SliderView : Frame
-{
+public class SliderView : Frame {
     public event Action PlayButtonPressed;
     public event Action NewGameButtonPressed;
     public event Action ExitButtonPressed;
 
-    public SliderView(SquidLayout menuLayout)
-    {
+    public SliderView(SquidLayout menuLayout) {
         Desktop menuDesktop = menuLayout.GetInstance();
         menuDesktop.Dock = DockStyle.Fill;
         Controls.Add(menuDesktop);
@@ -20,44 +19,35 @@ public class SliderView : Frame
 
     }
 
-    public void EditStartButton(String text)
-    {
+    public void EditStartButton(String text) {
         (GetControl("Start") as Button).Text = text;
     }
 
-    public void setScore(int score)
-    {
+    public void setScore(int score) {
         (GetControl("Score") as TextBox).Text = score.ToString();
     }
 
-    void ExitButton_MouseClick(Control sender, MouseEventArgs args)
-    {
-        if (ExitButtonPressed != null)
-        {
+    void ExitButton_MouseClick(Control sender, MouseEventArgs args) {
+        if (ExitButtonPressed != null) {
             ExitButtonPressed();
         }
     }
 
-    void PlayButton_MouseClick(Control sender, MouseEventArgs args)
-    {
-        if (PlayButtonPressed != null)
-        {
+    void PlayButton_MouseClick(Control sender, MouseEventArgs args) {
+        if (PlayButtonPressed != null) {
             PlayButtonPressed();
         }
     }
 
-    void NewGameButton_MouseClick(Control sender, MouseEventArgs args)
-    {
-        if (NewGameButtonPressed != null)
-        {
+    void NewGameButton_MouseClick(Control sender, MouseEventArgs args) {
+        if (NewGameButtonPressed != null) {
             NewGameButtonPressed();
         }
     }
 }
 
 
-public class SliderPuzzleUI : GuiRenderer
-{
+public class SliderPuzzleUI : GuiRenderer {
 #pragma warning disable 0067, 0649
     [SerializeField]
     private SquidLayout _launchScreen;
@@ -65,14 +55,12 @@ public class SliderPuzzleUI : GuiRenderer
     private TileSlider game;
     private bool play_button_is_start;
 
-    public SliderView view
-    {
+    public SliderView view {
         get;
         private set;
     }
 
-    protected override void Awake()
-    {
+    protected override void Awake() {
         base.Awake();
 
         view = new SliderView(_launchScreen);
@@ -89,47 +77,38 @@ public class SliderPuzzleUI : GuiRenderer
         view.NewGameButtonPressed += new System.Action(SliderView_NewGameButtonPressed);
     }
 
-    protected override void OnGUI()
-    {
+    protected override void OnGUI() {
         base.OnGUI();
 
         view.setScore(game.get_score());
     }
 
-    void SliderView_PlayButtonPressed()
-    {
-        if (play_button_is_start)
-        {
+    void SliderView_PlayButtonPressed() {
+        if (play_button_is_start) {
             play_button_is_start = false;
             SliderView_StartButtonPressed();
         }
-        else
-        {
+        else {
             SliderView_ResetButtonPressed();
         }
     }
 
-    void SliderView_StartButtonPressed()
-    {
+    void SliderView_StartButtonPressed() {
         game.start_game();
         view.EditStartButton("RESET");
     }
 
-    void SliderView_ResetButtonPressed()
-    {
+    void SliderView_ResetButtonPressed() {
         game.reset();
     }
 
-    void SliderView_NewGameButtonPressed()
-    {
+    void SliderView_NewGameButtonPressed() {
         game.new_game();
         view.EditStartButton("START");
         play_button_is_start = true;
     }
 
-    void SliderView_ExitButtonPressed()
-    {
-        Application.LoadLevel("Laboratory");
-
+    void SliderView_ExitButtonPressed() {
+        SceneManager.LoadScene("Laboratory");
     }
 }
