@@ -40,7 +40,7 @@ public class ScannableObject : MonoBehaviour
     {
         foreach (Renderer renderer in gameObject.GetComponentsInChildren<Renderer>())
         {
-            if (renderer.GetComponent<ParticleSystem>() || renderer is ParticleRenderer)
+            if (renderer.GetComponent<ParticleSystem>() || renderer is ParticleSystemRenderer)
             {
                 continue;
             }
@@ -65,7 +65,7 @@ public class ScannableObject : MonoBehaviour
 				//DebugFormatter.LogError(renderer.gameObject, "{0} must have property \"_RimColor\" for ScannableObject to work correctly", renderer.material.name);
 				continue;
 			}
-            if (renderer.GetComponent<ParticleSystem>() || renderer is ParticleRenderer)
+            if (renderer.GetComponent<ParticleSystem>() || renderer is ParticleSystemRenderer)
             {
                 continue;
             }
