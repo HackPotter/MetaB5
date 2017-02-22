@@ -24,7 +24,7 @@ public class Shootable : BaseShootable
     {
         curExplosion = Instantiate(explosionType, curPosition, curRotation) as GameObject;
         curExplosion.GetComponent<ParticleSystem>().Play();
-        Destroy(curExplosion.gameObject, curExplosion.GetComponent<ParticleSystem>().duration);
+        Destroy(curExplosion.gameObject, curExplosion.GetComponent<ParticleSystem>().main.duration);
 
     }
 }

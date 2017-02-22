@@ -50,6 +50,6 @@ public class ProjectileMovement : MonoBehaviour
     {
         curExplosion = Instantiate(explosionType, curPosition, transform.rotation) as GameObject;
         curExplosion.GetComponent<ParticleSystem>().Play();
-        Destroy(curExplosion.gameObject, curExplosion.GetComponent<ParticleSystem>().duration);
+        Destroy(curExplosion.gameObject, curExplosion.GetComponent<ParticleSystem>().main.duration);
     }
 }
