@@ -50,9 +50,6 @@ public class CSB_ReflectionFx : MonoBehaviour
 		{
 			initialReflectionTextures[i] = reflectiveMaterials[i].GetTexture(reflectionSampler);
 		}		
-		
-		if (!SystemInfo.supportsRenderTextures)
-			this.enabled = false;
 	}
 	
 	public void OnDisable()
@@ -192,9 +189,9 @@ public class CSB_ReflectionFx : MonoBehaviour
 					
 		SaneCameraSettings(reflectCamera);
 		
-		reflectCamera.backgroundColor = clearColor;				
-							
-		GL.SetRevertBackfacing(true);		
+		reflectCamera.backgroundColor = clearColor;
+
+        GL.invertCulling = true;	
 							
 		Transform reflectiveSurface = reflectiveSurfaceHeight;
 			
@@ -234,8 +231,8 @@ public class CSB_ReflectionFx : MonoBehaviour
         {
             reflectCamera.Render();
         }
-		
-		GL.SetRevertBackfacing(false);					
+
+        GL.invertCulling = true;				
 	}
 	
 	private void SaneCameraSettings(Camera helperCam) 
