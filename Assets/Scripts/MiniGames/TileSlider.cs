@@ -528,4 +528,4 @@ public class TileSlider : MonoBehaviour
         }
     }
 }
-#pragma warning restore 0067, 0649, 0169, 0414
+#pragma warning restore 0067, 0649, 0414

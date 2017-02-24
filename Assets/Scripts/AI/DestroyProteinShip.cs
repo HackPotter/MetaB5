@@ -3,7 +3,9 @@ using UnityEngine;
 public class DestroyProteinShip : MonoBehaviour
 {
     public Transform ship;
+    //public ParticleSystem shipDebris;
     public ParticleEmitter shipDebris;
+    //public ParticleSystem[] ubiquitinParticleSystems;
     public ParticleEmitter[] ubiquitinParticleSystems;
     public float avoidDistance = 3.0f;
     public float lookAhead = 2.0f;

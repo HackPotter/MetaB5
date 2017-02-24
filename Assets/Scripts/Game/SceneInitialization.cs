@@ -55,16 +55,16 @@ public class SceneInitialization : MonoBehaviour {
         ApplicationEvents.Instance.ApplicationQuit -= Instance_ApplicationQuit;
     }
 
-    void OnLevelWasLoaded(int level) {
-        string currentScene = SceneManager.GetActiveScene().name;
+    void OnLevelWasLoaded(int sceneIndex) {
+        string sceneName = SceneManager.GetActiveScene().name;
         // Prevent existing SceneInitializers from executing.
         if (!_initialize) {
             return;
         }
 
         // Skip this if we've already initialized and we're not at the main menu.
-        if (level != 0 && _sceneInitialized) {
-            AnalyticsLogger.Instance.AddLogEntry(new SceneLoadedLogEntry(GameContext.Instance.Player.UserGuid, currentScene, level));
+        if (sceneIndex != 0 && _sceneInitialized) {
+            AnalyticsLogger.Instance.AddLogEntry(new SceneLoadedLogEntry(GameContext.Instance.Player.UserGuid, sceneName, sceneIndex));
             return;
         }
         RememberMe.Clear();
@@ -97,10 +97,10 @@ public class SceneInitialization : MonoBehaviour {
 
         if (!_sceneInitialized) {
             // Odd bug. Unity doesn't give back the right time in the first frame?
-            AnalyticsLogger.Instance.AddLogEntry(new SceneLoadedLogEntry(GameContext.Instance.Player.UserGuid, currentScene, level, 0f));
+            AnalyticsLogger.Instance.AddLogEntry(new SceneLoadedLogEntry(GameContext.Instance.Player.UserGuid, sceneName, sceneIndex, 0f));
         }
         else {
-            AnalyticsLogger.Instance.AddLogEntry(new SceneLoadedLogEntry(GameContext.Instance.Player.UserGuid, currentScene, level));
+            AnalyticsLogger.Instance.AddLogEntry(new SceneLoadedLogEntry(GameContext.Instance.Player.UserGuid, sceneName, sceneIndex));
         }
         _sceneInitialized = true;
     }

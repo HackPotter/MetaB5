@@ -5,8 +5,7 @@ using UnityEngine;
 
 [AddComponentMenu("Metablast/Protealosis/Proteasome Agent")]
 [RequireComponent(typeof(Rigidbody))]
-public class ProteasomeAgent : Agent
-{
+public class ProteasomeAgent : Agent {
 
     public static event Action ProtealosisBeginning;
     public static event Action Protealyzed;
@@ -35,8 +34,7 @@ public class ProteasomeAgent : Agent
     private Vector3 startingPoint;
     private Quaternion startingRotation;
 
-    void Awake()
-    {
+    void Awake() {
         _allProteasomes.Add(this);
         startingPoint = transform.position;
         startingRotation = transform.rotation;
@@ -47,15 +45,13 @@ public class ProteasomeAgent : Agent
         pursue.enabled = false;
         tether.enabled = false;
     }
-	
-	void OnDestroy()
-	{
-		_allProteasomes.Remove(this);
-		_pursuingAgent = null;
-	}
 
-    void Start()
-    {
+    void OnDestroy() {
+        _allProteasomes.Remove(this);
+        _pursuingAgent = null;
+    }
+
+    void Start() {
         _substrate = Substrate.Instance;
         alarmSource = gameObject.AddComponent<AudioSource>();
         alarmSource.clip = AlarmSound;
@@ -63,16 +59,13 @@ public class ProteasomeAgent : Agent
         StartCoroutine(AlarmSoundRoutine());
     }
 
-    protected override void FixedUpdate()
-    {
+    protected override void FixedUpdate() {
         ResolveCurrentBehavior();
         base.FixedUpdate();
     }
 
-    void ResolveCurrentBehavior()
-    {
-        if (_protealizingCutscene)
-        {
+    void ResolveCurrentBehavior() {
+        if (_protealizingCutscene) {
             wander.enabled = true;
             pursue.enabled = false;
             tether.enabled = false;
@@ -81,27 +74,22 @@ public class ProteasomeAgent : Agent
             _pursuingAgent = null;
             return;
         }
-        if (_protealizing)
-        {
+        if (_protealizing) {
             wander.enabled = false;
             pursue.enabled = false;
             tether.enabled = false;
         }
-        if (_substrate.CanBeProtealized)
-        {
+        if (_substrate.CanBeProtealized) {
             ProteasomeAgent closestAgent = null;
-            foreach (ProteasomeAgent agent in _allProteasomes)
-            {
+            foreach (ProteasomeAgent agent in _allProteasomes) {
                 if (closestAgent == null ||
                     (Vector3.Distance(agent.transform.position, pursue.target.transform.position) < Vector3.Distance(closestAgent.transform.position, pursue.target.transform.position)) &&
-                     Vector3.Distance(agent.transform.position, pursue.target.transform.position) < _maximumDistanceToPursue)
-                {
+                     Vector3.Distance(agent.transform.position, pursue.target.transform.position) < _maximumDistanceToPursue) {
                     closestAgent = agent;
                 }
             }
             // If nobody is pursuing and we can pursue, then pursue.
-            if (_pursuingAgent == null && Vector3.Distance(transform.position, pursue.target.transform.position) < _maximumDistanceToPursue)
-            {
+            if (_pursuingAgent == null && Vector3.Distance(transform.position, pursue.target.transform.position) < _maximumDistanceToPursue) {
                 MaxSpeed = _pursuitSpeed;
                 MaxAcceleration = _pursuitAcceleration;
                 _pursuingAgent = this;
@@ -110,8 +98,7 @@ public class ProteasomeAgent : Agent
                 wander.enabled = false;
             }
             // Give up if we're pursuing but too far away.
-            else if (_pursuingAgent == this && Vector3.Distance(transform.position, pursue.target.transform.position) >= _maximumDistanceToPursue)
-            {
+            else if (_pursuingAgent == this && Vector3.Distance(transform.position, pursue.target.transform.position) >= _maximumDistanceToPursue) {
                 wander.enabled = true;
                 tether.enabled = false;
                 pursue.enabled = false;
@@ -121,8 +108,7 @@ public class ProteasomeAgent : Agent
             }
         }
         // If we can't protealize, don't pursue.
-        else
-        {
+        else {
             wander.enabled = true;
             pursue.enabled = false;
             tether.enabled = false;
@@ -132,31 +118,24 @@ public class ProteasomeAgent : Agent
         }
     }
 
-    void OnCollisionEnter(Collision collision)
-    {
-        if (_substrate.CanBeProtealized && collision.gameObject.tag == "Player")
-        {
-            if (!_protealizingCutscene)
-            {
+    void OnCollisionEnter(Collision collision) {
+        if (_substrate.CanBeProtealized && collision.gameObject.tag == "Player") {
+            if (!_protealizingCutscene) {
                 StartCoroutine(ShipProtealizationRoutine(collision.gameObject));
             }
         }
     }
 
-    IEnumerator AlarmSoundRoutine()
-    {
-        while (true)
-        {
-            if (_pursuingAgent == this)
-            {
+    IEnumerator AlarmSoundRoutine() {
+        while (true) {
+            if (_pursuingAgent == this) {
                 alarmSource.Play();
             }
             yield return new WaitForSeconds(AlarmCooldown);
         }
     }
 
-    IEnumerator ShipProtealizationRoutine(GameObject ship)
-    {
+    IEnumerator ShipProtealizationRoutine(GameObject ship) {
         VehicleController3D shipControls = ship.GetComponent<VehicleController3D>();
         shipControls.enabled = false;
         ship.GetComponent<Rigidbody>().isKinematic = true;
@@ -174,13 +153,11 @@ public class ProteasomeAgent : Agent
         Quaternion startShipRotation = ship.transform.rotation;
         Quaternion targetShipRotation = Quaternion.LookRotation(transform.position - ship.transform.position);
 
-        if (ProtealosisBeginning != null)
-        {
+        if (ProtealosisBeginning != null) {
             ProtealosisBeginning();
         }
         float start = Time.time;
-        while (Time.time - start <= 1.5f)
-        {
+        while (Time.time - start <= 1.5f) {
             transform.rotation = Quaternion.Slerp(startProteasomeRotation, targetProteasomeRotation, (Time.time - start) / 1.5f);
             ship.transform.rotation = Quaternion.Slerp(startShipRotation, targetShipRotation, (Time.time - start) / 1.5f);
             yield return null;
@@ -191,8 +168,7 @@ public class ProteasomeAgent : Agent
 
         Vector3 startPosition = ship.transform.position;
         start = Time.time;
-        while (Time.time - start <= 1.5f)
-        {
+        while (Time.time - start <= 1.5f) {
             ship.transform.position = Vector3.Lerp(startPosition, transform.position, (Time.time - start) / 1.5f);
             yield return null;
         }
@@ -204,7 +180,7 @@ public class ProteasomeAgent : Agent
 
         yield return new WaitForSeconds(2.0f);
 
-        CameraFade.Instance.StartFade(new Color(0,0,0), 1.0f);
+        CameraFade.Instance.StartFade(new Color(0, 0, 0), 1.0f);
         //iTween.CameraFadeTo(iTween.Hash("amount", 1.0f, "time", 1.0f, "delay", 0.0f));
 
         yield return new WaitForSeconds(1.75f);
@@ -235,8 +211,7 @@ public class ProteasomeAgent : Agent
         shipControls.enabled = true;
 
 
-        if (Protealyzed != null)
-        {
+        if (Protealyzed != null) {
             Protealyzed();
         }
         yield return null;
