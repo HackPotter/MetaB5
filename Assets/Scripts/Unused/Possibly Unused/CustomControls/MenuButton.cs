@@ -34,9 +34,9 @@ public class MenuButton : UnityEngine.Object
         _Style.alignment = TextAnchor.MiddleCenter;
         _Style.overflow.left = 5;
         _Style.overflow.right = 5;
-        _Style.font = (Font)UnityEditor.AssetDatabase.LoadAssetAtPath("Assets/Styling/Fonts/orbitron-light.ttf", typeof(Font));
-        _Style.normal.background = (Texture2D)UnityEditor.AssetDatabase.LoadAssetAtPath("Assets/Textures/UI/Menu/Shared/Buttons/Button_Normal.png", typeof(Texture2D));
-        _Style.hover.background = (Texture2D)UnityEditor.AssetDatabase.LoadAssetAtPath("Assets/Textures/UI/Menu/Shared/Buttons/Button_Active.png", typeof(Texture2D));
+        _Style.font = (Font)Resources.Load("Assets/Styling/Fonts/orbitron-light.ttf", typeof(Font));
+        _Style.normal.background = (Texture2D)Resources.Load("Assets/Textures/UI/Menu/Shared/Buttons/Button_Normal.png", typeof(Texture2D));
+        _Style.hover.background = (Texture2D)Resources.Load("Assets/Textures/UI/Menu/Shared/Buttons/Button_Active.png", typeof(Texture2D));
     }
 
     public virtual void draw()

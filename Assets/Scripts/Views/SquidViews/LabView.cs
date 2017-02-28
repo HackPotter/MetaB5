@@ -1,5 +1,5 @@
 ﻿using Squid;
-using UnityEditor.SceneManagement;
+using UnityEngine.SceneManagement;
 
 public class LabView {
     private Button _exitGameButton;
@@ -24,7 +24,7 @@ public class LabView {
     }
 
     void _exitGameButton_MouseClick(Control sender, MouseEventArgs args) {
-        EditorSceneManager.LoadScene(0);
+        SceneManager.LoadScene("MainMenu");
     }
 }
 
