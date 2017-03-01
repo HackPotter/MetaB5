@@ -98,10 +98,10 @@ public class Jigsaw : MonoBehaviour
             style.fontSize = (int)(Screen.height * 0.025f);
 
         GUI.Label(new Rect(screenWidth * 0.07f, screenHeight * 0.25f, screenWidth * 0.17f, screenHeight * 0.05f), "Score: " + score);
-        if (GUI.Button(new Rect(screenWidth * 0.875f, screenHeight * 0.935f, screenWidth * 0.07f, screenHeight * 0.05f), "", "Back"))
+        /*if (GUI.Button(new Rect(screenWidth * 0.875f, screenHeight * 0.935f, screenWidth * 0.07f, screenHeight * 0.05f), "", "Back"))
         {
             SceneManager.LoadScene("Laboratory");
-        }
+        }*/
 
         if (!playing)
         {
@@ -236,6 +236,11 @@ public class Jigsaw : MonoBehaviour
         }
     }
 
+    public void onClickExitButton()
+    {
+        SceneManager.LoadScene("Laboratory");
+        Debug.Log("Close Button Clicked");
+    }
     void Update()
     {
         checkInput();
@@ -412,5 +417,6 @@ public class Jigsaw : MonoBehaviour
                 return true;
             return false;
         }
+        
     }
 }
