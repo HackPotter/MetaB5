@@ -127,7 +127,6 @@ namespace Metablast.UI
             get { return _isShowing; }
         }
 
-        ////////////////////////////////////////////////
         // Unity button event to interface event mapping:
         private void BiologButtonPressedHandler()
         {
