@@ -4,6 +4,7 @@
 
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class Jigsaw : MonoBehaviour
 {
@@ -41,6 +42,7 @@ public class Jigsaw : MonoBehaviour
     public GameObject wall_2;
     public GameObject wall_3;
     public GameObject wall_4;
+
 
     public Texture2D[] textures;
     public Texture2D[] previews;
@@ -97,7 +99,7 @@ public class Jigsaw : MonoBehaviour
         foreach (GUIStyle style in GUI.skin.customStyles)
             style.fontSize = (int)(Screen.height * 0.025f);
 
-        GUI.Label(new Rect(screenWidth * 0.07f, screenHeight * 0.25f, screenWidth * 0.17f, screenHeight * 0.05f), "Score: " + score);
+        //GUI.Label(new Rect(screenWidth * 0.07f, screenHeight * 0.25f, screenWidth * 0.17f, screenHeight * 0.05f), "Score: " + score);
         /*if (GUI.Button(new Rect(screenWidth * 0.875f, screenHeight * 0.935f, screenWidth * 0.07f, screenHeight * 0.05f), "", "Back"))
         {
             SceneManager.LoadScene("Laboratory");
@@ -163,11 +165,21 @@ public class Jigsaw : MonoBehaviour
                 piece.puzzlePiece.GetComponent<Renderer>().enabled = true;
             }
 
+            GameObject modeObject = GameObject.FindGameObjectWithTag("JigsawMode");
+            Text modeText = modeObject.GetComponentInChildren<Text>();
             if (mode == Difficulty.CASUAL)
-                GUI.Label(new Rect(screenWidth * 0.07f, screenHeight * 0.15f, screenWidth * 0.17f, screenHeight * 0.05f), "Mode: Casual");
+            {
+                //GUI.Label(new Rect(screenWidth * 0.07f, screenHeight * 0.15f, screenWidth * 0.17f, screenHeight * 0.05f), "Mode: Casual"); 
+                modeText.text = " Mode: Casual";
+            }
             else
-                GUI.Label(new Rect(screenWidth * 0.07f, screenHeight * 0.15f, screenWidth * 0.17f, screenHeight * 0.05f), "Mode: Challenge");
-
+            {
+                //GUI.Label(new Rect(screenWidth * 0.07f, screenHeight * 0.15f, screenWidth * 0.17f, screenHeight * 0.05f), "Mode: Challenge");
+                modeText.text = " Mode: Challenge";
+            }
+        
+            GameObject ScorePoints = GameObject.FindGameObjectWithTag("JigsawScorePoints");
+            Text scoreP = ScorePoints.GetComponentInChildren<Text>();
             if (!gameOver)
             {
                 GUI.Label(new Rect(screenWidth * 0.07f, screenHeight * 0.68f, screenWidth * 0.17f, screenHeight * 0.05f), textures[rand].name.Substring(10).ToUpper());
@@ -178,7 +190,9 @@ public class Jigsaw : MonoBehaviour
 
                     if (piecesFound == numPieces)
                     {
-                        score = 15;
+                        
+                        //score = 15;
+                        scoreP.text = "15";
                         gameOver = true;
                     }
 
@@ -192,7 +206,8 @@ public class Jigsaw : MonoBehaviour
                 {
                     if (piecesFound == numPieces)
                     {
-                        score = 10;
+                        //score = 10;
+                        scoreP.text = "10";
                         gameOver = true;
                     }
                 }
