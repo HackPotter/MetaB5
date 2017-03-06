@@ -31,7 +31,7 @@ public class QuestionSetSelectionMenu : MonoBehaviour {
         bool first = true;
         foreach (var questionSet in _loader.QuestionSets) {
 
-            QuestionSetUIElement element = GameObject.Instantiate(_questionSetUIElementPrefab) as QuestionSetUIElement;
+            QuestionSetUIElement element = Instantiate(_questionSetUIElementPrefab) as QuestionSetUIElement;
             element.TitleText = questionSet.Title;
             element.Description = questionSet.Description;
             element.transform.parent = _questionSetArea.transform;
@@ -57,7 +57,6 @@ public class QuestionSetSelectionMenu : MonoBehaviour {
         _playButton.onClick.AddListener(StartGame);
         _backButton.onClick.AddListener(Quit);
 
-
     }
 
     void _gameUI_UserQuitGame() {
@@ -65,7 +64,7 @@ public class QuestionSetSelectionMenu : MonoBehaviour {
     }
 
     void StartGame() {
-        var game = GameObject.Instantiate(_gameUI) as MillionaireUI;
+        var game = Instantiate(_gameUI) as MillionaireUI;
         game.StartGame(new Millionaire(_selected.QuestionSet));
         game.UserQuitGame += new System.Action(_gameUI_UserQuitGame);
         this.transform.root.gameObject.SetActive(false);

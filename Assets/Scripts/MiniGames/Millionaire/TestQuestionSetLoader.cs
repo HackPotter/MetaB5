@@ -1,41 +1,38 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Diagnostics;
 using UnityEngine;
 
 [RequireComponent(typeof(QuestionSetLoader))]
-public class TestQuestionSetLoader : MonoBehaviour
-{
-    void Awake()
-    {
-        QuestionSetLoader loader = GetComponent<QuestionSetLoader>();
 
-        string message = "";
-        foreach (var questionSet in loader.QuestionSets)
-        {
-            message += "Question Set: " + questionSet.Title + "\n";
-            message += "Category: " + questionSet.Category + "\n";
-            message += "Levels: " + questionSet.Levels.Length + "\n";
-            foreach (var level in questionSet.Levels)
-            {
-                message += "Level:" + "\n";
-                message += "    Questions: " + level.questions.Length + "\n";
-                foreach (var question in level.questions)
-                {
-                    message += "        Text: " + question.content + "\n";
-                    message += "        ImgPath: " + question.imagePath + "\n";
-                    message += "        Answers: " + question.answers.Length + "\n";
-                    foreach (var answer in question.answers)
-                    {
-                        message += "            Text: " + answer.content + " - Correct: " + answer.correct + "\n";
+public class TestQuestionSetLoader : MonoBehaviour {
+
+    void Awake() {
+        try {
+            QuestionSetLoader loader = GetComponent<QuestionSetLoader>();
+
+            string message = "";
+            foreach (var questionSet in loader.QuestionSets) {
+                message += "Question Set: " + questionSet.Title + "\n";
+                message += "Category: " + questionSet.Category + "\n";
+                message += "Levels: " + questionSet.Levels.Length + "\n";
+                if (questionSet.Levels == null) {
+                    UnityEngine.Debug.Log("Questionset.levels is null");
+                }
+
+                foreach (var level in questionSet.Levels) {
+                    if (level == null) {
+                        UnityEngine.Debug.Log(questionSet.Title + ": level is null");
                     }
                 }
+                message += "\n\n";
             }
-            message += "\n\n";
-        }
 
-        Debug.Log(message);
+            UnityEngine.Debug.Log(message);
+        }
+        catch (Exception ex) {
+            StackFrame callStack = new StackFrame(1, true);
+            UnityEngine.Debug.Log("Error: " + ex.InnerException.Message + ", File: " + callStack.GetFileName() + ", Line: " + callStack.GetFileLineNumber());
+        }
     }
 }
 
