@@ -49,6 +49,9 @@ public class Jigsaw : MonoBehaviour
 
     public Puzzle[] pieces;
 
+    GameObject TimeLeft;
+    Text timeText;
+
     void Start()
     {
         rand = Random.Range(0, textures.Length);
@@ -67,7 +70,10 @@ public class Jigsaw : MonoBehaviour
             pieces[i].puzzlePiece.GetComponent<Renderer>().material.SetTexture("_MainTex", textures[rand]);
             pieces[i].init();
 		}
-		
+        TimeLeft = GameObject.Find("TimeLeft");
+        timeText = TimeLeft.GetComponentInChildren<Text>();
+        timeText.text = "";
+
         /*foreach (Puzzle piece in pieces)
         {
             piece.puzzlePiece.renderer.material.SetTexture("_MainTex", textures[rand]);
@@ -99,18 +105,12 @@ public class Jigsaw : MonoBehaviour
         foreach (GUIStyle style in GUI.skin.customStyles)
             style.fontSize = (int)(Screen.height * 0.025f);
 
-        //GUI.Label(new Rect(screenWidth * 0.07f, screenHeight * 0.25f, screenWidth * 0.17f, screenHeight * 0.05f), "Score: " + score);
-        /*if (GUI.Button(new Rect(screenWidth * 0.875f, screenHeight * 0.935f, screenWidth * 0.07f, screenHeight * 0.05f), "", "Back"))
-        {
-            SceneManager.LoadScene("Laboratory");
-        }*/
-
         if (!playing)
         {
             // Pieces are invisible
             foreach (Puzzle piece in pieces)
             {
-                piece.puzzlePiece.GetComponent<Renderer>().enabled = false;
+                piece.puzzlePiece.GetComponent<Renderer>().enabled = false; 
             }
 
             if (!modeSelected)
@@ -120,22 +120,23 @@ public class Jigsaw : MonoBehaviour
                 {
                     mode = Difficulty.CASUAL;
                     modeSelected = true;
+
                 }
-                /*if (GUI.Button(new Rect(screenWidth * 0.56f, screenHeight * 0.40f, screenWidth * 0.17f, screenHeight * 0.05f), "Challenge"))
+                if (GUI.Button(new Rect(screenWidth * 0.56f, screenHeight * 0.40f, screenWidth * 0.17f, screenHeight * 0.05f), "Challenge"))
                 {
                     mode = Difficulty.CHALLENGE;
                     modeSelected = true;
-                }*/
+                }
             }
             else
             {
                 scramble();
 
-                if (resetting)
+                //if (resetting)
                 {
-                    reset();
+                  //  reset();
                 }
-                else
+               // else
                 {
                     // Play preview for 3 seconds
                     if (!previewing)
@@ -167,68 +168,53 @@ public class Jigsaw : MonoBehaviour
 
             GameObject modeObject = GameObject.FindGameObjectWithTag("JigsawMode");
             Text modeText = modeObject.GetComponentInChildren<Text>();
-            if (mode == Difficulty.CASUAL)
-            {
-                //GUI.Label(new Rect(screenWidth * 0.07f, screenHeight * 0.15f, screenWidth * 0.17f, screenHeight * 0.05f), "Mode: Casual"); 
+            modeText.text = "Mode:";
+            if (mode == Difficulty.CASUAL){
                 modeText.text = " Mode: Casual";
             }
-            else
-            {
-                //GUI.Label(new Rect(screenWidth * 0.07f, screenHeight * 0.15f, screenWidth * 0.17f, screenHeight * 0.05f), "Mode: Challenge");
+            else{
                 modeText.text = " Mode: Challenge";
             }
         
             GameObject ScorePoints = GameObject.FindGameObjectWithTag("JigsawScorePoints");
             Text scoreP = ScorePoints.GetComponentInChildren<Text>();
-            if (!gameOver)
-            {
-                GUI.Label(new Rect(screenWidth * 0.07f, screenHeight * 0.68f, screenWidth * 0.17f, screenHeight * 0.05f), textures[rand].name.Substring(10).ToUpper());
+            if (!gameOver){
+                //TO Display the Name of Puzze loaded
+                //GUI.Label(new Rect(screenWidth * 0.07f, screenHeight * 0.68f, screenWidth * 0.17f, screenHeight * 0.05f), textures[rand].name.Substring(10).ToUpper());
 
-                if (mode == Difficulty.CHALLENGE)
-                {
-                    GUI.Label(new Rect(screenWidth * 0.07f, screenHeight * 0.35f, screenWidth * 0.17f, screenHeight * 0.05f), "Time Left: " + timeinMins + " : " + (timeLeft % 60).ToString("00"), "Timer");
+                if (mode == Difficulty.CHALLENGE){
+                    timeText.text = "Time Left:" + timeinMins + " : " + (timeLeft % 60).ToString("00");
 
-                    if (piecesFound == numPieces)
-                    {
-                        
-                        //score = 15;
-                        scoreP.text = "15";
+                    if (piecesFound == numPieces){
+                        score += 15;
+                        scoreP.text = score.ToString();
                         gameOver = true;
                     }
-
-                    if (timeLeft <= 0)
-                    {
+                    if (timeLeft <= 0){
                         gameOver = true;
                     }
-
                 }
-                else
-                {
-                    if (piecesFound == numPieces)
-                    {
-                        //score = 10;
-                        scoreP.text = "10";
+                else{
+                    if (piecesFound == numPieces){
+                        score += 10;
+                        scoreP.text = score.ToString();
                         gameOver = true;
                     }
                 }
             }
         }
 
-        if (gameOver)
-        {
+        if (gameOver){
             playing = false;
 
-            if (piecesFound < 36)
-            {
-                GUI.Label(new Rect(screenWidth * 0.32f, screenHeight * 0.70f, screenWidth * 0.65f, screenHeight * 0.1f), "Sorry! Better luck next time! \n\n You can play again or hit the exit button below.");
-                if (!resetting)
-                {
+            if (piecesFound < 36){
+                GUI.Label(new Rect(screenWidth * 0.32f, screenHeight * 0.70f, screenWidth * 0.65f, screenHeight * 0.1f), "Sorry! Better luck next time! \n\n You can play again or hit the Close button above.");
+                if (!resetting){
                     timer = Time.time;
                     resetting = true;
                 }
             }
-            else
-            {
+            else{
                 preview.GetComponent<Renderer>().enabled = true;
 
                 GUI.Label(new Rect(screenWidth * 0.57f, screenHeight * 0.70f, screenWidth * 0.15f, screenHeight * 0.05f), "You won!");
@@ -250,14 +236,9 @@ public class Jigsaw : MonoBehaviour
             }
         }
     }
+   
+    void Update(){
 
-    public void onClickExitButton()
-    {
-        SceneManager.LoadScene("Laboratory");
-        Debug.Log("Close Button Clicked");
-    }
-    void Update()
-    {
         checkInput();
         checkBorders();		// Make sure player doesn't exceed borders
         snapToGrid();		//Snap pieces to grid system
@@ -279,25 +260,20 @@ public class Jigsaw : MonoBehaviour
             }
             scrambled = true;
         }
+        
     }
 
-    void reset()
+    public void reset()
     {
-        foreach (Puzzle piece in pieces)
-        {
-            piece.puzzlePiece.layer = 0;
-        }
-
-        score = 0;
         piecesFound = 0;
         scrambled = false;
-
-        if (Time.time - timer >= 5)
-        {
-            gameOver = false;
-            modeSelected = false;
-            resetting = false;
-        }
+        gameOver = false;
+        modeSelected = false;
+        resetting = false;
+        previewing = false;
+        playing = false;
+        Start();
+        scramble();
     }
 
     void checkInput()
@@ -324,7 +300,7 @@ public class Jigsaw : MonoBehaviour
             }
         }
 
-        if (currentSelection && currentSelection.tag == "Jigsaw")
+       if (currentSelection && currentSelection.tag == "Jigsaw")
         {
             // Rotate
             if (mode == Difficulty.CHALLENGE)
@@ -366,7 +342,6 @@ public class Jigsaw : MonoBehaviour
             currentSelection.transform.position = currentSelection.transform.position.WithY(wall_4.transform.position.y);
         }
     }
-
     void snapToGrid()
     {
         if (currentSelection)
