@@ -177,7 +177,7 @@ public class ProteasomeAgent : Agent {
         ParticleSystem shipDebris = this.transform.FindChild("Particle System").GetComponent<ParticleSystem>();
         shipDebris.Play(); // Begin animation and emission of particles when ship is caught by Proteasome
 
-        yield return new WaitForSeconds(2.0f);
+        yield return new WaitForSeconds(5.0f);
 
         CameraFade.Instance.StartFade(new Color(0, 0, 0), 1.0f);
         //iTween.CameraFadeTo(iTween.Hash("amount", 1.0f, "time", 1.0f, "delay", 0.0f));
