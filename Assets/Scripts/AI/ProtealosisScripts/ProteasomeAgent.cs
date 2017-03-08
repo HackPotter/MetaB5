@@ -173,11 +173,9 @@ public class ProteasomeAgent : Agent {
             yield return null;
         }
 
-        ParticleEmitter shipDebris = this.transform.FindChild("Debris1").GetComponent<ParticleEmitter>();
-        shipDebris.worldVelocity = transform.forward.normalized * 10.0f;
-        shipDebris.useWorldSpace = true;
-        shipDebris.emit = true;
-
+        // Brad 3/6/2017
+        ParticleSystem shipDebris = this.transform.FindChild("Particle System").GetComponent<ParticleSystem>();
+        shipDebris.Play(); // Begin animation and emission of particles when ship is caught by Proteasome
         yield return new WaitForSeconds(2.0f);
 
         CameraFade.Instance.StartFade(new Color(0, 0, 0), 1.0f);
@@ -197,7 +195,7 @@ public class ProteasomeAgent : Agent {
         GetComponent<Rigidbody>().isKinematic = false;
         GetComponent<Rigidbody>().velocity = Vector3.zero;
 
-        shipDebris.emit = false;
+        shipDebris.Stop(); // stop emission of particles
         _protealizingCutscene = false;
         _protealizing = false;
 

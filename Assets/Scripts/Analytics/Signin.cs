@@ -77,27 +77,3 @@ public class Signin : MonoBehaviour {
     }
 
 }
-
-
-
-//Debug.Log("TOTAL: " + total);
-//int test1 = 0;
-//foreach (string answer in qs[1]["Answers"]) {
-//    Debug.Log(answer + ((int)qs[1]["CorrectAnswerIndex"] == test1 ? "correct" : ""));
-//    test1++;
-//}
-//Debug.Log(json);
-//Debug.Log(i);
-//string[] ans = qs[i]["Answers"].ToObject<string[]>();
-//string correctAnswerIndex1 = qs[0]["CorrectAnswerIndex"].ToString();
-
-////string[] answers2 = qs[1]["Answers"].ToObject<string[]>();
-////string correctAnswerIndex2 = qs[1]["correctAnswerIndex"].ToString();
-
-//Debug.Log("ID: " + qs[i]["_id"].ToString());
-//Debug.Log("Level: " + qs[i]["Level"]);
-//Debug.Log("Content: " + qs[i]["Content"].ToString());
-//Debug.Log("Answers: " + qs[i]["Answers"].ToString());
-//Debug.Log("Correct answer Index: " + qs[i]["CorrectAnswerIndex"].ToString());
-//Debug.Log("ANSWER: " + ans.GetValue(qs[i]["CorrectAnswerIndex"].ToObject<int>()));
-//Debug.Log("---------------------------------------------");  
