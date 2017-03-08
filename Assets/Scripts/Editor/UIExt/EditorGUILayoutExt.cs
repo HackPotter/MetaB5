@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 
 public static class EditorGUILayoutExt {
     public static void BeginLabelStyle(int? fontSize, FontStyle? fontStyle, Color? fontColor, RectOffset margin) {
@@ -83,6 +84,93 @@ public static class EditorGUILayoutExt {
 
     #endregion
 
+    #region Resizable Areas
+
+    public static Rect BeginVerticalResize(Rect area, ref float value, GUIStyle style, RectOffset border, string label = "") {
+        Rect areaRect = new Rect(0 + border.left, 0 + border.top, area.width - border.horizontal, value - border.vertical);
+        Rect visibleRect = new Rect(0, 0, area.width, value);
+        GUI.Box(visibleRect, "", style);
+        GUILayout.BeginArea(areaRect, label, GUIStyle.none);
+        return areaRect;
+    }
+
+    public static Rect VerticalResizeDivider(Rect area, ref float value, ref bool resizing, float topPanelMinimumSize, float bottomPanelMinimumSize, GUIStyle dividerStyle, GUIStyle areaStyle, RectOffset border) {
+        GUILayout.EndArea();
+        Rect cursorChangeRect = new Rect(0, value - 3, area.width, 6);
+        Rect visibleRect = new Rect(0, value - 1, area.width, 2);
+
+        GUI.Box(cursorChangeRect, "", GUIStyle.none);
+        GUI.Box(visibleRect, "", dividerStyle);
+
+        EditorGUIUtility.AddCursorRect(cursorChangeRect, MouseCursor.ResizeVertical);
+
+        if (Event.current.type == EventType.mouseDown && cursorChangeRect.Contains(Event.current.mousePosition)) {
+            resizing = true;
+            Event.current.Use();
+        }
+        if (resizing && Event.current.type == EventType.MouseDrag) {
+            value = Event.current.mousePosition.y;
+            Event.current.Use();
+        }
+        if (Event.current.type == EventType.MouseUp) {
+            resizing = false;
+        }
+
+        value = Mathf.Clamp(value, topPanelMinimumSize, area.height - bottomPanelMinimumSize);
+
+        GUI.Box(new Rect(0, value + 1, area.width, area.height - value), "", areaStyle);
+        Rect areaRect = new Rect(0 + border.left, value + border.top + 1, area.width - border.horizontal, area.height - value - border.vertical);
+        GUILayout.BeginArea(areaRect, GUIStyle.none);
+        return areaRect;
+    }
+
+    public static void EndVerticalResize() {
+        GUILayout.EndArea();
+    }
+
+    public static Rect BeginHorizontalResize(Rect area, ref float value, GUIStyle style, RectOffset border) {
+        Rect areaRect = new Rect(0 + border.left, 0 + border.top, value - border.horizontal, area.height - border.vertical);
+        Rect visibleRect = new Rect(0, 0, value, area.height);
+        GUI.Box(visibleRect, "", style);
+        GUILayout.BeginArea(areaRect, GUIStyle.none);
+        return areaRect;
+    }
+
+    public static Rect HorizontalDivider(Rect area, ref float value, ref bool resizing, float leftPanelMinimumSize, float rightPanelMinimumSize, GUIStyle dividerStyle, GUIStyle areaStyle, RectOffset border) {
+        GUILayout.EndArea();
+        Rect cursorChangeRect = new Rect(value - 3, 0, 6, area.height);
+        Rect visibleRect = new Rect(value - 1, 0, 2, area.height);
+
+        GUI.Box(cursorChangeRect, "", GUIStyle.none);
+        GUI.Box(visibleRect, "", dividerStyle);
+
+        EditorGUIUtility.AddCursorRect(cursorChangeRect, MouseCursor.ResizeHorizontal);
+
+        if (Event.current.type == EventType.mouseDown && cursorChangeRect.Contains(Event.current.mousePosition)) {
+            resizing = true;
+            Event.current.Use();
+        }
+        if (resizing && Event.current.type == EventType.MouseDrag) {
+            value = Event.current.mousePosition.x;
+            Event.current.Use();
+        }
+        if (Event.current.type == EventType.MouseUp) {
+            resizing = false;
+        }
+
+        value = Mathf.Clamp(value, leftPanelMinimumSize, area.width - rightPanelMinimumSize);
+        GUI.Box(new Rect(value, 0, area.width - value, area.height), "", areaStyle);
+        Rect areaRect = new Rect(value + border.left, 0 + border.top, area.width - value - border.horizontal, area.height - border.vertical);
+        GUILayout.BeginArea(areaRect, GUIStyle.none);
+        return areaRect;
+    }
+
+    public static void EndHorizontalResize() {
+        GUILayout.EndArea();
+    }
+
+    #endregion
+
 
     #region Custom Controls
 
@@ -98,9 +186,9 @@ public static class EditorGUILayoutExt {
 
         Color? color = focused ? null : new Nullable<Color>(EditorStylesExt.EditorDarkGray);
         FontStyle? style = focused ? null : new Nullable<FontStyle>(FontStyle.Italic);
-        EditorGUILayoutExt.BeginStyle(EditorStylesExt.SearchTextField, null, style, color, null);
+        BeginStyle(EditorStylesExt.SearchTextField, null, style, color, null);
         string newText = GUILayout.TextField(defaultString, EditorStylesExt.SearchTextField);
-        EditorGUILayoutExt.EndStyle();
+        EndStyle();
 
         if (focused) {
             text = newText;
@@ -125,9 +213,9 @@ public static class EditorGUILayoutExt {
 
         Color? color = focused ? null : new Nullable<Color>(EditorStylesExt.EditorDarkGray);
         FontStyle? style = focused ? null : new Nullable<FontStyle>(FontStyle.Italic);
-        EditorGUILayoutExt.BeginStyle(EditorStylesExt.SearchTextField, null, style, color, null);
+        BeginStyle(EditorStylesExt.SearchTextField, null, style, color, null);
         string newText = GUILayout.TextField(defaultString, EditorStylesExt.SearchTextField);
-        EditorGUILayoutExt.EndStyle();
+        EndStyle();
 
         if (focused) {
             text = newText;
