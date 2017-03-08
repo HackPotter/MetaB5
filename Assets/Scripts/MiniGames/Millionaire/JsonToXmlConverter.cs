@@ -1,4 +1,8 @@
-﻿using UnityEngine;
+﻿#pragma warning disable 0168 // variable declared but not used.
+#pragma warning disable 0219 // variable assigned but not used.
+#pragma warning disable 0414 // private field assigned but not used.
+
+using UnityEngine;
 using System;
 using System.IO;
 using System.Net;
@@ -7,10 +11,14 @@ using System.Collections.Generic;
 using System.Xml;
 using System.Diagnostics;
 
+// Memory Heavy script! Retrieves question data from online portal for the Sugar Rush game.
+// Creates Directories, creates XML files and stores them in the directories, and fetches the images and stores them also in their correct directory.
+
 public class JsonToXmlConverter : MonoBehaviour {
 
-    static string id = "s1";//NOT SAFE AT ALL but works for now... needs fixed
-    static string password = "123123123";//NOT SAFE AT ALL but works for now... needs fixed
+    // BAD PRACTICE: hardcoding id and password. Will be fixed later when analytical logger is more properly implemented.
+    static string id = "s1";
+    static string password = "123123123";
     static string clientID = "javascript";
     static string webUrl = "http://metablastweb.gdcb.iastate.edu/MetablastApp";
     private string accessToken = WebApiHelper.AccessToken(webUrl, id, password, clientID);

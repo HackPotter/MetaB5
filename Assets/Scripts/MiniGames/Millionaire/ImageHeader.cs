@@ -1,8 +1,14 @@
-﻿using UnityEngine;
+﻿#pragma warning disable 0168 // variable declared but not used.
+#pragma warning disable 0219 // variable assigned but not used.
+#pragma warning disable 0414 // private field assigned but not used.
+
+using UnityEngine;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+
+//Script used to help convert image files to .PNG for the Sugar Rush game. 
 
 public class ImageHeader : MonoBehaviour {
     public class Vector2Int {
