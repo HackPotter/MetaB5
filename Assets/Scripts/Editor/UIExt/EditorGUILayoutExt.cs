@@ -171,7 +171,6 @@ public static class EditorGUILayoutExt {
 
     #endregion
 
-
     #region Custom Controls
 
     public static string SearchFilter(string text, params GUILayoutOption[] options) {
