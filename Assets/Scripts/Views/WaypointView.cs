@@ -127,9 +127,5 @@ public class WaypointView : MonoBehaviour
         }
     }
 	
-	void OnLevelWasLoaded(int level)
-	{
-		_activeWaypoints.Clear();
-	}
 }
 
