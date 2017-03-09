@@ -7,7 +7,7 @@ Most assets are handled by [Git-Large File Storage](https://git-lfs.github.com).
 
 ### Current Tasks:
 ___
-- [ ] Get MetaBlast working in Unity 5.5 correctly
+- [x] Get MetaBlast working in Unity 5.5 correctly
 - [ ] Fix and update mini-games
 - [ ] Finish last 3 modules
 - [ ] Implement retrieval of player data in game while they play
