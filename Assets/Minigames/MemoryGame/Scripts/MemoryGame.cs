@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 public class MemoryGame : MonoBehaviour {
 
@@ -40,6 +41,7 @@ public class MemoryGame : MonoBehaviour {
 
 
     private bool modeSelected = false;
+    private bool casual = false;
     private bool challenge = false;
     private bool insane = false;
     private bool cheater = false; //if true shows position of matching tile, used for debug
@@ -248,26 +250,27 @@ public class MemoryGame : MonoBehaviour {
         foreach (GUIStyle style in GUI.skin.customStyles)
             style.fontSize = (int)(Screen.height * 0.025f);
 
-        if (GUI.Button(new Rect(139 * Screen.width / 160, 73 * Screen.height / 80, Screen.width / 13, Screen.height / 13), "", "Back")) {
+        /*if (GUI.Button(new Rect(139 * Screen.width / 160, 73 * Screen.height / 80, Screen.width / 13, Screen.height / 13), "", "Back")) {
             SceneManager.LoadScene("Laboratory");
-        }
+        }*/
 
         if (!modeSelected) {
             //GUI.Box(new Rect(89 * Screen.width / 160, Screen.height / 7, Screen.width / 6, Screen.height / 20), "WELCOME TO THE MEMORY GAME", "Score");
             GUI.Box(new Rect(Screen.width / 12, Screen.height / 12, Screen.width / 16, Screen.height / 20), "Select Difficulty:", "Score");
 
-            if (GUI.Button(new Rect(Screen.width / 70, 4 * Screen.height / 24, Screen.width / 5, Screen.height / 13), "Casual")) {
+            if (GUI.Button(new Rect(Screen.width / 70, 6 * Screen.height / 24, Screen.width / 5, Screen.height / 13), "Casual")) {
+                casual = true;
                 modeSelected = true;
                 hitter = true;
             }
 
-            if (GUI.Button(new Rect(Screen.width / 70, 6 * Screen.height / 24, Screen.width / 5, Screen.height / 13), "Challenge")) {
+            if (GUI.Button(new Rect(Screen.width / 70, 8 * Screen.height / 24, Screen.width / 5, Screen.height / 13), "Challenge")) {
                 challenge = true;
                 modeSelected = true;
                 hitter = true;
             }
 
-            if (GUI.Button(new Rect(Screen.width / 70, 8 * Screen.height / 24, Screen.width / 5, Screen.height / 13), "Insane")) {
+            if (GUI.Button(new Rect(Screen.width / 70, 10 * Screen.height / 24, Screen.width / 5, Screen.height / 13), "Insane")) {
                 insane = true;
                 modeSelected = true;
                 hitter = true;
@@ -277,20 +280,27 @@ public class MemoryGame : MonoBehaviour {
 
 
         else {
+            GameObject pointsObject = GameObject.Find("Points");
+            Text matchFound = pointsObject.GetComponentInChildren<Text>();
+            matchFound.text = localscore / 2 + "/" + totalTiles / 2;
+
             GUILayout.BeginArea(new Rect(25, 25, 500, Screen.height));
-
-            GUILayout.Label("Matches found: " + localscore / 2 + "/" + totalTiles / 2, "Score");
-
+            //GUILayout.Label("Matches found: " + localscore / 2 + "/" + totalTiles / 2, "Score");
             GUILayout.Space(25);
 
+            GameObject MismatchObject = GameObject.Find("MismatchesLeft");
+            Text mismatchText = MismatchObject.GetComponentInChildren<Text>();
+
             if (challenge) {
-                GUILayout.Label("Mismatches left: " + (chal_attempt - mismatch) / 2 + "/" + chal_attempt / 2, "Score");
+                mismatchText.text = "Mismatches left: " + (chal_attempt - mismatch) / 2 + "/" + chal_attempt / 2;
+                    //GUILayout.Label("Mismatches left: " + (chal_attempt - mismatch) / 2 + "/" + chal_attempt / 2, "Score");
             }
             else if (insane) {
-                GUILayout.Label("Mismatches left: " + (insane_attempt - mismatch) / 2 + "/" + insane_attempt / 2, "Score");
+                mismatchText.text = "Mismatches left: " + (insane_attempt - mismatch) / 2 + "/" + insane_attempt / 2;
+                    //GUILayout.Label("Mismatches left: " + (insane_attempt - mismatch) / 2 + "/" + insane_attempt / 2, "Score");
             }
-            else {
-                GUILayout.Label("Mismatches left: unlimited", "Score");
+            else if(casual) {
+                mismatchText.text = "Mismatches left:unlim.";               //GUILayout.Label("Mismatches left: unlimited", "Score");
             }
 
             GUILayout.Space(25);
