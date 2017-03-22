@@ -250,24 +250,22 @@ public class MemoryGame : MonoBehaviour {
         foreach (GUIStyle style in GUI.skin.customStyles)
             style.fontSize = (int)(Screen.height * 0.025f);
 
-        /*if (GUI.Button(new Rect(139 * Screen.width / 160, 73 * Screen.height / 80, Screen.width / 13, Screen.height / 13), "", "Back")) {
-            SceneManager.LoadScene("Laboratory");
-        }*/
-
         if (!modeSelected) {
-            //GUI.Box(new Rect(89 * Screen.width / 160, Screen.height / 7, Screen.width / 6, Screen.height / 20), "WELCOME TO THE MEMORY GAME", "Score");
-            GUI.Box(new Rect(Screen.width / 12, Screen.height / 12, Screen.width / 16, Screen.height / 20), "Select Difficulty:", "Score");
-
+            GameObject difficultyObj = GameObject.Find("SelectLevel");
+            Text diffText = difficultyObj.GetComponentInChildren<Text>();
+            
             if (GUI.Button(new Rect(Screen.width / 70, 6 * Screen.height / 24, Screen.width / 5, Screen.height / 13), "Casual")) {
                 casual = true;
                 modeSelected = true;
                 hitter = true;
+                diffText.text = "";
             }
 
             if (GUI.Button(new Rect(Screen.width / 70, 8 * Screen.height / 24, Screen.width / 5, Screen.height / 13), "Challenge")) {
                 challenge = true;
                 modeSelected = true;
                 hitter = true;
+                diffText.text = "";
             }
 
             if (GUI.Button(new Rect(Screen.width / 70, 10 * Screen.height / 24, Screen.width / 5, Screen.height / 13), "Insane")) {
@@ -275,6 +273,7 @@ public class MemoryGame : MonoBehaviour {
                 modeSelected = true;
                 hitter = true;
                 starttime = (int)Time.time;
+                diffText.text = "";
             }
         }
 
@@ -285,75 +284,51 @@ public class MemoryGame : MonoBehaviour {
             matchFound.text = localscore / 2 + "/" + totalTiles / 2;
 
             GUILayout.BeginArea(new Rect(25, 25, 500, Screen.height));
-            //GUILayout.Label("Matches found: " + localscore / 2 + "/" + totalTiles / 2, "Score");
-            GUILayout.Space(25);
 
             GameObject MismatchObject = GameObject.Find("MismatchesLeft");
             Text mismatchText = MismatchObject.GetComponentInChildren<Text>();
 
             if (challenge) {
                 mismatchText.text = "Mismatches left: " + (chal_attempt - mismatch) / 2 + "/" + chal_attempt / 2;
-                    //GUILayout.Label("Mismatches left: " + (chal_attempt - mismatch) / 2 + "/" + chal_attempt / 2, "Score");
             }
             else if (insane) {
+                GameObject timeObject = GameObject.Find("TimeLeft");
+                Text timeLeftText = timeObject.GetComponentInChildren<Text>();
                 mismatchText.text = "Mismatches left: " + (insane_attempt - mismatch) / 2 + "/" + insane_attempt / 2;
-                    //GUILayout.Label("Mismatches left: " + (insane_attempt - mismatch) / 2 + "/" + insane_attempt / 2, "Score");
-            }
-            else if(casual) {
-                mismatchText.text = "Mismatches left:unlim.";               //GUILayout.Label("Mismatches left: unlimited", "Score");
-            }
+                timeLeftText.text = "Timer: " + timeleft;
 
-            GUILayout.Space(25);
-
-            if (insane) {
-                GUILayout.Label("Timer: " + timeleft, "Timer");
-                if (timeleft < 15 && timeleft > 0 && timeleft % 2 == 0) {
-                    GUILayout.Box("WARNING: TIME LOW", "Score");
+                if (timeleft < 15 && timeleft > 0 && timeleft % 2 == 0)
+                {
+                    GameObject warnObject = GameObject.Find("Warning");
+                    Text warnText = warnObject.GetComponentInChildren<Text>();
+                    warnText.text = "WARNING: TIME LOW ";
                 }
             }
+            else if(casual) {
+                mismatchText.text = "Mismatches left:unlim.";               
+            }
 
-            GUILayout.Space(25);
             if (congrats) {
-                GUILayout.Label("Congratulations, you found them all!", "Score");
+                GameObject warnObject = GameObject.Find("Warning");
+                Text warnText = warnObject.GetComponentInChildren<Text>();
+
+                GameObject timeObject = GameObject.Find("TimeLeft");
+                Text timeLeftText = timeObject.GetComponentInChildren<Text>();
+                timeLeftText.text = "Congratulations";
+                warnText.text = "You found them all";
             }
 
             if (sorry) {
-                GUILayout.Label("I'm sorry, you have failed", "Score");
+                GameObject warnObject = GameObject.Find("Warning");
+                Text warnText = warnObject.GetComponentInChildren<Text>();
+
+                GameObject timeObject = GameObject.Find("TimeLeft");
+                Text timeLeftText = timeObject.GetComponentInChildren<Text>();
+                timeLeftText.text = "Sorry";
+                warnText.text = "You Lost";
             }
 
             GUILayout.EndArea();
-
-            /*
-            GUI.Label(new Rect(Screen.width / 180, 4 * Screen.height / 24, Screen.width / 6, Screen.height / 16), "Matches found: " + localscore / 2 + "/"+ totalTiles/2, "Score");
-
-            if (challenge)
-            {
-                GUI.Label(new Rect(Screen.width / 180, 6 * Screen.height / 24, Screen.width / 6, Screen.height / 16), "Mismatches left: " + (chal_attempt - mismatch) / 2 + "/" + chal_attempt / 2, "Score");
-            }
-            else if (insane)
-            {
-                GUI.Label(new Rect(Screen.width / 180, 6 * Screen.height / 24, Screen.width / 6, Screen.height / 16), "Mismatches left: " + (insane_attempt - mismatch) / 2 + "/" + insane_attempt / 2, "Score");
-            }
-            else
-            {
-                GUI.Label(new Rect(Screen.width / 180, 6 * Screen.height / 24, Screen.width / 6, Screen.height / 16), "Mismatches left: unlimited", "Score");
-            }
-
-            if (insane)
-            {
-                GUI.Label(new Rect(Screen.width / 180, 6 * Screen.height / 24, Screen.width / 6, Screen.height / 16), "Timer: " + timeleft, "Timer");
-                if (timeleft < 15 && timeleft > 0 && timeleft % 2 == 0)
-                {
-                    GUI.Box(new Rect(89 * Screen.width / 160, 5 * Screen.height / 28, Screen.width / 6, Screen.height / 20), "WARNING: TIME LOW", "Score");
-                }
-            }
-
-
-            if (congrats)
-                GUI.Label(new Rect(43 * Screen.width / 80, 3 * Screen.height / 7, Screen.width / 5, Screen.height / 20), "Congratulations, you found them all!", "Score");
-
-            if (sorry)
-                GUI.Label(new Rect(43 * Screen.width / 80, 3 * Screen.height / 7, Screen.width / 5, Screen.height / 20), "I'm sorry, you have failed", "Score");*/
         }
     }
 }
