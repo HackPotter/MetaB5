@@ -38,6 +38,7 @@ public class MemoryGame : MonoBehaviour {
     private bool skipWait = false;
     private int starttime;
     private int myTime;
+    private int score;
 
 
     private bool modeSelected = false;
@@ -254,21 +255,21 @@ public class MemoryGame : MonoBehaviour {
             GameObject difficultyObj = GameObject.Find("SelectLevel");
             Text diffText = difficultyObj.GetComponentInChildren<Text>();
             
-            if (GUI.Button(new Rect(Screen.width / 70, 6 * Screen.height / 24, Screen.width / 5, Screen.height / 13), "Casual")) {
+            if (GUI.Button(new Rect(Screen.width / 70, 8 * Screen.height / 24, Screen.width / 5, Screen.height / 13), "Casual")) {
                 casual = true;
                 modeSelected = true;
                 hitter = true;
                 diffText.text = "";
             }
 
-            if (GUI.Button(new Rect(Screen.width / 70, 8 * Screen.height / 24, Screen.width / 5, Screen.height / 13), "Challenge")) {
+            if (GUI.Button(new Rect(Screen.width / 70, 10 * Screen.height / 24, Screen.width / 5, Screen.height / 13), "Challenge")) {
                 challenge = true;
                 modeSelected = true;
                 hitter = true;
                 diffText.text = "";
             }
 
-            if (GUI.Button(new Rect(Screen.width / 70, 10 * Screen.height / 24, Screen.width / 5, Screen.height / 13), "Insane")) {
+            if (GUI.Button(new Rect(Screen.width / 70, 12 * Screen.height / 24, Screen.width / 5, Screen.height / 13), "Insane")) {
                 insane = true;
                 modeSelected = true;
                 hitter = true;
@@ -282,6 +283,10 @@ public class MemoryGame : MonoBehaviour {
             GameObject pointsObject = GameObject.Find("Points");
             Text matchFound = pointsObject.GetComponentInChildren<Text>();
             matchFound.text = localscore / 2 + "/" + totalTiles / 2;
+
+            GameObject scoreObj = GameObject.Find("Score");
+            Text scoreText = scoreObj.GetComponentInChildren<Text>();
+            scoreText.text = "Score(Sucrose): "+((localscore/2)*5);
 
             GUILayout.BeginArea(new Rect(25, 25, 500, Screen.height));
 
