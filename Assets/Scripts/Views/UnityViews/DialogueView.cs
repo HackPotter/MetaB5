@@ -66,7 +66,7 @@ namespace Metablast.UI
             _textAnimator.ShowText(dialogueNode.DialogueData.Message, (t) => MessageText = t,
                 () =>
                 {
-                    Debug.Log("Setting buttons");
+                    //Debug.Log("Setting buttons");
                     SetActionButtons(dialogueNode);
                     _allowProgression = true;
                 });
