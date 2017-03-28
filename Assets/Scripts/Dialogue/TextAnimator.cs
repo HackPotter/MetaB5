@@ -9,14 +9,12 @@ public class TextAnimator : MonoBehaviour
     private float _startTime;
     private bool _textAnimationRunning = false;
 
-    public string Text
-    {
+    public string Text {
         get;
         private set;
     }
 
-    public bool AnimationFinished
-    {
+    public bool AnimationFinished {
         get { return !_textAnimationRunning; }
     }
 
@@ -75,10 +73,18 @@ public class TextAnimator : MonoBehaviour
 
         int i = 0;
         int currentTextStartingIndex = 0;
-        yield return new WaitForSeconds(0.2f);
+        //yield return new WaitForSeconds(0.2f);
         while (true)
         {
-            time += Time.deltaTime * displayRate;
+            if (Input.GetMouseButtonDown(0))// If Left mouse button is clicked down
+            {
+                time += Time.deltaTime * displayRate * 5;
+            }
+            else
+            {
+                time += Time.deltaTime * displayRate;
+            }
+
 
             int newMaxCharacters = (int)(time);
             if (newMaxCharacters == maxCharacters)
