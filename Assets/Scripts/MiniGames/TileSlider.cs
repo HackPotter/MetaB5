@@ -84,6 +84,7 @@ public class TileSlider : MonoBehaviour
             if (gameWon)
             {
                 score += 5;
+                GameContext.Instance.Player.Points += score; // Add points to main Game Play
             }
         }
         GameObject pointsObj = GameObject.Find("Points");
