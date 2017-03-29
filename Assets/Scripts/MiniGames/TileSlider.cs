@@ -5,6 +5,7 @@ using UnityEngine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 public class TileSlider : MonoBehaviour
 {
@@ -59,7 +60,7 @@ public class TileSlider : MonoBehaviour
 
         init();
         new_game();
-
+        
         solve();
     }
 
@@ -85,6 +86,9 @@ public class TileSlider : MonoBehaviour
                 score += 5;
             }
         }
+        GameObject pointsObj = GameObject.Find("Points");
+        Text pointsText = pointsObj.GetComponentInChildren<Text>();
+        pointsText.text = score.ToString();
     }
 
     void init()
@@ -120,7 +124,21 @@ public class TileSlider : MonoBehaviour
         playing = true;
         StartCoroutine(showTiles());
     }
-
+    public void gamePlay()
+    {
+        GameObject NewGameObj = GameObject.Find("NewGameButton");
+        Text newgameButtonText = NewGameObj.GetComponentInChildren<Text>();
+        if (playing)
+        {
+            newgameButtonText.text = "Start";
+            new_game();
+        }
+        else
+        {
+            newgameButtonText.text = "New Game";
+            start_game();
+        }
+    }
     public void new_game()
     {
         playing = false;
@@ -132,6 +150,7 @@ public class TileSlider : MonoBehaviour
             scramble();
         }
         while (!solvable());
+       
     }
 
     public int get_score()
