@@ -112,6 +112,7 @@ namespace Metablast.UI {
             _animation[_showAnimation.name].speed = 1f;
             StartCoroutine(PlayAnimationCoroutine(_showAnimation, () => {
                 _isShowing = true;
+                GameState.Instance.PauseLevel = PauseLevel.Menu; // pause game if biolog when
                 if (onComplete != null) onComplete();
             }));
         }
@@ -125,6 +126,7 @@ namespace Metablast.UI {
             _animation[_showAnimation.name].speed = -1f;
             StartCoroutine(PlayAnimationCoroutine(_showAnimation, () => {
                 _isShowing = false;
+                GameState.Instance.PauseLevel = PauseLevel.Unpaused; // unpause game
                 if (onComplete != null) onComplete();
             }));
         }
