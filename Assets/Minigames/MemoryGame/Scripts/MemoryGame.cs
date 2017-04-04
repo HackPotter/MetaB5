@@ -286,7 +286,9 @@ public class MemoryGame : MonoBehaviour {
 
             GameObject scoreObj = GameObject.Find("Score");
             Text scoreText = scoreObj.GetComponentInChildren<Text>();
-            scoreText.text = "Score(Sucrose): "+((localscore/2)*5);
+            score = ((localscore / 2) * 5);
+            scoreText.text = "Score(Sucrose): " + score;
+            
 
             GUILayout.BeginArea(new Rect(25, 25, 500, Screen.height));
 
@@ -321,6 +323,7 @@ public class MemoryGame : MonoBehaviour {
                 Text timeLeftText = timeObject.GetComponentInChildren<Text>();
                 timeLeftText.text = "Congratulations";
                 warnText.text = "You found them all";
+                GameContext.Instance.Player.Points += score;
             }
 
             if (sorry) {
