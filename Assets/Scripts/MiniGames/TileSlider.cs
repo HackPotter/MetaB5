@@ -9,41 +9,42 @@ using UnityEngine.UI;
 
 public class TileSlider : MonoBehaviour
 {
-
     enum Difficulty { CASUAL, CHALLENGE };
     private Difficulty mode;
 
-    private float selectionZpos;
-    private int currentID;
-    private GameObject currentSelection;
+    private Transform keys;
+    private GameObject currentSelection,
+                       preview;
+
     private Ray ray;
     private RaycastHit hit;
 
-    private GameObject preview;
-    private Transform keys;
+    private Vector3 init_preview_pos;
+    private Vector3 init_preview_local_scale;
+
 
     private List<Vector3> positions;
     private List<Bounds> bounds;
     private List<int> scrambled_slots;
     private List<Tile> tiles;
 
-    private Vector3 init_preview_pos;
-    private Vector3 init_preview_local_scale;
+    private float selectionZpos,
+                  timer;
 
-    private float timer;
-    private bool playing = false;
-    private bool scrambled = false;
-    private bool gameWon = false;
-    private bool resetting = false;
+    private bool playing = false,
+                 gameWon = false,
+                 scrambled = false,
+                 resetting = false;
 
-    private int score = 0;
-    private int empty_slot;
+    private int currentID,
+                score = 0,
+                empty_slot,
+                screenWidth,
+                screenHeight;
 
-    private int screenWidth;
-    private int screenHeight;
 
-    public Texture2D[] textures;
-    public Texture2D[] previews;
+    public Texture2D[] textures,
+                       previews;
 
     public int numTiles;
 
@@ -53,14 +54,11 @@ public class TileSlider : MonoBehaviour
         positions = new List<Vector3>();
         bounds = new List<Bounds>();
         tiles = new List<Tile>();
-
         empty_slot = numTiles;
-
         preview = GameObject.Find("Preview");
 
         init();
         new_game();
-        
         solve();
     }
 
@@ -73,7 +71,7 @@ public class TileSlider : MonoBehaviour
         }
         else
         {
-            tiles.ForEach(delegate(Tile cur_tile)
+            tiles.ForEach(delegate (Tile cur_tile)
             {
                 cur_tile.hide();
             });
@@ -143,15 +141,15 @@ public class TileSlider : MonoBehaviour
     public void new_game()
     {
         playing = false;
-        
-        set_textures();        
+
+        set_textures();
 
         do
         {
             scramble();
         }
         while (!solvable());
-       
+
     }
 
     public int get_score()
@@ -161,7 +159,7 @@ public class TileSlider : MonoBehaviour
 
     public void reset()
     {
-        tiles.ForEach(delegate(Tile cur_tile)
+        tiles.ForEach(delegate (Tile cur_tile)
         {
             int slot = scrambled_slots[cur_tile.get_init_slot() - 1];
 
@@ -176,7 +174,7 @@ public class TileSlider : MonoBehaviour
 
         preview.GetComponent<Renderer>().material.SetTexture("_MainTex", previews[rand]);
 
-        tiles.ForEach(delegate(Tile cur_tile)
+        tiles.ForEach(delegate (Tile cur_tile)
         {
             cur_tile.set_texture(textures[rand]);
         });
@@ -186,7 +184,7 @@ public class TileSlider : MonoBehaviour
     {
         preview.GetComponent<Animation>().Play();
         yield return new WaitForSeconds(preview.GetComponent<Animation>().clip.length);
-        tiles.ForEach(delegate(Tile cur_tile)
+        tiles.ForEach(delegate (Tile cur_tile)
         {
             cur_tile.show();
         });
@@ -197,7 +195,7 @@ public class TileSlider : MonoBehaviour
         int rand;
         scrambled_slots = new List<int>();
 
-        tiles.ForEach(delegate(Tile cur_tile)
+        tiles.ForEach(delegate (Tile cur_tile)
         {
             //generate a random number as long as the list of used_positions contains the number
             do
@@ -207,7 +205,7 @@ public class TileSlider : MonoBehaviour
             while (scrambled_slots.Contains(rand));
 
             scrambled_slots.Add(rand);
-                        
+
             //Assign new position's slot number to tile
             cur_tile.set_cur_slot(rand);
             //Move tile to new position
@@ -229,7 +227,7 @@ public class TileSlider : MonoBehaviour
         int inversions = count_inversions();  //An inversion is a pair of tiles (a,b) such that a appears before b, but a>b;
         int dimension = (int)Math.Sqrt(numTiles);
         int empty_slot_row_from_bottom = dimension - (int)(scrambled_slots.FindIndex(s => s == empty_slot) / dimension);
-                
+
         //String temp = "Row from bottom: " + empty_slot_row_from_bottom.ToString() + "; Inversions: " + inversions + "; ";
         //scrambled_slots.ForEach(delegate(int slot) { temp += slot.ToString() + ", "; });
         //Debug.Log(temp);
@@ -248,10 +246,10 @@ public class TileSlider : MonoBehaviour
         }
         else
         {
-            if(inversions %2 == 0 && empty_slot_row_from_bottom % 2 != 0)
+            if (inversions % 2 == 0 && empty_slot_row_from_bottom % 2 != 0)
                 return true;
 
-            if(inversions %2 != 0 && empty_slot_row_from_bottom % 2 == 0)
+            if (inversions % 2 != 0 && empty_slot_row_from_bottom % 2 == 0)
                 return true;
         }
 
@@ -295,7 +293,7 @@ public class TileSlider : MonoBehaviour
                     {
                         //Get all the slots that surround the selected tile.
                         List<int> neighbors = tile.get_neighbors(numTiles);
-                        
+
                         foreach (int neighbor in neighbors)
                         {
                             //If this slot isn't occupied, move the selected tile to it.
@@ -325,7 +323,8 @@ public class TileSlider : MonoBehaviour
     {
         int correct_tiles = 0;
 
-        tiles.ForEach(delegate(Tile cur_tile) { 
+        tiles.ForEach(delegate (Tile cur_tile)
+        {
             if (cur_tile.get_init_slot() == cur_tile.get_cur_slot())
                 correct_tiles++;
         });
@@ -499,8 +498,8 @@ public class TileSlider : MonoBehaviour
             int dimension = (int)Math.Sqrt(numTiles);
             int slot = cur_slot;
 
-            if(init_state)
-                slot = init_slot;                
+            if (init_state)
+                slot = init_slot;
 
             //Loop through columns (col 1:{1,4,7}, col 2:{2,5,8}, col 3{3,6,9});
             for (int i = 1; i <= dimension; i++)
