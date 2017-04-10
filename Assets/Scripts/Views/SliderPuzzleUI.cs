@@ -1,4 +1,4 @@
-﻿using Squid;
+﻿/*using Squid;
 using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -111,4 +111,4 @@ public class SliderPuzzleUI : GuiRenderer {
     void SliderView_ExitButtonPressed() {
         SceneManager.LoadScene("Laboratory");
     }
-}
+}*/
