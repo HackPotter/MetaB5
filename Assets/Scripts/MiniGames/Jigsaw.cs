@@ -29,7 +29,7 @@ public class Jigsaw : MonoBehaviour
     private bool resetting = false;
 
     private int piecesFound = 0;
-    private int score = 0;
+    private int score = 5;
 
     private int screenWidth;
     private int screenHeight;
@@ -189,6 +189,7 @@ public class Jigsaw : MonoBehaviour
                         score += 15;
                         scoreP.text = score.ToString();
                         gameOver = true;
+                        GameContext.Instance.Player.Points += score;
                     }
                     if (timeLeft <= 0){
                         gameOver = true;
@@ -199,6 +200,7 @@ public class Jigsaw : MonoBehaviour
                         score += 10;
                         scoreP.text = score.ToString();
                         gameOver = true;
+                        GameContext.Instance.Player.Points += score;
                     }
                 }
             }
