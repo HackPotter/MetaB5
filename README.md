@@ -4,7 +4,7 @@ ___
 
 [MetaBlast](https://www.MetaBlast.org) is created and maintained at [Iowa State University](https://www.iastate.edu) using the [Unity Game Development Engine](https://www.unity3d.com). For more information about MetaBlast, or to download and play the game, go to our website: [MetaBlast.org](https://www.metablast.org).
 
-If you need help setting up MetaBlast for development, download our [tutorial page (Windows only).](https://www.github.com/MetaBlastTeam/MetaB5/GitandMetaBlastTutorial.docx)
+If you need help setting up MetaBlast for development, download our [tutorial page (Windows only).](GitandMetaBlastTutorial.docx)
 
 ### Current Development Tasks:
 ___
