@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 public class Jigsaw : MonoBehaviour
 {
-    enum Difficulty { CASUAL, CHALLENGE };
+    enum Difficulty { CASUAL, CHALLENGE, INSANE};
     private Difficulty mode;
 
     private float selectionZpos;
@@ -127,6 +127,11 @@ public class Jigsaw : MonoBehaviour
                     mode = Difficulty.CHALLENGE;
                     modeSelected = true;
                 }
+                if (GUI.Button(new Rect(screenWidth * 0.56f, screenHeight * 0.50f, screenWidth * 0.17f, screenHeight * 0.05f), "Insane"))
+                {
+                    mode = Difficulty.INSANE;
+                    modeSelected = true;
+                }
             }
             else
             {
@@ -195,13 +200,32 @@ public class Jigsaw : MonoBehaviour
                         gameOver = true;
                     }
                 }
-                else{
+                else if(mode == Difficulty.CASUAL)
+                {
                     if (piecesFound == numPieces){
                         score += 10;
                         scoreP.text = score.ToString();
                         gameOver = true;
                         GameContext.Instance.Player.Points += score;
                     }
+                }
+                else
+                {
+                    timeText.text = "Time Left:" + timeinMins + " : " + (timeLeft % 60).ToString("00");
+                    //previewing = false;
+                    preview.GetComponent<Renderer>().enabled = false;
+                    if (piecesFound == numPieces)
+                    {
+                        score += 20;
+                        scoreP.text = score.ToString();
+                        gameOver = true;
+                        GameContext.Instance.Player.Points += score;
+                    }
+                    if (timeLeft <= 0)
+                    {
+                        gameOver = true;
+                    }
+
                 }
             }
         }
