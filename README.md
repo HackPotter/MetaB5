@@ -16,5 +16,6 @@ ___
 * Add full Biolog to Main Menu
 * Add Credits Scene
 * Redo SugarRush Minigame
+* Replace all JS scripts with CS equivalent
  
 
