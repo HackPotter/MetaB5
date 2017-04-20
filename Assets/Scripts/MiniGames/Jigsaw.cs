@@ -191,7 +191,7 @@ public class Jigsaw : MonoBehaviour
                     timeText.text = "Time Left:" + timeinMins + " : " + (timeLeft % 60).ToString("00");
 
                     if (piecesFound == numPieces){
-                        score += 15;
+                        score += 10;
                         scoreP.text = score.ToString();
                         gameOver = true;
                         GameContext.Instance.Player.Points += score;
@@ -203,7 +203,7 @@ public class Jigsaw : MonoBehaviour
                 else if(mode == Difficulty.CASUAL)
                 {
                     if (piecesFound == numPieces){
-                        score += 10;
+                        score += 5;
                         scoreP.text = score.ToString();
                         gameOver = true;
                         GameContext.Instance.Player.Points += score;
@@ -216,7 +216,7 @@ public class Jigsaw : MonoBehaviour
                     preview.GetComponent<Renderer>().enabled = false;
                     if (piecesFound == numPieces)
                     {
-                        score += 20;
+                        score += 15;
                         scoreP.text = score.ToString();
                         gameOver = true;
                         GameContext.Instance.Player.Points += score;
