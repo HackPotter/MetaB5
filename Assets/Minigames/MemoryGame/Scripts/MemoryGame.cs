@@ -287,7 +287,7 @@ public class MemoryGame : MonoBehaviour {
             GameObject scoreObj = GameObject.Find("Score");
             Text scoreText = scoreObj.GetComponentInChildren<Text>();
             score = ((localscore / 2) * 5);
-            scoreText.text = "Score(Sucrose): " + score;
+            scoreText.text = "Score (nMol Suc): " + score;
             
 
             GUILayout.BeginArea(new Rect(25, 25, 500, Screen.height));
