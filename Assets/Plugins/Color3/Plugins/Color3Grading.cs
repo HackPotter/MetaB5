@@ -308,7 +308,7 @@ sealed public class Color3Grading : MonoBehaviour
 					material = materialGrading;
 			}
 
-			int pass = ( !GetComponent<Camera>().hdr && BlendAmount == 0.0f ) ? 0 : 1;
+			int pass = ( !GetComponent<Camera>().allowHDR && BlendAmount == 0.0f ) ? 0 : 1;
 
 			material.SetFloat( "_lerpAmount", BlendAmount );			
 			if ( MaskTexture != null )
