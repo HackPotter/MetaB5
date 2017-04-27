@@ -31,7 +31,6 @@ namespace UnityEditor
         private static class Styles
         {
             public static GUIContent uvSetLabel = new GUIContent("UV Set");
-
             public static GUIContent albedoText = new GUIContent("Albedo", "Albedo (RGB) and Transparency (A)");
             public static GUIContent alphaCutoffText = new GUIContent("Alpha Cutoff", "Threshold for alpha cutoff");
             public static GUIContent specularMapText = new GUIContent("Specular", "Specular (RGB) and Smoothness (A)");
@@ -56,6 +55,12 @@ namespace UnityEditor
             public static string advancedText = "Advanced Options";
             public static GUIContent emissiveWarning = new GUIContent("Emissive value is animated but the material has not been configured to support emissive. Please make sure the material itself has some amount of emissive.");
             public static readonly string[] blendNames = Enum.GetNames(typeof(BlendMode));
+
+            // Scan Features *****************************************************
+            public static string rimTitle = "Scan Properties";
+            public static string rimColorText = "Rim Color";
+            public static string rimPowerText = "Rim Power";
+            // *******************************************************************
         }
 
         MaterialProperty blendMode = null;
@@ -84,6 +89,10 @@ namespace UnityEditor
         MaterialProperty detailNormalMapScale = null;
         MaterialProperty detailNormalMap = null;
         MaterialProperty uvSetSecondary = null;
+        // Scan Features ****************
+        MaterialProperty rimColor = null;
+        MaterialProperty rimPower = null;
+        // ******************************
 
         MaterialEditor m_MaterialEditor;
         WorkflowMode m_WorkflowMode = WorkflowMode.Specular;
@@ -125,6 +134,11 @@ namespace UnityEditor
             detailNormalMapScale = FindProperty("_DetailNormalMapScale", props);
             detailNormalMap = FindProperty("_DetailNormalMap", props);
             uvSetSecondary = FindProperty("_UVSec", props);
+
+            // Scan Features ******
+            rimColor = FindProperty("_RimColor", props);
+            rimPower = FindProperty("_RimPower", props);
+            // ********************
         }
 
         public override void OnGUI(MaterialEditor materialEditor, MaterialProperty[] props)
@@ -155,7 +169,7 @@ namespace UnityEditor
             {
                 BlendModePopup();
 
-                // Primary properties
+                // Main Maps
                 GUILayout.Label(Styles.primaryMapsText, EditorStyles.boldLabel);
                 DoAlbedoArea(material);
                 DoSpecularMetallicArea();
@@ -171,14 +185,14 @@ namespace UnityEditor
 
                 EditorGUILayout.Space();
 
-                // Secondary properties
+                // Secondary Maps
                 GUILayout.Label(Styles.secondaryMapsText, EditorStyles.boldLabel);
                 m_MaterialEditor.TexturePropertySingleLine(Styles.detailAlbedoText, detailAlbedoMap);
                 m_MaterialEditor.TexturePropertySingleLine(Styles.detailNormalMapText, detailNormalMap, detailNormalMapScale);
                 m_MaterialEditor.TextureScaleOffsetProperty(detailAlbedoMap);
                 m_MaterialEditor.ShaderProperty(uvSetSecondary, Styles.uvSetLabel.text);
 
-                // Third properties
+                // Forward Rendering Options
                 GUILayout.Label(Styles.forwardText, EditorStyles.boldLabel);
                 if (highlights != null)
                     m_MaterialEditor.ShaderProperty(highlights, Styles.highlightsText);
@@ -193,9 +207,18 @@ namespace UnityEditor
 
             EditorGUILayout.Space();
 
+            // Advanced Options
             GUILayout.Label(Styles.advancedText, EditorStyles.boldLabel);
             m_MaterialEditor.RenderQueueField();
             m_MaterialEditor.EnableInstancingField();
+
+            EditorGUILayout.Space();
+
+            // Scan Properties ***
+            GUILayout.Label(Styles.rimTitle, EditorStyles.boldLabel);
+            m_MaterialEditor.ShaderProperty(rimColor, Styles.rimColorText);
+            m_MaterialEditor.ShaderProperty(rimPower, Styles.rimPowerText);
+            // *******************
         }
 
         internal void DetermineWorkflow(MaterialProperty[] props)
