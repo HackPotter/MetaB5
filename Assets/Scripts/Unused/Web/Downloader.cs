@@ -93,7 +93,7 @@ public class Downloader : MonoBehaviour
                     returnData["data"] = www.texture;
                     break;
                 case ReturnTypes.MovieValue:
-                    returnData["data"] = www.movie;
+                    returnData["data"] = www.GetMovieTexture();
                     break;
                 case ReturnTypes.XMLValue:
                     XMLNode node;

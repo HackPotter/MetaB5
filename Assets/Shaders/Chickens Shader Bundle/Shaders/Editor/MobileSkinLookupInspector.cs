@@ -1,6 +1,10 @@
+// Ignore warning CS0618: `UnityEditor.TextureImporterFormat.AutomaticTruecolor' is obsolete: `Use textureCompression property instead'.
+// Chicken Shaders will be replaced in the near future.
+#pragma warning disable 0618
+
 using UnityEngine;
 using UnityEditor;
-using System.Collections;
+
 
 
 [CustomEditor(typeof(MobileSkinLookupTexture))]

@@ -111,7 +111,7 @@ public class ScreenSpaceSubsurfaceScattering : MonoBehaviour {
         RenderTexture scam_aTex = RenderTexture.GetTemporary(source.width, source.height, 24, RenderTextureFormat.Default);
         RenderTexture scam_dTex = RenderTexture.GetTemporary(source.width, source.height, 24, RenderTextureFormat.Default);
         RenderTexture scam_rdTex = RenderTexture.GetTemporary(source.width, source.height, 24, RenderTextureFormat.Depth);
-        scam.hdr = this.GetComponent<Camera>().hdr;
+        scam.allowHDR = this.GetComponent<Camera>().allowHDR;
         RenderTexture[] blurs = new RenderTexture[5];
         for (int i = 0; i < m_blursteps; i++)
         {

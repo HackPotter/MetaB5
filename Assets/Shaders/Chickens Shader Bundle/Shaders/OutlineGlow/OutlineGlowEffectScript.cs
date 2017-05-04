@@ -324,7 +324,7 @@ public class OutlineGlowEffectScript : MonoBehaviour {
                 scam.backgroundColor = Color.black;
                 scam.clearFlags = CameraClearFlags.SolidColor;
                 scam.cullingMask = 1 << this.SecondCameraLayer;
-                scam.hdr = false;
+                scam.allowHDR = false;
                 scam.depthTextureMode = DepthTextureMode.None;
                 //Setup up the cullingMask is important, as we only want specific objects to be drawn. Therefor no other objects should be assigned to that layer.
                 #endregion
@@ -635,7 +635,7 @@ public class OutlineGlowEffectScript : MonoBehaviour {
                 scam.backgroundColor = Color.black;
                 scam.clearFlags = CameraClearFlags.SolidColor;
                 scam.cullingMask = 1 << this.SecondCameraLayer;
-                scam.hdr = false;
+                scam.allowHDR = false;
                 scam.depthTextureMode = DepthTextureMode.None;
                 //Setup up the cullingMask is important, as we only want specific objects to be drawn. Therefor no other objects should be assigned to that layer.
                 #endregion
