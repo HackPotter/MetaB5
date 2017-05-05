@@ -57,9 +57,9 @@ namespace UnityEditor
             public static readonly string[] blendNames = Enum.GetNames(typeof(BlendMode));
 
             // Scan Features *****************************************************
-            public static string rimTitle = "Scan Properties";
-            public static string rimColorText = "Rim Color";
-            public static string rimPowerText = "Rim Power";
+             public static string rimTitle = "Scan Properties";
+             public static string rimColorText = "Rim Color";
+             public static string rimPowerText = "Rim Power";
             // *******************************************************************
         }
 
@@ -90,8 +90,8 @@ namespace UnityEditor
         MaterialProperty detailNormalMap = null;
         MaterialProperty uvSetSecondary = null;
         // Scan Features ****************
-        MaterialProperty rimColor = null;
-        MaterialProperty rimPower = null;
+         MaterialProperty rimColor = null;
+         MaterialProperty rimPower = null;
         // ******************************
 
         MaterialEditor m_MaterialEditor;
