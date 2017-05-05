@@ -1,0 +1,67 @@
+﻿#pragma warning disable 0168 // variable declared but not used.
+#pragma warning disable 0219 // variable assigned but not used.
+#pragma warning disable 0414 // private field assigned but not used.
+
+using UnityEngine;
+
+public class TestNewScannable : MonoBehaviour {
+#pragma warning disable 0067, 0649
+    [SerializeField]
+    private string _biologEntry;
+    [SerializeField]
+    private Color defaultColor;
+
+    public float lerpDuration = (1.0f);
+#pragma warning restore 0067, 0649
+
+    public string BiologEntry {
+        get { return _biologEntry; }
+    }
+
+    private static readonly Color kScanColor = new Color((122.0f / 255.0f), (199.0f / 255.0f), 1, 1);
+
+    private Vector2 uvOffset = Vector2.zero;
+    private Color curColor;
+    private float lerp;
+
+    void Start() {
+        enabled = false;
+        foreach (Renderer renderer in gameObject.GetComponentsInChildren<Renderer>()) {
+            if (!renderer.material.HasProperty("_Color")) {
+                //DebugFormatter.LogError(renderer.gameObject, "{0} must have property \"_RimColor\" for ScannableObject to work correctly", renderer.material.name);
+                continue;
+            }
+            renderer.material.SetColor("_Color", defaultColor);
+        }
+    }
+
+    void OnDisable() {
+        foreach (Renderer renderer in gameObject.GetComponentsInChildren<Renderer>()) {
+            if (renderer.GetComponent<ParticleSystem>() || renderer is ParticleSystemRenderer) {
+                continue;
+            }
+            if (!renderer.material.HasProperty("_Color")) {
+                //DebugFormatter.LogError(renderer.gameObject, "{0} must have property \"_RimColor\" for ScannableObject to work correctly", renderer.material.name);
+                continue;
+            }
+            curColor = renderer.material.GetColor("_Color");
+            renderer.material.SetColor("_Color", defaultColor);
+        }
+    }
+
+    void Update() {
+        lerp = Mathf.PingPong(Time.time, lerpDuration * 0.5f) / (lerpDuration * 0.5f);
+
+        foreach (Renderer renderer in gameObject.GetComponentsInChildren<Renderer>()) {
+            if (!renderer.material.HasProperty("_Metallic") && !renderer.material.HasProperty("_Glossiness")){
+                //DebugFormatter.LogError(renderer.gameObject, "{0} must have property \"_RimColor\" for ScannableObject to work correctly", renderer.material.name);
+                continue;
+            }
+            if (renderer.GetComponent<ParticleSystem>() || renderer is ParticleSystemRenderer) {
+                continue;
+            }
+            renderer.material.SetFloat("_Metallic",  lerp);
+            renderer.material.SetFloat("_Glossiness", lerp);
+        }
+    }
+}

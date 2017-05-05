@@ -4,8 +4,7 @@
 
 using UnityEngine;
 
-public class ScannableObject : MonoBehaviour
-{
+public class ScannableObject : MonoBehaviour { 
 #pragma warning disable 0067, 0649
     [SerializeField]
     private string _biologEntry;
