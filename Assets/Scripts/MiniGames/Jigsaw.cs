@@ -46,14 +46,17 @@ public class Jigsaw : MonoBehaviour
 
     public Texture2D[] textures;
     public Texture2D[] previews;
+    public Texture2D[] texturesInfo; 
 
     public Puzzle[] pieces;
 
     GameObject TimeLeft;
     Text timeText;
-
+    GameObject infoScreen;
     void Start()
     {
+        infoScreen = GameObject.Find("Information");
+        infoScreen.GetComponent<Renderer>().enabled = false;
         rand = Random.Range(0, textures.Length);
 
         selectionZpos = 0.2f + GameObject.Find("PuzzlePiece1").transform.localPosition.z;
@@ -242,7 +245,8 @@ public class Jigsaw : MonoBehaviour
             }
             else{
                 preview.GetComponent<Renderer>().enabled = true;
-
+                infoScreen.GetComponent<Renderer>().material.SetTexture("_MainTex", texturesInfo[rand]);
+                infoScreen.GetComponent<Renderer>().enabled = true;
                 GUI.Label(new Rect(screenWidth * 0.57f, screenHeight * 0.70f, screenWidth * 0.15f, screenHeight * 0.05f), "You won!");
 
                 /*
