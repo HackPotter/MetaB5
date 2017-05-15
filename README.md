@@ -14,7 +14,7 @@ ___
 * Update Graphics 
 * Implement retrieval of player data in game while they play
 * Add full Biolog to Main Menu
-* Add Credits Scene (ISU faculty/staff/students)
+* Add Credits Scene (ISU faculty/staff/students) (Done and ready to merge as of 5/15/17)
 * Redo SugarRush Minigame
 * Replace all JS scripts with CS equivalent
  
