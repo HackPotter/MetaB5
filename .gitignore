@@ -40,4 +40,5 @@ sysinfo.txt
 *.apk
 *.unitypackage
 
-
+#Microsoft Word Lock file
+~$*.docx
