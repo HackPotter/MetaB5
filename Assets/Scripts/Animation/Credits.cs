@@ -14,6 +14,11 @@ public class Credits : MonoBehaviour {
 
         camera.transform.Translate(Vector3.down * Time.deltaTime * speed);
 
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.LoadLevel(level);
+        }
+
         StartCoroutine(waitFor());
 	}
 
