@@ -18,5 +18,6 @@ ___
 * ~~Fix bug that sometimes causes credits to not appear (Fixed and ready to merge)~~
 * Redo SugarRush Minigame
 * Replace all JS scripts with CS equivalent
+* Add freeroam/exploration/safari mode
  
 
