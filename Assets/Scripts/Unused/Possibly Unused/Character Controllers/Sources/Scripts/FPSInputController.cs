@@ -59,8 +59,6 @@ public class FPSInputController : MonoBehaviour
             turning += _keyboardTurningRate * Time.deltaTime;
         }
 
-
-
         Vector3 directionVector = new Vector3(right, 0, forward);
 
         if (directionVector != Vector3.zero)
@@ -85,6 +83,7 @@ public class FPSInputController : MonoBehaviour
         {
             directionVector = directionVector * 2;
         }
+
         // Apply the direction to the CharacterMotor
         motor.inputMoveDirection = transform.rotation * directionVector;
         transform.Rotate(Vector3.up, turning);
