@@ -41,20 +41,20 @@ public class FPSInputController : MonoBehaviour
             forward -= 1;
         }
 
-        if (Input.GetKey(KeyCode.E))
+        if (Input.GetKey(KeyCode.D))
         {
             right += 1;
         }
-        if (Input.GetKey(KeyCode.Q))
+        if (Input.GetKey(KeyCode.A))
         {
             right -= 1;
         }
 
-        if (Input.GetKey(KeyCode.A))
+        if (Input.GetKey(KeyCode.Q))
         {
             turning -= _keyboardTurningRate * Time.deltaTime;
         }
-        if (Input.GetKey(KeyCode.D))
+        if (Input.GetKey(KeyCode.E))
         {
             turning += _keyboardTurningRate * Time.deltaTime;
         }
@@ -81,6 +81,10 @@ public class FPSInputController : MonoBehaviour
             directionVector = directionVector * directionLength;
         }
 
+        if(Input.GetKey(KeyCode.LeftShift))
+        {
+            directionVector = directionVector * 2;
+        }
         // Apply the direction to the CharacterMotor
         motor.inputMoveDirection = transform.rotation * directionVector;
         transform.Rotate(Vector3.up, turning);
