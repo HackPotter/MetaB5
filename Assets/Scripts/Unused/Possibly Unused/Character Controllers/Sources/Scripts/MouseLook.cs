@@ -31,6 +31,9 @@ public class MouseLook : MonoBehaviour {
 
 	float rotationY = 0F;
 
+    bool cursorVisable = false;
+    float lastCursorToggle = 0;
+
 	void Update ()
 	{
         if (GameState.Instance.PauseLevel != PauseLevel.Unpaused)
@@ -65,7 +68,19 @@ public class MouseLook : MonoBehaviour {
         }
         else
         {
-            Cursor.lockState = CursorLockMode.None;
+            if(Input.GetKey(KeyCode.Tab) && (Time.fixedTime - lastCursorToggle) > 1)
+            {
+                cursorVisable = !cursorVisable;
+            }
+            if(cursorVisable)
+            {
+                Cursor.lockState = CursorLockMode.None;
+            }
+            else
+            {
+                Cursor.lockState = CursorLockMode.Locked;
+            }
+
             if (axes == RotationAxes.MouseXAndY || axes == RotationAxes.MouseY)
             {
                 rotationY = Mathf.Lerp(rotationY, 0, 0.15f);
