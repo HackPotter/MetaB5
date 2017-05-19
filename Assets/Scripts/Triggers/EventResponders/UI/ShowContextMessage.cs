@@ -24,6 +24,7 @@ public class ShowContextMessage : EventResponder
         {
             MetablastUI.Instance.HudView.ContextMessageView.SetText(_messageToShow);
         }
+        Cursor.lockState = CursorLockMode.None;
     }
 }
 
