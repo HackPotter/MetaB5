@@ -9,7 +9,7 @@ public class CrossHairsForLab : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        float crosshairSize = Screen.width * 0.1f;
+        float crosshairSize = Screen.width * 0.05f;
         crosshairTexture = Resources.Load("Textures/target") as Texture;
         crosshairRect = new Rect(Screen.width / 2 - crosshairSize / 2, Screen.height / 2 - crosshairSize / 2, crosshairSize, crosshairSize);
     }
