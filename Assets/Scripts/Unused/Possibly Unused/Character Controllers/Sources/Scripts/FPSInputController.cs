@@ -59,6 +59,11 @@ public class FPSInputController : MonoBehaviour
             turning += _keyboardTurningRate * Time.deltaTime;
         }
 
+        if(Input.GetKey(KeyCode.Tab))
+        {
+            
+        }
+
         Vector3 directionVector = new Vector3(right, 0, forward);
 
         if (directionVector != Vector3.zero)
