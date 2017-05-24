@@ -11,5 +11,7 @@ public class StartSafariMode : MonoBehaviour
     {
         InputSimulator.SimulateKeyPress(VirtualKeyCode.VK_0);
         InputSimulator.SimulateKeyPress(VirtualKeyCode.VK_Q);
+
+
     }
 }
