@@ -42,7 +42,7 @@ public class MouseLook : MonoBehaviour {
             return;
         }
 
-        if (!EventSystem.current.IsPointerOverGameObject() && (Input.GetMouseButton(1) || !cursorVisable))
+        if (/*!EventSystem.current.IsPointerOverGameObject() && */ (Input.GetMouseButton(1) || !cursorVisable))
         {
             Cursor.lockState = CursorLockMode.Locked;
             CheckForCursorToggle();
@@ -121,6 +121,7 @@ public class MouseLook : MonoBehaviour {
 
     private void CheckForCursorToggle()
     {
+
         if (Input.GetKey(KeyCode.Escape) && (Time.fixedTime - lastCursorToggle) > 1)
         {
             cursorVisable = !cursorVisable;
