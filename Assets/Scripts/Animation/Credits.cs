@@ -2,17 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-/*Written by Jack Potter, May 2017
- *Scrolls camera down at a given speed for a given time
- *Scrolling credits on the cheap, basically
- *Once the time runs out, it automatically loads the given level*/
-
 public class Credits : MonoBehaviour {
 
     public GameObject camera;
     public int speed = 1;
     public string level;
-    public int runTime;
 
 	
 	// Update is called once per frame
@@ -30,7 +24,7 @@ public class Credits : MonoBehaviour {
 
     IEnumerator waitFor()
     {
-        yield return new WaitForSeconds(runTime);
+        yield return new WaitForSeconds(107);
         Application.LoadLevel(level);
     }
 }
