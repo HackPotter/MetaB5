@@ -50,7 +50,7 @@ public class UbiquitinLigaseAgent : Agent
 
         //get the UbiquitinTriggerScript component attached to the parent
         //ubiquitinTriggerScript = parent.GetComponent<UbiquitinTriggerScript>();
-        _ubiquitinParticle = transform.FindChild("UbiquitinMolecule").gameObject;
+        _ubiquitinParticle = transform.Find("UbiquitinMolecule").gameObject;
 
         //set the tether parameters
         //tether.SetTetherPosition(parent.position);
