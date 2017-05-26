@@ -5,8 +5,10 @@ using UnityEngine.SceneManagement;
 
 public class LaunchCredits : MonoBehaviour {
 
+    public string sceneToLoad;
+
     public void Launch()
     {
-        SceneManager.LoadScene("Credits Redux");
+        SceneManager.LoadScene(sceneToLoad);
     }
 }
