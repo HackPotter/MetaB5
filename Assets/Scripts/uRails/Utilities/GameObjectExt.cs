@@ -8,7 +8,7 @@ public static class GameObjectExt
 {
     public static Transform FindChildInHierarchy(this Transform component, string GameObjectName)
     {
-        Transform foundChild = component.Find(GameObjectName);
+        Transform foundChild = component.FindChild(GameObjectName);
         if (foundChild)
         {
             return foundChild;
