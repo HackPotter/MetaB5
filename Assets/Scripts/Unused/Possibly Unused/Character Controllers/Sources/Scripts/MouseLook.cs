@@ -122,7 +122,7 @@ public class MouseLook : MonoBehaviour {
     private void CheckForCursorToggle()
     {
 
-        if (Input.GetKey(KeyCode.Escape) && (Time.fixedTime - lastCursorToggle) > 1)
+        if (Input.GetKey(KeyCode.Tab) && (Time.fixedTime - lastCursorToggle) > 1)
         {
             cursorVisable = !cursorVisable;
         }
