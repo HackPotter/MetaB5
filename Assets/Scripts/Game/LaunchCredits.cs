@@ -7,6 +7,6 @@ public class LaunchCredits : MonoBehaviour {
 
     public void Launch()
     {
-        SceneManager.LoadScene("Credits Redux");
+        SceneManager.LoadScene("FinishedCredits");
     }
 }
