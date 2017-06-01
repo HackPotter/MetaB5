@@ -174,39 +174,33 @@ public class TileSlider : MonoBehaviour {
     }
 
     void scramble() {
-        int[,] scramblingArray = new int[3,3];
-        int k = 1; //Value put into array at given slot
-        /*
-        These loops initialize the array in the following layout:
-        123
-        456
-        780
-        Where 1-8 are tiles and 0 is the empty space
-        */
-        for(int i = 0; i < 3; i++)
-        {
-            for(int j = 0; j < 3; j++)
-            {
-                if(k == 9) { k = 0; } //0 in the last slot
-                scramblingArray[i,j] = k;
-                k++;
-            }
-        }
-
-        System.Random rand = new System.Random(1); //Seeded with a 1. Should probably remove that before deployment, but testing.
-
-        //time to actually scramble things
-        for(int i = 0; i < 100; i++) //Makes 100 random moves. Don't worry, the hardest possible positioning of the tiles takes 31 moves to solve. It's like a Rubik's Cube. Math.
-        {
-
-        }
-
-
+        int rand;
         scrambled_slots = new List<int>();
 
+        tiles.ForEach(delegate (Tile cur_tile) {
+            //generate a random number as long as the list of used_positions contains the number
+            do {
+                rand = UnityEngine.Random.Range(1, numTiles + 1);
+            }
+            while (scrambled_slots.Contains(rand));
+
+            scrambled_slots.Add(rand);
+
+            //Assign new position's slot number to tile
+            cur_tile.set_cur_slot(rand);
+            //Move tile to new position
+            cur_tile.move(positions[rand - 1]);
+        });
+
+        //Add a position for the empty slot tile
+        for (int i = 1; i <= numTiles; i++) {
+            if (scrambled_slots.Contains(i))
+                continue;
+
+            scrambled_slots.Add(i);
+        }
     }
 
-    //Pretty sure this function is broken
     bool solvable() {
         int inversions = count_inversions();  //An inversion is a pair of tiles (a,b) such that a appears before b, but a>b;
         int dimension = (int)Math.Sqrt(numTiles);
