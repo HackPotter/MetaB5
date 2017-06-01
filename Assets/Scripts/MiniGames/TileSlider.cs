@@ -195,9 +195,31 @@ public class TileSlider : MonoBehaviour {
 
         System.Random rand = new System.Random(1); //Seeded with a 1. Should probably remove that before deployment, but testing.
 
+        int xZero = 2; //Location of 0 (empty space) in x dimension
+        int yZero = 2; //Same as above in y dimension
+
+        int xOther = 2, yOther = 2; //Location of other element, initially the same as the 0
+
         //time to actually scramble things
-        for(int i = 0; i < 100; i++) //Makes 100 random moves. Don't worry, the hardest possible positioning of the tiles takes 31 moves to solve. It's like a Rubik's Cube. Math.
+        for(int i = 0; i < 1000; i++) //Makes 1000 random moves. Don't worry, the hardest possible positioning of the tiles takes 31 moves to solve. It's like a Rubik's Cube. Math.
         {
+            switch(rand.Next(4))
+            {
+                case 0://Attempt to move up
+                    if(yZero > 0)
+                    {
+                        yOther--;
+                    }
+                    break;
+                case 1://Attempt to move down
+                    break;
+                case 2://Attempt to move left
+                    break;
+                case 3://Attempt to move right
+                    break;
+                default:
+                    break;
+            }
 
         }
 
