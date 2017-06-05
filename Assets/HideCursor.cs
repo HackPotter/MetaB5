@@ -11,7 +11,7 @@ public class HideCursor : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (Input.GetKey(KeyCode.W))
+        /*if (Input.GetKey(KeyCode.W))
         {
             Cursor.lockState = CursorLockMode.Locked;
         }
@@ -27,6 +27,6 @@ public class HideCursor : MonoBehaviour {
         if (Input.GetKey(KeyCode.A))
         {
             Cursor.lockState = CursorLockMode.Locked;
-        }
+        }*/
     }
 }

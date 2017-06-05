@@ -16,6 +16,9 @@ public class CrossHairsForLab : MonoBehaviour {
 	
 	// Update is called once per frame
 	void OnGUI () {
-        GUI.DrawTexture(crosshairRect, crosshairTexture);
+        if(GameState.Instance.PauseLevel != PauseLevel.Menu)
+        {
+            GUI.DrawTexture(crosshairRect, crosshairTexture);
+        }
 	}
 }
