@@ -11,14 +11,14 @@ ___
 * ~~Get MetaBlast working in Unity 5.5 correctly~~
 * ~~Fix and update mini-games~~
 * Improve Game Ending (Last 3 modules)
-* Update Graphics 
+* ~~Update Graphics~~ 
 * Implement retrieval of player data in game while they play
 * Add full Biolog to Main Menu
 * ~~Add Credits Scene (ISU faculty/staff/students)~~
 * ~~Fix bug that sometimes causes credits to not appear (Fixed and ready to merge)~~
 * Redo SugarRush Minigame
 * Fix Tile Slider Minigame
-* Replace all JS scripts with CS equivalent
+* ~~Replace all JS scripts with CS equivalent~~
 * ~~~Add freeroam/exploration/safari mode~~~ 
  
 
