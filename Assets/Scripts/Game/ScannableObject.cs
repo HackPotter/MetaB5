@@ -4,6 +4,8 @@
 
 using UnityEngine;
 
+// When Standard Shaders are implemented completely in MB replace all _RimColor with _EmissionColor.
+
 public class ScannableObject : MonoBehaviour { 
 #pragma warning disable 0067, 0649
     [SerializeField]
