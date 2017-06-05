@@ -3,11 +3,18 @@ using UnityEditor;
 using UnityEngine;
 using System;
 
-public static class EditorGUILayoutExt
-{
+public static class EditorGUILayoutExt {
+
+    public static void BeginLabelStyle(int? fontSize, FontStyle? fontStyle, Color? fontColor, RectOffset margin) {
+        BeginStyle(GUI.skin.label, fontSize, fontStyle, fontColor, margin);
+    }
+
+    public static void EndLabelStyle() {
+        EndStyle();
+    }
+
     #region Style Customizer
-    private struct FontState
-    {
+    private struct FontState {
         public GUIStyle GUIStyle;
         public bool WordWrap;
         public int FontSize;
@@ -16,8 +23,7 @@ public static class EditorGUILayoutExt
         public TextAnchor TextAnchor;
         public RectOffset Margin;
 
-        public FontState(GUIStyle style, int fontSize, FontStyle fontStyle, Color fontColor, TextAnchor textAnchor, RectOffset margin, bool wordWrap)
-        {
+        public FontState(GUIStyle style, int fontSize, FontStyle fontStyle, Color fontColor, TextAnchor textAnchor, RectOffset margin, bool wordWrap) {
             GUIStyle = style;
             WordWrap = wordWrap;
             FontSize = fontSize;
@@ -30,62 +36,50 @@ public static class EditorGUILayoutExt
 
     private static Stack<FontState> _fontStateStack = new Stack<FontState>();
 
-    public static void BeginStyle(GUIStyle style, int? fontSize, FontStyle? fontStyle, Color? fontColor, RectOffset margin)
-    {
+    public static void BeginStyle(GUIStyle style, int? fontSize, FontStyle? fontStyle, Color? fontColor, RectOffset margin) {
         _fontStateStack.Push(GetFontState(style));
         SetFontState(style, fontSize, fontStyle, fontColor, null, margin, null);
     }
 
-    public static void BeginStyle(GUIStyle style, int? fontSize, FontStyle? fontStyle, Color? fontColor, RectOffset margin, bool wordWrap)
-    {
+    public static void BeginStyle(GUIStyle style, int? fontSize, FontStyle? fontStyle, Color? fontColor, RectOffset margin, bool wordWrap) {
         _fontStateStack.Push(GetFontState(style));
         SetFontState(style, fontSize, fontStyle, fontColor, null, margin, wordWrap);
     }
 
-    public static void BeginStyle(GUIStyle style, int? fontSize, FontStyle? fontStyle, Color? fontColor, RectOffset margin, TextAnchor textAnchor)
-    {
+    public static void BeginStyle(GUIStyle style, int? fontSize, FontStyle? fontStyle, Color? fontColor, RectOffset margin, TextAnchor textAnchor) {
         _fontStateStack.Push(GetFontState(style));
         SetFontState(style, fontSize, fontStyle, fontColor, textAnchor, margin, null);
     }
 
-    public static void EndStyle()
-    {
+    public static void EndStyle() {
         FontState fontState = _fontStateStack.Pop();
         SetFontState(fontState.GUIStyle, fontState.FontSize, fontState.FontStyle, fontState.FontColor, fontState.TextAnchor, fontState.Margin, fontState.WordWrap);
     }
 
-    private static void SetFontState(GUIStyle guiStyle, int? fontSize, FontStyle? fontStyle, Color? fontColor, TextAnchor? textAnchor, RectOffset margin, bool? wordWrap)
-    {
-        if (fontSize.HasValue)
-        {
+    private static void SetFontState(GUIStyle guiStyle, int? fontSize, FontStyle? fontStyle, Color? fontColor, TextAnchor? textAnchor, RectOffset margin, bool? wordWrap) {
+        if (fontSize.HasValue) {
             guiStyle.fontSize = fontSize.Value;
         }
 
-        if (fontStyle.HasValue)
-        {
+        if (fontStyle.HasValue) {
             guiStyle.fontStyle = fontStyle.Value;
         }
 
-        if (fontColor.HasValue)
-        {
+        if (fontColor.HasValue) {
             guiStyle.normal.textColor = fontColor.Value;
         }
-        if (margin != null)
-        {
+        if (margin != null) {
             guiStyle.margin = margin;
         }
-        if (textAnchor.HasValue)
-        {
+        if (textAnchor.HasValue) {
             guiStyle.alignment = textAnchor.Value;
         }
-        if (wordWrap.HasValue)
-        {
+        if (wordWrap.HasValue) {
             guiStyle.wordWrap = wordWrap.Value;
         }
     }
 
-    private static FontState GetFontState(GUIStyle guiStyle)
-    {
+    private static FontState GetFontState(GUIStyle guiStyle) {
         return new FontState(guiStyle, guiStyle.fontSize, guiStyle.fontStyle, guiStyle.normal.textColor, guiStyle.alignment, guiStyle.margin, guiStyle.wordWrap);
     }
 
@@ -93,8 +87,7 @@ public static class EditorGUILayoutExt
 
     #region Resizable Areas
 
-    public static Rect BeginVerticalResize(Rect area, ref float value, GUIStyle style, RectOffset border, string label = "")
-    {
+    public static Rect BeginVerticalResize(Rect area, ref float value, GUIStyle style, RectOffset border, string label = "") {
         Rect areaRect = new Rect(0 + border.left, 0 + border.top, area.width - border.horizontal, value - border.vertical);
         Rect visibleRect = new Rect(0, 0, area.width, value);
         GUI.Box(visibleRect, "", style);
@@ -102,8 +95,7 @@ public static class EditorGUILayoutExt
         return areaRect;
     }
 
-    public static Rect VerticalResizeDivider(Rect area, ref float value, ref bool resizing, float topPanelMinimumSize, float bottomPanelMinimumSize, GUIStyle dividerStyle, GUIStyle areaStyle, RectOffset border)
-    {
+    public static Rect VerticalResizeDivider(Rect area, ref float value, ref bool resizing, float topPanelMinimumSize, float bottomPanelMinimumSize, GUIStyle dividerStyle, GUIStyle areaStyle, RectOffset border) {
         GUILayout.EndArea();
         Rect cursorChangeRect = new Rect(0, value - 3, area.width, 6);
         Rect visibleRect = new Rect(0, value - 1, area.width, 2);
@@ -113,18 +105,15 @@ public static class EditorGUILayoutExt
 
         EditorGUIUtility.AddCursorRect(cursorChangeRect, MouseCursor.ResizeVertical);
 
-        if (Event.current.type == EventType.mouseDown && cursorChangeRect.Contains(Event.current.mousePosition))
-        {
+        if (Event.current.type == EventType.mouseDown && cursorChangeRect.Contains(Event.current.mousePosition)) {
             resizing = true;
             Event.current.Use();
         }
-        if (resizing && Event.current.type == EventType.MouseDrag)
-        {
+        if (resizing && Event.current.type == EventType.MouseDrag) {
             value = Event.current.mousePosition.y;
             Event.current.Use();
         }
-        if (Event.current.type == EventType.MouseUp)
-        {
+        if (Event.current.type == EventType.MouseUp) {
             resizing = false;
         }
 
@@ -136,13 +125,11 @@ public static class EditorGUILayoutExt
         return areaRect;
     }
 
-    public static void EndVerticalResize()
-    {
+    public static void EndVerticalResize() {
         GUILayout.EndArea();
     }
 
-    public static Rect BeginHorizontalResize(Rect area, ref float value, GUIStyle style, RectOffset border)
-    {
+    public static Rect BeginHorizontalResize(Rect area, ref float value, GUIStyle style, RectOffset border) {
         Rect areaRect = new Rect(0 + border.left, 0 + border.top, value - border.horizontal, area.height - border.vertical);
         Rect visibleRect = new Rect(0, 0, value, area.height);
         GUI.Box(visibleRect, "", style);
@@ -150,8 +137,7 @@ public static class EditorGUILayoutExt
         return areaRect;
     }
 
-    public static Rect HorizontalDivider(Rect area, ref float value, ref bool resizing, float leftPanelMinimumSize, float rightPanelMinimumSize, GUIStyle dividerStyle, GUIStyle areaStyle, RectOffset border)
-    {
+    public static Rect HorizontalDivider(Rect area, ref float value, ref bool resizing, float leftPanelMinimumSize, float rightPanelMinimumSize, GUIStyle dividerStyle, GUIStyle areaStyle, RectOffset border) {
         GUILayout.EndArea();
         Rect cursorChangeRect = new Rect(value - 3, 0, 6, area.height);
         Rect visibleRect = new Rect(value - 1, 0, 2, area.height);
@@ -161,18 +147,15 @@ public static class EditorGUILayoutExt
 
         EditorGUIUtility.AddCursorRect(cursorChangeRect, MouseCursor.ResizeHorizontal);
 
-        if (Event.current.type == EventType.mouseDown && cursorChangeRect.Contains(Event.current.mousePosition))
-        {
+        if (Event.current.type == EventType.mouseDown && cursorChangeRect.Contains(Event.current.mousePosition)) {
             resizing = true;
             Event.current.Use();
         }
-        if (resizing && Event.current.type == EventType.MouseDrag)
-        {
+        if (resizing && Event.current.type == EventType.MouseDrag) {
             value = Event.current.mousePosition.x;
             Event.current.Use();
         }
-        if (Event.current.type == EventType.MouseUp)
-        {
+        if (Event.current.type == EventType.MouseUp) {
             resizing = false;
         }
 
@@ -183,8 +166,7 @@ public static class EditorGUILayoutExt
         return areaRect;
     }
 
-    public static void EndHorizontalResize()
-    {
+    public static void EndHorizontalResize() {
         GUILayout.EndArea();
     }
 
@@ -192,15 +174,13 @@ public static class EditorGUILayoutExt
 
     #region Custom Controls
 
-    public static string SearchFilter(string text, params GUILayoutOption[] options)
-    {
+    public static string SearchFilter(string text, params GUILayoutOption[] options) {
         GUILayout.BeginHorizontal(options);
         string defaultString = "Search...";
         GUI.SetNextControlName("SearchFilterTextField");
         bool focused = GUI.GetNameOfFocusedControl() == "SearchFilterTextField" || !string.IsNullOrEmpty(text);
 
-        if (focused)
-        {
+        if (focused) {
             defaultString = text;
         }
 
@@ -210,28 +190,24 @@ public static class EditorGUILayoutExt
         string newText = GUILayout.TextField(defaultString, EditorStylesExt.SearchTextField);
         EditorGUILayoutExt.EndStyle();
 
-        if (focused)
-        {
+        if (focused) {
             text = newText;
         }
 
-        if (GUILayout.Button("", EditorStylesExt.SearchCancelButton))
-        {
+        if (GUILayout.Button("", EditorStylesExt.SearchCancelButton)) {
             text = "";
         }
         GUILayout.EndHorizontal();
         return text;
     }
 
-    public static string SearchFilter(string text, string defaultString, params GUILayoutOption[] options)
-    {
+    public static string SearchFilter(string text, string defaultString, params GUILayoutOption[] options) {
         GUILayout.BeginHorizontal(options);
 
         GUI.SetNextControlName("SearchFilterTextField");
         bool focused = GUI.GetNameOfFocusedControl() == "SearchFilterTextField";
 
-        if (focused)
-        {
+        if (focused) {
             defaultString = text;
         }
 
@@ -241,21 +217,18 @@ public static class EditorGUILayoutExt
         string newText = GUILayout.TextField(defaultString, EditorStylesExt.SearchTextField);
         EditorGUILayoutExt.EndStyle();
 
-        if (focused)
-        {
+        if (focused) {
             text = newText;
         }
 
-        if (GUILayout.Button("", EditorStylesExt.SearchCancelButton))
-        {
+        if (GUILayout.Button("", EditorStylesExt.SearchCancelButton)) {
             text = "";
         }
         GUILayout.EndHorizontal();
         return text;
     }
 
-    public static bool EnterableTextField(ref string text)
-    {
+    public static bool EnterableTextField(ref string text) {
         bool toReturn = false;
         GUILayout.BeginVertical();
         GUILayout.BeginHorizontal(GUILayout.ExpandWidth(true));
@@ -268,8 +241,7 @@ public static class EditorGUILayoutExt
         GUI.SetNextControlName("CreateObjectTextField");
         text = GUI.TextField(textFieldRect, text);
         if (GUI.Button(buttonRect, "", EditorStylesExt.OLPlus) ||
-            GUI.GetNameOfFocusedControl() == "CreateObjectTextField" && UnityEngine.Event.current.isKey && UnityEngine.Event.current.keyCode == KeyCode.Return)
-        {
+            GUI.GetNameOfFocusedControl() == "CreateObjectTextField" && UnityEngine.Event.current.isKey && UnityEngine.Event.current.keyCode == KeyCode.Return) {
             GUI.FocusControl(null);
             toReturn = true;
         }
@@ -280,8 +252,7 @@ public static class EditorGUILayoutExt
         return toReturn;
     }
 
-    public static bool AddItemTextField(ref string text)
-    {
+    public static bool AddItemTextField(ref string text) {
         bool toReturn = false;
         GUILayout.BeginVertical();
         GUILayout.BeginHorizontal(GUILayout.ExpandWidth(true));
@@ -294,8 +265,7 @@ public static class EditorGUILayoutExt
         GUI.SetNextControlName("CreateObjectTextField");
         text = GUI.TextField(textFieldRect, text);
         if (GUI.Button(buttonRect, "", EditorStylesExt.OLPlus) ||
-            GUI.GetNameOfFocusedControl() == "CreateObjectTextField" && UnityEngine.Event.current.isKey && UnityEngine.Event.current.keyCode == KeyCode.Return)
-        {
+            GUI.GetNameOfFocusedControl() == "CreateObjectTextField" && UnityEngine.Event.current.isKey && UnityEngine.Event.current.keyCode == KeyCode.Return) {
             GUI.FocusControl(null);
             toReturn = true;
         }
@@ -306,18 +276,13 @@ public static class EditorGUILayoutExt
         return toReturn;
     }
 
-    public static int Button(string content, GUIStyle style, out Rect r, params GUILayoutOption[] options)
-    {
+    public static int Button(string content, GUIStyle style, out Rect r, params GUILayoutOption[] options) {
         r = GUILayoutUtility.GetRect(new GUIContent(content), style, options);
 
-        if (GUI.Button(r, content, style))
-        {
-            if (Event.current.button == 0)
-            {
+        if (GUI.Button(r, content, style)) {
+            if (Event.current.button == 0) {
                 return 0;
-            }
-            else if (Event.current.button == 1)
-            {
+            } else if (Event.current.button == 1) {
                 return 1;
             }
         }
