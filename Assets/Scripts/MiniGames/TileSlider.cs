@@ -7,7 +7,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
 
-public class TileSlider : MonoBehaviour {
+public class TileSlider : MonoBehaviour
+{
     enum Difficulty { CASUAL, CHALLENGE };
     private Difficulty mode;
 
@@ -48,7 +49,8 @@ public class TileSlider : MonoBehaviour {
     public int numTiles;
 
     // Use this for initialization
-    void Start() {
+    void Start()
+    {
         positions = new List<Vector3>();
         bounds = new List<Bounds>();
         tiles = new List<Tile>();
@@ -61,10 +63,14 @@ public class TileSlider : MonoBehaviour {
     }
 
     // Update is called once per frame
-    void Update() {
-        if (playing) {
+    void Update()
+    {
+        if (playing)
+        {
             check_input();
-        } else {
+        }
+        else
+        {
             tiles.ForEach(delegate (Tile cur_tile) {
                 cur_tile.hide();
             });
@@ -72,7 +78,8 @@ public class TileSlider : MonoBehaviour {
             preview.transform.position = init_preview_pos;
             preview.transform.localScale = init_preview_local_scale;
 
-            if (gameWon) {
+            if (gameWon)
+            {
                 score += 5;
                 GameContext.Instance.Player.Points += score; // Add points to main Game Play
             }
@@ -82,17 +89,22 @@ public class TileSlider : MonoBehaviour {
         pointsText.text = score.ToString();
     }
 
-    void init() {
+    void init()
+    {
         GameObject currentTile;
 
         init_preview_pos = preview.transform.position;
         init_preview_local_scale = preview.transform.localScale;
 
-        for (int i = 1; i <= numTiles; i++) {
+        for (int i = 1; i <= numTiles; i++)
+        {
             //if index is at empty slot, find gameObject called "Blank"
-            if (i == empty_slot) {
+            if (i == empty_slot)
+            {
                 currentTile = GameObject.Find("PuzzlePiece9");
-            } else {
+            }
+            else
+            {
                 //set the position to the world position of the corresponding tile
                 currentTile = GameObject.Find("PuzzlePiece" + i);
 
@@ -105,7 +117,8 @@ public class TileSlider : MonoBehaviour {
         }
     }
 
-    public void start_game() {
+    public void start_game()
+    {
         playing = true;
         StartCoroutine(showTiles());
     }
@@ -114,32 +127,39 @@ public class TileSlider : MonoBehaviour {
     {
         GameObject NewGameObj = GameObject.Find("NewGameButton");
         Text newgameButtonText = NewGameObj.GetComponentInChildren<Text>();
-        if (playing) {
+        if (playing)
+        {
             newgameButtonText.text = "Start";
             new_game();
-        } else {
+        }
+        else
+        {
             newgameButtonText.text = "New Game";
             start_game();
         }
     }
 
-    public void new_game() {
+    public void new_game()
+    {
         playing = false;
 
         set_textures();
 
-        do {
+        do
+        {
             scramble();
         }
         while (!solvable());
 
     }
 
-    public int get_score() {
+    public int get_score()
+    {
         return score;
     }
 
-    public void reset() {
+    public void reset()
+    {
         tiles.ForEach(delegate (Tile cur_tile) {
             int slot = scrambled_slots[cur_tile.get_init_slot() - 1];
 
@@ -148,7 +168,8 @@ public class TileSlider : MonoBehaviour {
         });
     }
 
-    void set_textures() {
+    void set_textures()
+    {
         int rand = UnityEngine.Random.Range(0, textures.Length);
 
         preview.GetComponent<Renderer>().material.SetTexture("_MainTex", previews[rand]);
@@ -158,7 +179,8 @@ public class TileSlider : MonoBehaviour {
         });
     }
 
-    IEnumerator showTiles() {
+    IEnumerator showTiles()
+    {
         preview.GetComponent<Animation>().Play();
         yield return new WaitForSeconds(preview.GetComponent<Animation>().clip.length);
         tiles.ForEach(delegate (Tile cur_tile) {
@@ -166,13 +188,43 @@ public class TileSlider : MonoBehaviour {
         });
     }
 
-    void scramble() {
+    void scramble() //THIS IS A WORK IN PROGRESS
+    {
+        int[,] grid = new int[,]
+        {
+            {1,2,3},
+            {4,5,6},
+            {7,8,0},
+        };
+
+        System.Random rand = new System.Random();
+
+        for (int moves = 0; moves < 1000; moves++)
+        {
+            for (int i = 0; i < 3; i++)
+            {
+                for (int j = 0; j < 3; j++)
+                {
+                    if (grid[i, j] == 0)
+                    {
+                        
+                    }
+                }
+            }
+        }
+    }
+
+
+    void scrambleOLD() //THIS IS THE VERSION THAT WORKS ~%50 OF THE TIME
+    {
+        return; //THIS IS HERE FOR TESTING. IF YOU DON'T REMOVE IT NOTHING WILL SCRAMBLE
         int rand;
         scrambled_slots = new List<int>();
 
         tiles.ForEach(delegate (Tile cur_tile) {
             //generate a random number as long as the list of used_positions contains the number
-            do {
+            do
+            {
                 rand = UnityEngine.Random.Range(1, numTiles + 1);
             }
             while (scrambled_slots.Contains(rand));
@@ -186,7 +238,8 @@ public class TileSlider : MonoBehaviour {
         });
 
         //Add a position for the empty slot tile
-        for (int i = 1; i <= numTiles; i++) {
+        for (int i = 1; i <= numTiles; i++)
+        {
             if (scrambled_slots.Contains(i))
                 continue;
 
@@ -194,7 +247,9 @@ public class TileSlider : MonoBehaviour {
         }
     }
 
-    bool solvable() {
+
+    bool solvable()
+    {
         int inversions = count_inversions();  //An inversion is a pair of tiles (a,b) such that a appears before b, but a>b;
         int dimension = (int)Math.Sqrt(numTiles);
         int empty_slot_row_from_bottom = dimension - (int)(scrambled_slots.FindIndex(s => s == empty_slot) / dimension);
@@ -208,11 +263,15 @@ public class TileSlider : MonoBehaviour {
          * (2)empty slot is on an even row from bottom  and inversions are odd number, or
          * (3) empty slot is on an odd row from bottom  and inversions are even number.*/
 
-        if (dimension % 2 != 0) {
-            if (inversions % 2 == 0) {
+        if (dimension % 2 != 0)
+        {
+            if (inversions % 2 == 0)
+            {
                 return true;
             }
-        } else {
+        }
+        else
+        {
             if (inversions % 2 == 0 && empty_slot_row_from_bottom % 2 != 0)
                 return true;
 
@@ -223,14 +282,18 @@ public class TileSlider : MonoBehaviour {
         return false;
     }
 
-    int count_inversions() {
+    int count_inversions()
+    {
         int inversions = 0;
 
-        for (int i = 0; i < numTiles - 1; i++) {
+        for (int i = 0; i < numTiles - 1; i++)
+        {
             int cur_slot = scrambled_slots[i];
 
-            if (cur_slot != empty_slot) {
-                for (int j = i + 1; j < numTiles; j++) {
+            if (cur_slot != empty_slot)
+            {
+                for (int j = i + 1; j < numTiles; j++)
+                {
                     int slot = scrambled_slots[j];
 
                     if (cur_slot > slot && slot != empty_slot)
@@ -242,19 +305,26 @@ public class TileSlider : MonoBehaviour {
         return inversions;
     }
 
-    void check_input() {
-        if (Input.GetButtonDown("Primary")) {
+    void check_input()
+    {
+        if (Input.GetButtonDown("Primary"))
+        {
             ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-            if (Physics.Raycast(ray, out hit)) {
-                foreach (Tile tile in tiles) {
-                    if (hit.collider.transform.name == tile.get_name()) {
+            if (Physics.Raycast(ray, out hit))
+            {
+                foreach (Tile tile in tiles)
+                {
+                    if (hit.collider.transform.name == tile.get_name())
+                    {
                         //Get all the slots that surround the selected tile.
                         List<int> neighbors = tile.get_neighbors(numTiles);
 
-                        foreach (int neighbor in neighbors) {
+                        foreach (int neighbor in neighbors)
+                        {
                             //If this slot isn't occupied, move the selected tile to it.
-                            if (!tiles.Exists(t => t.slot_matches(neighbor))) {
+                            if (!tiles.Exists(t => t.slot_matches(neighbor)))
+                            {
                                 tile.move(positions[neighbor - 1]);
                                 tile.set_cur_slot(neighbor);
 
@@ -284,14 +354,16 @@ public class TileSlider : MonoBehaviour {
                 correct_tiles++;
         });
 
-        if (correct_tiles == tiles.Count) {
+        if (correct_tiles == tiles.Count)
+        {
             gameWon = true;
             playing = false;
         }
         return correct_tiles;
     }
 
-    void solve() {
+    void solve()
+    {
         /*AStar solution = new AStar();
 
         List<OTNode> start_neighbors;
@@ -372,67 +444,81 @@ public class TileSlider : MonoBehaviour {
     /// <summary>
     /// Tile object
     /// </summary>
-    class Tile {
+    class Tile
+    {
         private GameObject tile;
         private int init_slot,
                     cur_slot;
 
-        public Tile(GameObject t, int i_slot) {
+        public Tile(GameObject t, int i_slot)
+        {
             tile = t;
             init_slot = i_slot;
             cur_slot = i_slot;
         }
 
-        public String get_name() {
+        public String get_name()
+        {
             return tile.name;
         }
 
-        public Bounds get_bounds() {
+        public Bounds get_bounds()
+        {
             return tile.GetComponent<MeshFilter>().mesh.bounds;
         }
 
-        public int get_init_slot() {
+        public int get_init_slot()
+        {
             return init_slot;
         }
 
-        public int get_cur_slot() {
+        public int get_cur_slot()
+        {
             return cur_slot;
         }
 
-        public void set_cur_slot(int slot) {
+        public void set_cur_slot(int slot)
+        {
             cur_slot = slot;
         }
 
-        public bool slot_matches(int neighbor) {
+        public bool slot_matches(int neighbor)
+        {
             if (cur_slot == neighbor)
                 return true;
 
             return false;
         }
 
-        public void show() {
+        public void show()
+        {
             tile.GetComponent<MeshRenderer>().enabled = true;
         }
 
-        public void hide() {
+        public void hide()
+        {
             tile.GetComponent<Renderer>().enabled = false;
         }
 
-        public void set_texture(Texture2D texture) {
+        public void set_texture(Texture2D texture)
+        {
             tile.GetComponent<Renderer>().material.SetTexture("_MainTex", texture);
         }
 
-        public void move(Vector3 target) {
+        public void move(Vector3 target)
+        {
             Vector3 translation = target - tile.transform.position;
 
             tile.transform.Translate(translation, Space.World);
         }
 
-        public List<int> get_neighbors(int numTiles) {
+        public List<int> get_neighbors(int numTiles)
+        {
             return get_neighbors(numTiles, false);
         }
 
-        public List<int> get_neighbors(int numTiles, bool init_state) {
+        public List<int> get_neighbors(int numTiles, bool init_state)
+        {
             List<int> neighbors = new List<int>();
             int dimension = (int)Math.Sqrt(numTiles);
             int slot = cur_slot;
@@ -441,25 +527,38 @@ public class TileSlider : MonoBehaviour {
                 slot = init_slot;
 
             //Loop through columns (col 1:{1,4,7}, col 2:{2,5,8}, col 3{3,6,9});
-            for (int i = 1; i <= dimension; i++) {
+            for (int i = 1; i <= dimension; i++)
+            {
                 //Loop through rows (row 0:{1,2,3}, row 1:{4,5,6}, row 2{7,8,9})
-                for (int j = 0; j <= dimension - 1; j++) {
-                    if (slot == i + (dimension * j)) {
+                for (int j = 0; j <= dimension - 1; j++)
+                {
+                    if (slot == i + (dimension * j))
+                    {
                         //Each tile has a max of 4 neighbors                        
-                        if (i == 1) {
+                        if (i == 1)
+                        {
                             neighbors.Add((i + 1) + (dimension * j));
-                        } else if (i == dimension) {
+                        }
+                        else if (i == dimension)
+                        {
                             neighbors.Add((i - 1) + (dimension * j));
-                        } else {
+                        }
+                        else
+                        {
                             neighbors.Add((i - 1) + (dimension * j));
                             neighbors.Add((i + 1) + (dimension * j));
                         }
 
-                        if (j == 0) {
+                        if (j == 0)
+                        {
                             neighbors.Add(i + (dimension * (j + 1)));
-                        } else if (j == dimension - 1) {
+                        }
+                        else if (j == dimension - 1)
+                        {
                             neighbors.Add(i + (dimension * (j - 1)));
-                        } else {
+                        }
+                        else
+                        {
                             neighbors.Add(i + (dimension * (j - 1)));
                             neighbors.Add(i + (dimension * (j + 1)));
                         }
