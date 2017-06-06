@@ -6,11 +6,11 @@ public class OpenOptions : MonoBehaviour {
 
     [SerializeField]
     private GameObject _optionsMenu;
-    private bool toggle;
+    [SerializeField]
+    private GameObject _helpScreen;
 
 	// Use this for initialization
 	void Start () {
-        toggle = true;
 	}
 	
 	// Update is called once per frame
@@ -18,7 +18,7 @@ public class OpenOptions : MonoBehaviour {
 
         if(Input.GetKeyDown(KeyCode.Tab))
         {
-            if (toggle)
+            if (GameState.Instance.PauseLevel == PauseLevel.Unpaused)
             {
                 _optionsMenu.SetActive(true);
                 GameState.Instance.PauseLevel = PauseLevel.Menu;
@@ -27,11 +27,11 @@ public class OpenOptions : MonoBehaviour {
             else
             {
                 _optionsMenu.SetActive(false);
+                _helpScreen.SetActive(false);
                 GameState.Instance.PauseLevel = PauseLevel.Unpaused;
                 Cursor.lockState = CursorLockMode.Locked;
             }
             
-            toggle = !toggle;
         }
         	
 	}
