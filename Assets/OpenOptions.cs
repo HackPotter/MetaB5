@@ -16,20 +16,20 @@ public class OpenOptions : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        if(Input.GetKeyDown(KeyCode.Tab))
+        if(Input.GetKeyDown(KeyCode.Tab)) //Should be ESC, but that messes with the editor. Change before building
         {
-            if (GameState.Instance.PauseLevel == PauseLevel.Unpaused)
+             if (GameState.Instance.PauseLevel == PauseLevel.Unpaused) //If the game isn't currently paused...
             {
-                _optionsMenu.SetActive(true);
-                GameState.Instance.PauseLevel = PauseLevel.Menu;
-                Cursor.lockState = CursorLockMode.None;
+                _optionsMenu.SetActive(true); //Open the options menu
+                GameState.Instance.PauseLevel = PauseLevel.Menu; //Pause the game
+                Cursor.lockState = CursorLockMode.None; //Free the cursor
             }
-            else
+            else //Otherwise...
             {
-                _optionsMenu.SetActive(false);
-                _helpScreen.SetActive(false);
-                GameState.Instance.PauseLevel = PauseLevel.Unpaused;
-                Cursor.lockState = CursorLockMode.Locked;
+                _optionsMenu.SetActive(false); //Close the options menu
+                _helpScreen.SetActive(false); //Close the help screen if it's open
+                GameState.Instance.PauseLevel = PauseLevel.Unpaused; //Unpause the level
+                Cursor.lockState = CursorLockMode.Locked; //Lock the cursor back into the game
             }
             
         }
