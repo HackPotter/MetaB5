@@ -15,7 +15,7 @@ public class TileScrambleAlgorithm : MonoBehaviour {
 	}
 
 
-    static int[,] Scramble()
+    public static int[,] Scramble()
     {
         int[,] grid = new int[,] //Grid starts in normal orientation with gap in lower left
         {
@@ -26,7 +26,7 @@ public class TileScrambleAlgorithm : MonoBehaviour {
 
         System.Random rand = new System.Random(); //Generates random movement
 
-        for (int moves = 0; moves < 10; moves++) //Any number of moves will work here. Mathematically, it can't get harder than 31 moves away from solved
+        for (int moves = 0; moves < 100; moves++) //Any number of moves will work here. Mathematically, it can't get harder than 31 moves away from solved
         {
             for (int i = 0; i < 3; i++) // i - vertical index
             {

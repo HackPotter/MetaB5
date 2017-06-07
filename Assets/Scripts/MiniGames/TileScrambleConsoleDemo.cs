@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace SliderScrambleTest
 {
@@ -23,7 +22,7 @@ namespace SliderScrambleTest
             //print(grid); 
             //Console.ReadLine();
 
-            for(int moves = 0; moves < 10; moves++) //Any number of moves will work here. Mathematically, it can't get harder than 31 moves away from solved
+            for(int moves = 0; moves < 100; moves++) //Any number of moves will work here. Mathematically, it can't get harder than 31 moves away from solved
             {
                 for(int i = 0; i < 3; i++) // i - vertical index
                 {

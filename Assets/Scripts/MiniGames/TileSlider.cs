@@ -190,32 +190,36 @@ public class TileSlider : MonoBehaviour
 
     void scramble() //THIS IS A WORK IN PROGRESS
     {
-        int[,] grid = new int[,]
-        {
-            {1,2,3},
-            {4,5,6},
-            {7,8,0},
-        };
+        int[,] grid = TileScrambleAlgorithm.Scramble(); //Get a (solvable) scrambled grid
 
-        System.Random rand = new System.Random();
-
-        for (int moves = 0; moves < 1000; moves++)
+        //Turn the grid into a 1D array to make sorting the tiles easier
+        int[] order = new int[9];
+        int index = 0;
+        for (int i = 0; i < 3; i++)
         {
-            for (int i = 0; i < 3; i++)
+            for(int j = 0; j < 3; j ++)
             {
-                for (int j = 0; j < 3; j++)
-                {
-                    if (grid[i, j] == 0)
-                    {
-                        
-                    }
-                }
+                order[index] = grid[i, j];
+                index++;
             }
+        }
+
+        foreach (Tile t in tiles)
+        {
+            int tileInitial = t.get_init_slot();
+            int newSlot = 0;
+            while(tileInitial != order[newSlot])
+            {
+                newSlot++;
+            }
+            newSlot++;
+            t.set_cur_slot(newSlot);
+            t.move(positions[newSlot - 1]);
         }
     }
 
 
-    void scrambleOLD() //THIS IS THE VERSION THAT WORKS ~%50 OF THE TI
+    void scrambleOLD() //THIS IS THE VERSION THAT WORKS ~%50 OF THE TIME
     {
         return; //THIS IS HERE FOR TESTING. IF YOU DON'T REMOVE IT NOTHING WILL SCRAMBLE
         int rand;
