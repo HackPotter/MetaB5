@@ -215,7 +215,7 @@ public class TileSlider : MonoBehaviour
     }
 
 
-    void scrambleOLD() //THIS IS THE VERSION THAT WORKS ~%50 OF THE TIME
+    void scrambleOLD() //THIS IS THE VERSION THAT WORKS ~%50 OF THE TI
     {
         return; //THIS IS HERE FOR TESTING. IF YOU DON'T REMOVE IT NOTHING WILL SCRAMBLE
         int rand;
