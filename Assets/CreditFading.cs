@@ -23,12 +23,12 @@ public class CreditFading : MonoBehaviour
     private int[] _timings;
 #pragma warning restore 0067, 0649
 
-    void Start ()
+    void Start()
     {
         StartCoroutine(Fade());
     }
 
-    void Update ()
+    void Update()
     {
         if(Input.GetKey(KeyCode.Escape))
         {
@@ -38,14 +38,12 @@ public class CreditFading : MonoBehaviour
 
     IEnumerator Fade()
     {
-        for(int i = 0; i < _gameObjects.Length; i++)
+        for (int i = 0; i < _gameObjects.Length; i++)
         {
             _gameObjects[i].SetActive(true);
             yield return new WaitForSecondsRealtime(_timings[i]);
-            _gameObjects[i].SetActive(false); 
+            _gameObjects[i].SetActive(false);
         }
         _scrollCredits.SetActive(true);
     }
 }
-
-
