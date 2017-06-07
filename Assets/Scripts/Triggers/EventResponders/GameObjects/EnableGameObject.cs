@@ -19,6 +19,5 @@ public class EnableGameObject : EventResponder
             return;
         }
         gameObject.SetActive(true);
-        Cursor.lockState = CursorLockMode.None;
     }
 }

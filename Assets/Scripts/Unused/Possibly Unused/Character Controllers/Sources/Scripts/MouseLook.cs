@@ -31,9 +31,6 @@ public class MouseLook : MonoBehaviour {
 
 	float rotationY = 0F;
 
-    bool cursorVisable = false;
-    float lastCursorToggle = 0;
-
 	void Update ()
 	{
         if (GameState.Instance.PauseLevel != PauseLevel.Unpaused)
@@ -42,15 +39,14 @@ public class MouseLook : MonoBehaviour {
             return;
         }
 
-        if (/*!EventSystem.current.IsPointerOverGameObject() && */ (Input.GetMouseButton(1) || !cursorVisable))
+        if (!EventSystem.current.IsPointerOverGameObject() && Input.GetMouseButton(1))
         {
             Cursor.lockState = CursorLockMode.Locked;
-            CheckForCursorToggle();
             if (axes == RotationAxes.MouseXAndY)
             {
                 float rotationX = transform.localEulerAngles.y + Input.GetAxis("Horizontal") * sensitivityX;
 
-                rotationY += Input.GetAxis("Vertical") * sensitivityY + 2 * transform.localEulerAngles.y;
+                rotationY += Input.GetAxis("Vertical") * sensitivityY;
                 rotationY = Mathf.Clamp(rotationY, minimumY, maximumY);
 
                 transform.localEulerAngles = new Vector3(-rotationY, rotationX, 0);
@@ -64,20 +60,18 @@ public class MouseLook : MonoBehaviour {
                 rotationY += Input.GetAxis("Vertical") * sensitivityY;
                 rotationY = Mathf.Clamp(rotationY, minimumY, maximumY);
 
-                transform.localEulerAngles = new Vector3(-rotationY, transform.localEulerAngles.y, transform.localEulerAngles.z);
+                transform.localEulerAngles = new Vector3(-rotationY, transform.localEulerAngles.y, 0);
             }
         }
         else
         {
-
-            CheckForCursorToggle();
-
+            Cursor.lockState = CursorLockMode.None;
             if (axes == RotationAxes.MouseXAndY || axes == RotationAxes.MouseY)
             {
                 rotationY = Mathf.Lerp(rotationY, 0, 0.15f);
                 rotationY = Mathf.Clamp(rotationY, minimumY, maximumY);
 
-                //transform.localEulerAngles = new Vector3(-rotationY, transform.localEulerAngles.y, 0);
+                transform.localEulerAngles = new Vector3(-rotationY, transform.localEulerAngles.y, 0);
             }
         }
 
@@ -104,7 +98,7 @@ public class MouseLook : MonoBehaviour {
 		}*/
 	}
 
-    private float ClampAngle(float ang, float min, float max) //This function is never used anywhere...
+    private float ClampAngle(float ang, float min, float max)
     {
         if (ang > 180) ang = ang - 360;
         ang = Mathf.Clamp(ang, min, max);
@@ -118,22 +112,4 @@ public class MouseLook : MonoBehaviour {
 		if (GetComponent<Rigidbody>())
 			GetComponent<Rigidbody>().freezeRotation = true;
 	}
-
-    private void CheckForCursorToggle()
-    {
-        /*
-        if (Input.GetKey(KeyCode.Tab) && (Time.fixedTime - lastCursorToggle) > 1)
-        {
-            cursorVisable = !cursorVisable;
-        }
-
-        if (cursorVisable)
-        {
-            Cursor.lockState = CursorLockMode.None;
-        }
-        else
-        {
-            Cursor.lockState = CursorLockMode.Locked;
-        } */
-    } 
 }
