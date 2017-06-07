@@ -57,8 +57,9 @@ public class TileSlider : MonoBehaviour
         empty_slot = numTiles;
         preview = GameObject.Find("Preview");
 
+        
         init();
-        new_game();
+        new_game();scramble();
         //solve();
     }
 
@@ -137,19 +138,20 @@ public class TileSlider : MonoBehaviour
             newgameButtonText.text = "New Game";
             start_game();
         }
+        scramble();
     }
 
     public void new_game()
     {
+        scramble();
+
+        gameWon = false;
+
         playing = false;
 
         set_textures();
 
-        do
-        {
-            scramble();
-        }
-        while (!solvable());
+        scramble(); //Uses new functional algorithm
 
     }
 
@@ -160,12 +162,18 @@ public class TileSlider : MonoBehaviour
 
     public void reset()
     {
-        tiles.ForEach(delegate (Tile cur_tile) {
+        foreach(Tile t in tiles)
+        {
+            t.set_cur_slot(t.get_init_slot());
+        }
+        
+        
+        /*tiles.ForEach(delegate (Tile cur_tile) {
             int slot = scrambled_slots[cur_tile.get_init_slot() - 1];
 
             cur_tile.set_cur_slot(slot);
             cur_tile.move(positions[slot - 1]);
-        });
+        });*/
     }
 
     void set_textures()
@@ -188,7 +196,7 @@ public class TileSlider : MonoBehaviour
         });
     }
 
-    void scramble() //THIS IS A WORK IN PROGRESS
+    public void scramble() //As of June 7, 2017, this no longer generates unsolveable games.
     {
         int[,] grid = TileScrambleAlgorithm.Scramble(); //Get a (solvable) scrambled grid
 
