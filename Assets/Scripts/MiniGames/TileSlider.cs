@@ -79,11 +79,7 @@ public class TileSlider : MonoBehaviour
             preview.transform.position = init_preview_pos;
             preview.transform.localScale = init_preview_local_scale;
 
-            if (gameWon)
-            {
-                score += 5;
-                GameContext.Instance.Player.Points += score; // Add points to main Game Play
-            }
+
         }
         GameObject pointsObj = GameObject.Find("Points");
         Text pointsText = pointsObj.GetComponentInChildren<Text>();
@@ -279,6 +275,8 @@ public class TileSlider : MonoBehaviour
         {
             gameWon = true;
             playing = false;
+            score += 5;
+            GameContext.Instance.Player.Points += score; // Add points to main Game Play
         }
         return correct_tiles;
     }
