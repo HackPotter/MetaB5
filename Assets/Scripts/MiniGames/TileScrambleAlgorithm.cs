@@ -3,17 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class TileScrambleAlgorithm : MonoBehaviour {
-
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
-
+    
+    /*
+        Summary: Generates an initial layout for an 8-tile slider game.
+        This is done by creating a 2D array with the numbers 0-8.
+        0 is an empty space and 1-8 are all tiles.
+        The scrambling occurs by using a pseudo-random number generator to pick "moves" for the empty space.
+        By swapping the empty space with one of the tiles immediately next to it, the algorithm emulates sliding a tile.
+        This eliminates any chance of generating an unsolveable grid.
+            -Jack Potter, June 2017
+    */
 
     public static int[,] Scramble()
     {

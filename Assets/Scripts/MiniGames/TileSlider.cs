@@ -206,15 +206,15 @@ public class TileSlider : MonoBehaviour
 
         foreach (Tile t in tiles)
         {
-            int tileInitial = t.get_init_slot();
+            int tileInitial = t.get_init_slot(); //Tiles are already sorted in order when initialized
             int newSlot = 0;
-            while(tileInitial != order[newSlot])
+            while(tileInitial != order[newSlot]) //Finds the tile's initial position in the list
             {
                 newSlot++;
             }
-            newSlot++;
-            t.set_cur_slot(newSlot);
-            t.move(positions[newSlot - 1]);
+            newSlot++; //Increments again because everything dies in a ball of fire if this line isn't here. Not sure why.
+            t.set_cur_slot(newSlot); //Sets the tile to its scrambled position
+            t.move(positions[newSlot - 1]); //Move the tile to the appropriate spot
         }
     }
 
