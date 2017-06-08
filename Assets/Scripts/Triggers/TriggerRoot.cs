@@ -40,6 +40,7 @@ public class TriggerRoot : MonoBehaviour
 
     private void Initialize()
     {
+        Cursor.lockState = CursorLockMode.None;
         if (_initialized)
             return;
         _initialized = true;
