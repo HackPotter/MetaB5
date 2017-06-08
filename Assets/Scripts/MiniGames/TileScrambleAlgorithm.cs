@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class TileScrambleAlgorithm : MonoBehaviour {
-    
+
     /*
         Summary: Generates an initial layout for an 8-tile slider game.
         This is done by creating a 2D array with the numbers 0-8.
@@ -12,16 +12,25 @@ public class TileScrambleAlgorithm : MonoBehaviour {
         By swapping the empty space with one of the tiles immediately next to it, the algorithm emulates sliding a tile.
         This eliminates any chance of generating an unsolveable grid.
             -Jack Potter, June 2017
-    */
+    */ 
 
     public static int[,] Scramble()
     {
+
+        //Setting this to true generates grids 1 move away from being solved for testing TileSlider.cs
+        bool DEBUGGING = false;
+
         int[,] grid = new int[,] //Grid starts in normal orientation with gap in lower left
         {
                 {1,2,3},
                 {4,5,6},
                 {7,8,0},
         };
+
+        if(DEBUGGING) //While debugging, this returns a solved grid 
+        {
+            return grid;
+        }
 
         System.Random rand = new System.Random(); //Generates random movement
 
