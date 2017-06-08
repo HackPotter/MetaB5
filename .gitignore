@@ -41,4 +41,5 @@ sysinfo.txt
 *.unitypackage
 
 #Microsoft Word Lock file
-~$*.docx
+*.docx*
+

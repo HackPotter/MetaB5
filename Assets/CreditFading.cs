@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 /* 
  * Written by Jack Potter, May 2017
@@ -29,7 +30,10 @@ public class CreditFading : MonoBehaviour
 
     void Update()
     {
-
+        if(Input.GetKey(KeyCode.Escape))
+        {
+            SceneManager.LoadScene("MainMenu");
+        }
     }
 
     IEnumerator Fade()
