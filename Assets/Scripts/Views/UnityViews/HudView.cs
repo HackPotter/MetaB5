@@ -116,7 +116,7 @@ namespace Metablast.UI
         {
             ObjectiveListItem objectiveListItem = GameObject.Instantiate(_objectiveListItemPrefab) as ObjectiveListItem;
             objectiveListItem.ObjectiveName.text = objective.Name;
-            objectiveListItem.transform.parent = _objectivePanel;
+            objectiveListItem.transform.SetParent(_objectivePanel);
             objectiveListItem.transform.localScale = Vector3.one;
 
             objectiveListItem.Objective = objective;

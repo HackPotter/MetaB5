@@ -1,10 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Credits : MonoBehaviour {
 
-    public GameObject camera;
+    public GameObject _camera;
     public int speed = 1;
     public string level;
 
@@ -12,11 +13,12 @@ public class Credits : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        camera.transform.Translate(Vector3.down * Time.deltaTime * speed);
+        _camera.transform.Translate(Vector3.down * Time.deltaTime * speed);
 
         if(Input.GetKeyDown(KeyCode.Escape))
         {
-            Application.LoadLevel(level);
+
+            SceneManager.LoadScene(level);
         }
 
         StartCoroutine(waitFor());
@@ -25,6 +27,6 @@ public class Credits : MonoBehaviour {
     IEnumerator waitFor()
     {
         yield return new WaitForSeconds(107);
-        Application.LoadLevel(level);
+        SceneManager.LoadScene(level);
     }
 }
