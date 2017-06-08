@@ -57,6 +57,8 @@ public class TileSlider : MonoBehaviour
         empty_slot = numTiles;
         preview = GameObject.Find("Preview");
 
+        System.Random rand = new System.Random();
+        currentTexture = rand.Next(previews.Length);
         
         init();
         new_game();

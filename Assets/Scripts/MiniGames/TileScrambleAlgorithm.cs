@@ -18,7 +18,7 @@ public class TileScrambleAlgorithm : MonoBehaviour {
     {
 
         //Setting this to true generates grids 1 move away from being solved for testing TileSlider.cs
-        bool DEBUGGING = false;
+        bool DEBUGGING = true;
 
         int[,] grid = new int[,] //Grid starts in normal orientation with gap in lower left
         {
