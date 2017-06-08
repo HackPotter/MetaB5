@@ -1,6 +1,4 @@
 ﻿#pragma warning disable 0067, 0649, 0169, 0414
-
-// I have no idea what the deal with this is.
 using UnityEngine;
 using System;
 using System.Collections;
@@ -48,6 +46,8 @@ public class TileSlider : MonoBehaviour
 
     public int numTiles;
 
+    public int currentTexture = -1;
+
     // Use this for initialization
     void Start()
     {
@@ -57,10 +57,12 @@ public class TileSlider : MonoBehaviour
         empty_slot = numTiles;
         preview = GameObject.Find("Preview");
 
+        System.Random rand = new System.Random();
+        currentTexture = rand.Next(previews.Length);
         
         init();
-        new_game();scramble();
-        //solve();
+        new_game();
+        scramble();
     }
 
     // Update is called once per frame
@@ -126,6 +128,7 @@ public class TileSlider : MonoBehaviour
         Text newgameButtonText = NewGameObj.GetComponentInChildren<Text>();
         if (playing)
         {
+            currentTexture++;
             newgameButtonText.text = "Start";
             new_game();
         }
@@ -134,6 +137,7 @@ public class TileSlider : MonoBehaviour
             newgameButtonText.text = "New Game";
             start_game();
         }
+        set_textures();
         scramble();
     }
 
@@ -162,24 +166,19 @@ public class TileSlider : MonoBehaviour
         {
             t.set_cur_slot(t.get_init_slot());
         }
-        
-        
-        /*tiles.ForEach(delegate (Tile cur_tile) {
-            int slot = scrambled_slots[cur_tile.get_init_slot() - 1];
-
-            cur_tile.set_cur_slot(slot);
-            cur_tile.move(positions[slot - 1]);
-        });*/
     }
 
     void set_textures()
     {
-        int rand = UnityEngine.Random.Range(0, textures.Length);
+        if(currentTexture >= textures.Length)
+        {
+            currentTexture = 0;
+        }
 
-        preview.GetComponent<Renderer>().material.SetTexture("_MainTex", previews[rand]);
+        preview.GetComponent<Renderer>().material.SetTexture("_MainTex", previews[currentTexture]);
 
         tiles.ForEach(delegate (Tile cur_tile) {
-            cur_tile.set_texture(textures[rand]);
+            cur_tile.set_texture(textures[currentTexture]);
         });
     }
 
@@ -275,8 +274,9 @@ public class TileSlider : MonoBehaviour
         {
             gameWon = true;
             playing = false;
-            score += 5;
+            score += 15;
             GameContext.Instance.Player.Points += score; // Add points to main Game Play
+            currentTexture++;
         }
         return correct_tiles;
     }
