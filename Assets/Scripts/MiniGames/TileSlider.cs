@@ -130,12 +130,14 @@ public class TileSlider : MonoBehaviour
         {
             currentTexture++;
             newgameButtonText.text = "Start";
+            scramble();
             new_game();
         }
         else
         {
             newgameButtonText.text = "New Game";
             start_game();
+            scramble();
         }
         set_textures();
         scramble();
