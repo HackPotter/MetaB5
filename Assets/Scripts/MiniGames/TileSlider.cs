@@ -46,7 +46,7 @@ public class TileSlider : MonoBehaviour
 
     public int numTiles;
 
-    public int currentTexture = 0;
+    public int currentTexture = -1;
 
     // Use this for initialization
     void Start()
@@ -126,6 +126,7 @@ public class TileSlider : MonoBehaviour
         Text newgameButtonText = NewGameObj.GetComponentInChildren<Text>();
         if (playing)
         {
+            currentTexture++;
             newgameButtonText.text = "Start";
             new_game();
         }
@@ -134,6 +135,7 @@ public class TileSlider : MonoBehaviour
             newgameButtonText.text = "New Game";
             start_game();
         }
+        set_textures();
         scramble();
     }
 
@@ -166,8 +168,7 @@ public class TileSlider : MonoBehaviour
 
     void set_textures()
     {
-        currentTexture++;
-        if(currentTexture == textures.Length)
+        if(currentTexture >= textures.Length)
         {
             currentTexture = 0;
         }
@@ -273,6 +274,7 @@ public class TileSlider : MonoBehaviour
             playing = false;
             score += 15;
             GameContext.Instance.Player.Points += score; // Add points to main Game Play
+            currentTexture++;
         }
         return correct_tiles;
     }
