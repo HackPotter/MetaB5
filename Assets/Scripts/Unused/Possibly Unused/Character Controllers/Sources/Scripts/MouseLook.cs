@@ -32,7 +32,7 @@ public class MouseLook : MonoBehaviour {
 	float rotationY = 0F;
 
     bool cursorVisable = false;
-    float lastCursorToggle = 0;
+    //float lastCursorToggle = 0;
 
 	void Update ()
 	{
