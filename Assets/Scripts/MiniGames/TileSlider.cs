@@ -1,6 +1,4 @@
 ﻿#pragma warning disable 0067, 0649, 0169, 0414
-
-// I have no idea what the deal with this is.
 using UnityEngine;
 using System;
 using System.Collections;
@@ -48,6 +46,8 @@ public class TileSlider : MonoBehaviour
 
     public int numTiles;
 
+    public int currentTexture = 0;
+
     // Use this for initialization
     void Start()
     {
@@ -59,8 +59,8 @@ public class TileSlider : MonoBehaviour
 
         
         init();
-        new_game();scramble();
-        //solve();
+        new_game();
+        scramble();
     }
 
     // Update is called once per frame
@@ -162,24 +162,20 @@ public class TileSlider : MonoBehaviour
         {
             t.set_cur_slot(t.get_init_slot());
         }
-        
-        
-        /*tiles.ForEach(delegate (Tile cur_tile) {
-            int slot = scrambled_slots[cur_tile.get_init_slot() - 1];
-
-            cur_tile.set_cur_slot(slot);
-            cur_tile.move(positions[slot - 1]);
-        });*/
     }
 
     void set_textures()
     {
-        int rand = UnityEngine.Random.Range(0, textures.Length);
+        currentTexture++;
+        if(currentTexture == textures.Length)
+        {
+            currentTexture = 0;
+        }
 
-        preview.GetComponent<Renderer>().material.SetTexture("_MainTex", previews[rand]);
+        preview.GetComponent<Renderer>().material.SetTexture("_MainTex", previews[currentTexture]);
 
         tiles.ForEach(delegate (Tile cur_tile) {
-            cur_tile.set_texture(textures[rand]);
+            cur_tile.set_texture(textures[currentTexture]);
         });
     }
 
@@ -275,7 +271,7 @@ public class TileSlider : MonoBehaviour
         {
             gameWon = true;
             playing = false;
-            score += 5;
+            score += 15;
             GameContext.Instance.Player.Points += score; // Add points to main Game Play
         }
         return correct_tiles;
