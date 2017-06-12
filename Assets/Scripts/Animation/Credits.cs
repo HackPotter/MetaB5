@@ -26,7 +26,7 @@ public class Credits : MonoBehaviour {
 
     IEnumerator waitFor()
     {
-        yield return new WaitForSeconds(107);
+        yield return new WaitForSeconds(52);
         SceneManager.LoadScene(level);
     }
 }
